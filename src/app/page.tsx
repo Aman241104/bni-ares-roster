@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { TrendingUp, ShieldCheck, Users, GraduationCap, Crown } from "lucide-react";
+import { TrendingUp, ShieldCheck, Users, HandHeart, Crown } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section, SectionHeading } from "@/components/Section";
 import Reveal from "@/components/Reveal";
@@ -8,11 +8,17 @@ import FaqAccordion from "@/components/FaqAccordion";
 import type { Settings, Sponsor } from "@/types/database";
 
 const WHY_VISIT = [
-  { icon: TrendingUp, title: "Business Growth", copy: "Tap into a room of business owners actively looking to send you work, not just swap cards." },
+  { icon: TrendingUp, title: "Opportunities", copy: "Tap into a room of business owners actively looking to send you work, not just swap cards." },
   { icon: ShieldCheck, title: "Trusted Referrals", copy: "Every referral comes with a relationship behind it — vetted by people who know your business." },
-  { icon: Users, title: "Networking", copy: "Meet 40+ business owners across categories, every single week, without cold outreach." },
-  { icon: GraduationCap, title: "Learning", copy: "Weekly education slots sharpen how you pitch, follow up, and close the referrals you get." },
+  { icon: Users, title: "Relationships", copy: "Meet 40+ business owners across categories, every single week, without cold outreach." },
+  { icon: HandHeart, title: "Accountability", copy: "A room that shows up for you weekly holds you to the follow-through that actually closes referrals." },
   { icon: Crown, title: "Leadership", copy: "Take on chapter roles that build your visibility and leadership track record in the room." },
+];
+
+const CATEGORY_SEAT = [
+  { title: "One Seat", copy: "Every business category gets one seat per chapter — never two competitors in the same room." },
+  { title: "One Business", copy: "That seat is yours alone. No one else in the chapter can send referrals to a rival in your category." },
+  { title: "One Opportunity", copy: "No competition inside the room means every introduction is collaboration, not a pitch against someone else." },
 ];
 
 export default async function HomePage() {
@@ -23,6 +29,13 @@ export default async function HomePage() {
 
   const s = settings as Settings | null;
   const activeSponsors = (sponsors as Sponsor[] | null) ?? [];
+  const hasRealStats = !!(
+    s?.stat_total_members ||
+    s?.stat_business_passed ||
+    s?.stat_total_referrals ||
+    s?.stat_visitors_hosted ||
+    s?.stat_years_chapter
+  );
 
   return (
     <>
@@ -35,10 +48,10 @@ export default async function HomePage() {
               BNI Ares Chapter
             </p>
             <h1 className="font-heading text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl">
-              Business Grows Where Trust Is Built
+              Your Next Client Might Be Sitting At This Table.
             </h1>
             <p className="mt-6 max-w-xl text-lg text-zinc-300">
-              A chapter of business owners referring real work to each other, every week — powered by Givers Gain.
+              Every week, business owners gather to share opportunities, relationships, and referrals — powered by Givers Gain.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
@@ -63,9 +76,9 @@ export default async function HomePage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="About Us"
-              title="Who We Are"
-              description="BNI Ares is a chapter of committed business professionals who meet weekly to grow each other's businesses through structured, trusted referrals."
+              eyebrow="Our Philosophy"
+              title="Givers Gain"
+              description="The more business you help create for others, the more opportunities return to you. Trust isn't built in one meeting — it's built every week."
             />
           </Reveal>
           <div className="mt-12 grid gap-8 sm:grid-cols-2">
@@ -85,33 +98,52 @@ export default async function HomePage() {
         </Container>
       </Section>
 
-      {/* Stats strip */}
-      <section className="bg-ink py-16">
+      {/* One Seat, One Business */}
+      <Section className="bg-ink text-white">
         <Container>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-5">
-            <StatCounter value={s?.stat_total_members ?? 0} label="Total Members" />
-            {s?.stat_business_passed ? (
-              <div className="text-center">
-                <span className="font-heading text-4xl font-extrabold text-white sm:text-5xl">
-                  {s.stat_business_passed}
-                </span>
-                <p className="mt-2 text-sm font-medium text-zinc-400">Business Passed</p>
-              </div>
-            ) : (
-              <StatCounter value={0} label="Business Passed" />
-            )}
-            <StatCounter value={s?.stat_total_referrals ?? 0} label="Total Referrals" />
-            <StatCounter value={s?.stat_visitors_hosted ?? 0} label="Visitors Hosted" />
-            <StatCounter value={s?.stat_years_chapter ?? 0} label="Years of Chapter" />
+          <Reveal>
+            <SectionHeading eyebrow="How It Works" title="One Seat. One Business. One Opportunity." center light />
+          </Reveal>
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            {CATEGORY_SEAT.map((item) => (
+              <Reveal key={item.title} className="rounded-2xl border border-white/10 p-6 text-center">
+                <h3 className="font-heading text-base font-bold text-white">{item.title}</h3>
+                <p className="mt-2 text-sm text-zinc-400">{item.copy}</p>
+              </Reveal>
+            ))}
           </div>
         </Container>
-      </section>
+      </Section>
+
+      {/* Stats strip — only once real chapter numbers exist, a zero-filled strip reads as a dead site */}
+      {hasRealStats && (
+        <section className="bg-ink py-16">
+          <Container>
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-5">
+              <StatCounter value={s?.stat_total_members ?? 0} label="Total Members" />
+              {s?.stat_business_passed ? (
+                <div className="text-center">
+                  <span className="font-heading text-4xl font-extrabold text-white sm:text-5xl">
+                    {s.stat_business_passed}
+                  </span>
+                  <p className="mt-2 text-sm font-medium text-zinc-400">Business Passed</p>
+                </div>
+              ) : (
+                <StatCounter value={0} label="Business Passed" />
+              )}
+              <StatCounter value={s?.stat_total_referrals ?? 0} label="Total Referrals" />
+              <StatCounter value={s?.stat_visitors_hosted ?? 0} label="Visitors Hosted" />
+              <StatCounter value={s?.stat_years_chapter ?? 0} label="Years of Chapter" />
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* Why Visit */}
       <Section>
         <Container>
           <Reveal>
-            <SectionHeading eyebrow="Why Visit" title="Why Visit Ares" center />
+            <SectionHeading eyebrow="Why Visit" title="Why Business Owners Keep Coming Back" center />
           </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {WHY_VISIT.map(({ icon: Icon, title, copy }) => (

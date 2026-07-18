@@ -13,6 +13,16 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
+const MEETING_FLOW = [
+  { step: "01", title: "Open Networking", copy: "Arrive, grab a coffee, and meet the room before the meeting starts." },
+  { step: "02", title: "Weekly Meeting", copy: "A structured, fast-moving agenda — no wasted time, no small talk filler." },
+  { step: "03", title: "Business Presentations", copy: "Members present who they're looking to meet, so the room knows who to refer." },
+  { step: "04", title: "Referrals Shared", copy: "Real, structured referrals handed from one member to another, in the open." },
+  { step: "05", title: "Visitors Connect", copy: "You're introduced around the room — no observing from the back." },
+];
+
+const BRING_LIST = ["Business Cards", "Your Story", "An Open Mind"];
+
 export default async function VisitorPage() {
   const { data: settings } = await supabase.from("settings").select("*").eq("id", 1).maybeSingle();
   const s = settings as Settings | null;
@@ -57,6 +67,23 @@ export default async function VisitorPage() {
       </Section>
 
       <Section className="bg-zinc-50">
+        <Container>
+          <Reveal>
+            <SectionHeading eyebrow="What To Expect" title="What Happens At A Meeting" center />
+          </Reveal>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-5">
+            {MEETING_FLOW.map((item) => (
+              <Reveal key={item.step} className="text-center">
+                <span className="font-heading text-3xl font-extrabold text-brand-500">{item.step}</span>
+                <h3 className="mt-3 font-heading text-sm font-bold text-ink">{item.title}</h3>
+                <p className="mt-2 text-xs text-zinc-500">{item.copy}</p>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
         <Container>
           <Reveal>
             <SectionHeading eyebrow="Testimonials" title="Success Stories" center />
@@ -112,8 +139,19 @@ export default async function VisitorPage() {
       <Section className="bg-zinc-50">
         <Container className="max-w-2xl">
           <Reveal>
-            <SectionHeading eyebrow="Register" title="Register as a Visitor" center />
+            <SectionHeading eyebrow="Register" title="Join Us This Week" center />
           </Reveal>
+          <Reveal className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            {BRING_LIST.map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-ink"
+              >
+                {item}
+              </span>
+            ))}
+          </Reveal>
+          <p className="mt-4 text-center text-sm text-zinc-500">We&apos;ll handle the coffee.</p>
           <div className="mt-10">
             <VisitorRegistrationForm />
           </div>
