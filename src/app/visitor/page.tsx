@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase/client";
 import { Container, Section, SectionHeading } from "@/components/Section";
 import Reveal from "@/components/Reveal";
 import VisitorRegistrationForm from "@/components/VisitorRegistrationForm";
-import type { Settings } from "@/types/database";
+import type { Member, Settings } from "@/types/database";
 
 export const metadata: Metadata = {
   title: "Visit BNI Ares",
@@ -21,11 +21,41 @@ const MEETING_FLOW = [
   { step: "05", title: "Visitors Connect", copy: "You're introduced around the room — no observing from the back." },
 ];
 
+const TAKE_HOME = [
+  "New Relationships",
+  "Business Opportunities",
+  "Fresh Perspectives",
+  "Weekly Learning",
+  "Trusted Connections",
+  "Possibly Your Next Client",
+];
+
+const WELCOMED_BY = ["Visitor Hosts", "Leadership Team", "Business Owners"];
+
+const GOOD_FIT = [
+  "Business owners and founders",
+  "Consultants and freelancers",
+  "Professionals looking to grow",
+  "People ready to build real relationships",
+];
+
+const NOT_A_FIT = [
+  "Looking to sell aggressively, once",
+  "Not interested in giving referrals back",
+  "Just here to collect business cards",
+];
+
 const BRING_LIST = ["Business Cards", "Your Story", "An Open Mind"];
 
 export default async function VisitorPage() {
-  const { data: settings } = await supabase.from("settings").select("*").eq("id", 1).maybeSingle();
+  const [{ data: settings }, { data: members }] = await Promise.all([
+    supabase.from("settings").select("*").eq("id", 1).maybeSingle(),
+    supabase.from("members").select("business_category").eq("status", "active"),
+  ]);
   const s = settings as Settings | null;
+  const memberList = (members as Pick<Member, "business_category">[] | null) ?? [];
+  const memberCount = memberList.length;
+  const categoryCount = new Set(memberList.map((m) => m.business_category).filter(Boolean)).size;
 
   const details = [
     s?.meeting_venue && { icon: MapPin, label: "Venue", value: s.meeting_venue, href: s.meeting_maps_link ?? undefined },
@@ -39,34 +69,78 @@ export default async function VisitorPage() {
       <section className="bg-ink py-24 text-white sm:py-32">
         <Container className="max-w-3xl text-center">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500">Come See Us</p>
-          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">Why Visit BNI Ares</h1>
+          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Your Next Client Might Be Waiting At Our Table.
+          </h1>
           <p className="mt-6 text-lg text-zinc-300">
-            One meeting is enough to see how a referral network actually works — no pressure, just an open seat at our weekly gathering.
+            No pressure. No obligations. Just one seat waiting for you at our next weekly meeting.
           </p>
+          {memberCount > 0 && (
+            <div className="mt-10 flex justify-center gap-10">
+              <div>
+                <p className="font-heading text-3xl font-extrabold sm:text-4xl">{memberCount}+</p>
+                <p className="mt-1 text-sm text-zinc-400">Business Owners</p>
+              </div>
+              {categoryCount > 0 && (
+                <div>
+                  <p className="font-heading text-3xl font-extrabold sm:text-4xl">{categoryCount}+</p>
+                  <p className="mt-1 text-sm text-zinc-400">Industries</p>
+                </div>
+              )}
+            </div>
+          )}
         </Container>
       </section>
 
       <Section>
         <Container>
           <Reveal>
-            <SectionHeading eyebrow="Benefits" title="What You'll Get as a Visitor" center />
+            <SectionHeading eyebrow="What You'll Get" title="What You'll Take Home With You" center />
           </Reveal>
-          <div className="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-3">
-            {[
-              { title: "Real Introductions", copy: "Meet 40+ business owners who can become clients, vendors, or referral partners." },
-              { title: "See the System", copy: "Watch a structured referral meeting run in under 90 minutes." },
-              { title: "No Obligation", copy: "Come once, ask questions, decide if it's right for you." },
-            ].map((item) => (
-              <Reveal key={item.title} className="rounded-2xl border border-zinc-200 p-6 text-center">
-                <h3 className="font-heading text-base font-bold text-ink">{item.title}</h3>
-                <p className="mt-2 text-sm text-zinc-500">{item.copy}</p>
-              </Reveal>
+          <Reveal className="mx-auto mt-10 flex max-w-2xl flex-wrap justify-center gap-3">
+            {TAKE_HOME.map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-ink"
+              >
+                {item}
+              </span>
             ))}
-          </div>
+          </Reveal>
         </Container>
       </Section>
 
       <Section className="bg-zinc-50">
+        <Container>
+          <Reveal>
+            <SectionHeading eyebrow="No Pressure" title="Is This For You?" center />
+          </Reveal>
+          <div className="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-2">
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6">
+              <p className="text-sm font-semibold uppercase tracking-wider text-brand-600">Yes, If You&apos;re</p>
+              <ul className="mt-4 space-y-2.5">
+                {GOOD_FIT.map((item) => (
+                  <li key={item} className="text-sm text-zinc-600">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6">
+              <p className="text-sm font-semibold uppercase tracking-wider text-zinc-400">Maybe Not, If You&apos;re</p>
+              <ul className="mt-4 space-y-2.5">
+                {NOT_A_FIT.map((item) => (
+                  <li key={item} className="text-sm text-zinc-500">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
         <Container>
           <Reveal>
             <SectionHeading eyebrow="What To Expect" title="What Happens At A Meeting" center />
@@ -80,16 +154,23 @@ export default async function VisitorPage() {
               </Reveal>
             ))}
           </div>
+          <Reveal className="mx-auto mt-14 max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-wider text-zinc-400">You&apos;ll Be Welcomed By</p>
+            <p className="mt-3 text-lg text-zinc-600">
+              {WELCOMED_BY.join(" · ")}
+              {memberCount > 0 && ` · ${memberCount}+ Friendly Faces`}
+            </p>
+          </Reveal>
         </Container>
       </Section>
 
-      <Section>
+      <Section className="bg-zinc-50">
         <Container>
           <Reveal>
             <SectionHeading eyebrow="Testimonials" title="Success Stories" center />
           </Reveal>
           <div className="mt-10 rounded-2xl border border-dashed border-zinc-300 bg-white py-14 text-center text-zinc-500">
-            Visitor success stories coming soon.
+            Our first visitor stories land after our next meeting — yours could be one of them.
           </div>
         </Container>
       </Section>
@@ -135,6 +216,22 @@ export default async function VisitorPage() {
           </Container>
         </Section>
       )}
+
+      <section className="bg-ink py-20 text-center text-white">
+        <Container className="max-w-2xl">
+          <Reveal>
+            <p className="font-heading text-3xl font-extrabold leading-tight sm:text-4xl">
+              This Week, Your Story Might Change.
+            </p>
+            <p className="mt-4 text-zinc-300">One meeting. One introduction. One opportunity. That&apos;s all it takes.</p>
+            {details.length > 0 && (
+              <p className="mt-6 text-sm font-semibold uppercase tracking-wider text-brand-500">
+                {details.map((d) => d.value).join(" · ")}
+              </p>
+            )}
+          </Reveal>
+        </Container>
+      </section>
 
       <Section className="bg-zinc-50">
         <Container className="max-w-2xl">
