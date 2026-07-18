@@ -1,0 +1,53 @@
+import Link from "next/link";
+import Avatar from "@/components/Avatar";
+import ContactButtons from "@/components/ContactButtons";
+import type { Member } from "@/types/database";
+
+export default function MemberCard({ member }: { member: Member }) {
+  return (
+    <Link
+      href={`/members/${member.id}`}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+    >
+      <div className="relative aspect-square w-full overflow-hidden bg-zinc-100">
+        <Avatar
+          name={member.name}
+          photoUrl={member.photo_url}
+          className="transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
+      <div className="flex flex-1 flex-col gap-2 p-5">
+        <div>
+          <h3 className="font-heading text-base font-bold text-ink">{member.name}</h3>
+          {member.company && <p className="text-sm text-zinc-600">{member.company}</p>}
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {member.business_category && (
+            <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
+              {member.business_category}
+            </span>
+          )}
+          {member.designation && (
+            <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">
+              {member.designation}
+            </span>
+          )}
+        </div>
+        {member.description && (
+          <p className="line-clamp-2 text-sm text-zinc-500">{member.description}</p>
+        )}
+        <div className="mt-auto pt-2">
+          <ContactButtons
+            phone={member.phone}
+            whatsapp={member.whatsapp}
+            email={member.email}
+            website={member.website}
+            linkedin={member.linkedin}
+            instagram={member.instagram}
+            facebook={member.facebook}
+          />
+        </div>
+      </div>
+    </Link>
+  );
+}
