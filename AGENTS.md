@@ -123,9 +123,40 @@ npm run lint     # eslint
 ```
 **To apply the DB schema:** open the Supabase dashboard for project `ijmyvtnyytehjxprpwdc` → SQL Editor → paste and run `supabase/migrations/0001_init.sql`, then `supabase/seed/seed.sql`.
 
-**To deploy:** see the Handoff block below for current status — Vercel deploy was requested and is being set up.
+**To deploy:** `git push origin main` — Vercel auto-deploys on push (GitHub integration connected, see handoff below). Manual deploy: `npx vercel --prod`.
 
 ## Memory Protocol
 Standard protocol from `~/.claude/CLAUDE.md` Section 2 applies — update this file and the Claude Code memory files after each significant step, not just at session end.
 
 <!-- HANDOFF BLOCKS BELOW -->
+
+---
+## Handoff — Claude Code — 2026-07-18
+
+### Completed This Session
+- [x] Brainstormed and scoped the project into 3 phases with the requester (Aman Patel, relaying Gaurav Mehta's brief)
+- [x] Scaffolded Next.js 16 + Tailwind 4 + Supabase project at `/home/whoever/work/bni-ares-roster`
+- [x] Wrote full DB schema + RLS (`supabase/migrations/0001_init.sql`) and placeholder seed data (`supabase/seed/seed.sql`)
+- [x] Built all Phase 1 public pages (Home, Members Directory, Member Profile, Coordinators, Visitor Invite, Gallery, Contact) with GSAP/Lenis scroll animations, BNI red/black branding, glassmorphism nav
+- [x] `npm run build` and `npm run lint` pass clean; manual Playwright QA pass (desktop + mobile, hamburger menu, scroll-reveal, empty states) confirmed everything renders correctly
+- [x] Created GitHub repo `Aman241104/bni-ares-roster` (public, confirmed with user) and pushed
+- [x] Linked Vercel project `aman241104s-projects/bni-ares-roster`, connected to the GitHub repo for auto-deploy on push to `main`
+- [x] Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` in Vercel across Production/Preview/Development
+- [x] Deployed to production — live at **https://bni-ares-roster.vercel.app**
+- [x] Wrote cross-session memory (`project_bni-ares-roster.md`, `project_supabase_mcp_gap.md`)
+
+### State Left In
+Site is live but shows empty states everywhere (no members, no coordinators, no sponsors, no gallery, stats all zero) because **the DB schema has not been applied to the live Supabase project yet** — that step requires the Supabase dashboard SQL Editor (no MCP access to this project, no DB password for direct `psql`). Everything else is done and working.
+
+### Next Steps
+1. **Apply the DB schema**: Supabase dashboard → project `ijmyvtnyytehjxprpwdc` → SQL Editor → run `supabase/migrations/0001_init.sql`, then `supabase/seed/seed.sql` (or skip seed and wait for real data). Site will immediately start showing content once this is done — no redeploy needed, it's all server-fetched.
+2. **Get the PPT** from the manager with real chapter data (members, coordinators, stats, meeting details) and either swap the seed data or wait for Phase 2's admin panel to enter it through a UI.
+3. **Phase 2**: build the admin panel (single shared login, CRUD for all content types, settings editor, registration/message inbox).
+4. **Phase 3**: wire up email notifications on visitor registration once an email service is chosen.
+5. Sort out the real domain (requester said "decide later") and swap `SITE_URL` in `layout.tsx`, `sitemap.ts`, `robots.ts` off the Vercel URL once it's connected — same gotcha `ares-web`'s AGENTS.md documents for its own domain switch.
+
+### New Gotchas Discovered
+- `lucide-react` v1.x removed all trademarked brand icons (Instagram/Facebook/LinkedIn) — see Critical Gotchas above, custom SVGs in `src/components/icons/BrandIcons.tsx`.
+- `react-hooks/set-state-in-effect` (new-ish ESLint rule) flags `useEffect(() => setState(...), [dep])` patterns — closing the mobile nav menu on route change had to move to an `onClick` handler on each link instead of a pathname-watching effect.
+- Full-page Playwright screenshots taken without scrolling first will show blank sections — the `<Reveal>` scroll-animation starts elements at `opacity: 0` and only reveals on actual scroll-triggered intersection. Scroll programmatically before screenshotting.
+---
