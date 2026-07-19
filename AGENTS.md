@@ -96,8 +96,13 @@ See `supabase/migrations/0001_init.sql` for the authoritative source. Tables: `m
 ## Known Issues / Bugs
 None currently open — `npm run build` and `npm run lint` both pass clean as of this writing.
 
+## Storytelling / Copy Pass (2026-07-19)
+A page-by-page copywriting review (external, delivered as 6 documents — one per public page) pushed for much stronger narrative: sell opportunities/access/leadership/belonging instead of describing features ("members directory" → "the people behind the referrals", etc.). Implemented across all 6 public pages: Home (Givers Gain philosophy, "One Seat One Business One Opportunity", closing CTA), Members (hero + live stats computed from real data, "why our members matter", member profile as a mini landing page), Coordinators (full rewrite — role explainers, warm per-team empty states), Visitor (multi-step registration form, "is this for you", meeting-flow walkthrough), Gallery (belonging-focused hero, warm empty state), Contact (split hero, quick-nav, "what happens next", topic selector on the form).
+
+**Deliberately NOT implemented from that review**: fabricated specific stats ("150+ meetings hosted", "1000+ connections"), fake testimonials/quotes, invented operational facts (visitor fee amount, response times, meeting length as hardcoded FAQ answers) — the review's mockups included these as if real. All stat displays instead read from `settings`/live table counts and stay hidden until non-zero (see `hasRealStats` pattern in `src/app/page.tsx`, mirrored in `members/page.tsx` and `visitor/page.tsx`). FAQs stay fully data-driven from `settings.faqs`. Testimonials sections keep an honest "coming soon" empty state. Don't add fabricated content here even if a future review asks for it the same way — wire it to real data or leave the empty state.
+
 ## Feature Backlog
-**Phase 2 — Admin Panel** (next up): single shared admin login (per requester — no per-coordinator accounts), CRUD + show/hide + reorder for members/coordinators/sponsors/gallery, settings editor (meeting details, stats, FAQs, QR code/UPI), visitor registration + contact message inbox (search, mark contacted, export CSV, delete).
+**Phase 2 — Admin Panel** (next up): single shared admin login (per requester — no per-coordinator accounts), CRUD + show/hide + reorder for members/coordinators/sponsors/gallery, settings editor (meeting details, stats, FAQs, QR code/UPI), visitor registration + contact message inbox (search, mark contacted, export CSV, delete). Also needs a `featured` flag on `members` if "member of the month" (from the copy review) gets built later — not added yet, no mechanism to curate it honestly without real admin input.
 
 **Phase 3 — Registration wiring** (deferred by requester): email notification to admin on new visitor registration — needs an email service decision (Resend/Google Workspace/etc.) not yet made.
 
