@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { X, ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
-import type { AlbumWithImages } from "@/app/gallery/page";
+import type { AlbumWithImages } from "@/app/(site)/gallery/page";
 import type { GalleryCategory, GalleryImage } from "@/types/database";
 
 const CATEGORY_LABELS: Record<GalleryCategory, string> = {
