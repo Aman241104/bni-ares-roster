@@ -3,6 +3,14 @@ import { useState, FormEvent } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 
+const TOPICS = [
+  "Membership Information",
+  "Visiting a Meeting",
+  "Partnership Inquiry",
+  "Referral Opportunity",
+  "General Question",
+];
+
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -14,6 +22,7 @@ export default function ContactForm() {
     const form = new FormData(e.currentTarget);
     const name = String(form.get("name") ?? "").trim();
     const message = String(form.get("message") ?? "").trim();
+    const topic = String(form.get("topic") ?? "").trim();
 
     if (!name || !message) {
       setError("Name and message are required.");
@@ -25,7 +34,7 @@ export default function ContactForm() {
       name,
       email: form.get("email") || null,
       phone: form.get("phone") || null,
-      message,
+      message: topic ? `[${topic}] ${message}` : message,
     });
     setSubmitting(false);
 
@@ -49,6 +58,24 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8">
       <div className="grid gap-5">
+        <div>
+          <label htmlFor="topic" className="mb-1.5 block text-sm font-medium text-ink">
+            What Brings You Here?
+          </label>
+          <select
+            id="topic"
+            name="topic"
+            defaultValue=""
+            className="w-full rounded-lg border border-zinc-200 px-4 py-2.5 text-sm outline-none ring-brand-500 focus:ring-2"
+          >
+            <option value="">Select an option</option>
+            {TOPICS.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </div>
         <div>
           <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-ink">
             Name <span className="text-brand-500">*</span>

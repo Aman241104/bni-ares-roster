@@ -1,6 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { X, ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
 import type { AlbumWithImages } from "@/app/gallery/page";
 import type { GalleryCategory, GalleryImage } from "@/types/database";
@@ -64,8 +65,17 @@ export default function GalleryGrid({ albums }: { albums: AlbumWithImages[] }) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-dashed border-zinc-300 py-16 text-center text-zinc-500">
-          No albums yet — photos will appear here after the next event.
+        <div className="mt-10 rounded-2xl border border-dashed border-zinc-300 py-16 text-center">
+          <p className="font-heading text-lg font-bold text-ink">Our Story Is Just Beginning.</p>
+          <p className="mx-auto mt-2 max-w-sm text-sm text-zinc-500">
+            The next photograph on this page could be yours. Join us this Wednesday.
+          </p>
+          <Link
+            href="/visitor"
+            className="mt-6 inline-flex items-center justify-center rounded-full bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+          >
+            Register as Visitor
+          </Link>
         </div>
       ) : (
         <div className="mt-10 space-y-14">

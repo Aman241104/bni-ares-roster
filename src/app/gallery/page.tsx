@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase/client";
-import { Container, Section, SectionHeading } from "@/components/Section";
+import { Container, Section } from "@/components/Section";
 import GalleryGrid from "@/components/GalleryGrid";
 import type { GalleryAlbum, GalleryImage } from "@/types/database";
 
@@ -23,13 +23,27 @@ export default async function GalleryPage() {
   const albums = (data as AlbumWithImages[] | null) ?? [];
 
   return (
-    <Section>
-      <Container>
-        <SectionHeading eyebrow="Moments" title="Gallery" description="A look back at meetings, events, and the moments that make this chapter." />
-        <div className="mt-10">
-          <GalleryGrid albums={albums} />
-        </div>
-      </Container>
-    </Section>
+    <>
+      <section className="bg-ink py-20 text-white sm:py-28">
+        <Container className="max-w-3xl text-center">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500">Life at BNI Ares</p>
+          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Memories. Relationships. Opportunities.
+          </h1>
+          <p className="mt-6 text-lg text-zinc-300">
+            Every Wednesday tells a different story — new introductions, new businesses, new opportunities, new
+            friendships.
+          </p>
+        </Container>
+      </section>
+
+      <Section>
+        <Container>
+          <div className="mt-2">
+            <GalleryGrid albums={albums} />
+          </div>
+        </Container>
+      </Section>
+    </>
   );
 }

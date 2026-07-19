@@ -38,11 +38,16 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
             <h1 className="font-heading text-3xl font-bold text-ink">{member.name}</h1>
             {member.designation && <p className="mt-1 text-lg text-brand-600">{member.designation}</p>}
             {member.company && <p className="text-zinc-600">{member.company}</p>}
-            {member.business_category && (
-              <span className="mt-3 inline-block rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
-                {member.business_category}
+            <div className="mt-3 flex flex-wrap gap-2">
+              {member.business_category && (
+                <span className="inline-block rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+                  {member.business_category}
+                </span>
+              )}
+              <span className="inline-block rounded-full bg-zinc-100 px-3 py-1 text-xs font-semibold text-zinc-600">
+                Member since {new Date(member.created_at).getFullYear()}
               </span>
-            )}
+            </div>
             <div className="mt-5">
               <ContactButtons
                 phone={member.phone}
@@ -68,13 +73,25 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
             )}
             {member.referral_expectations && (
               <div>
-                <h2 className="font-heading text-lg font-bold text-ink">Referral Expectations</h2>
+                <h2 className="font-heading text-lg font-bold text-ink">What Makes a Great Referral</h2>
                 <p className="mt-2 whitespace-pre-line text-zinc-600">{member.referral_expectations}</p>
               </div>
             )}
           </div>
 
           <div className="space-y-6">
+            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5">
+              <h3 className="font-heading text-sm font-bold text-ink">Looking to Connect?</h3>
+              <p className="mt-2 text-sm text-zinc-600">
+                Reach out directly, or meet {member.name.split(" ")[0]} in person at a Wednesday meeting.
+              </p>
+              <a
+                href="/visitor"
+                className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+              >
+                Register as Visitor
+              </a>
+            </div>
             {(member.address || member.google_maps_link) && (
               <div className="rounded-2xl border border-zinc-200 p-5">
                 <h3 className="flex items-center gap-2 font-heading text-sm font-bold text-ink">

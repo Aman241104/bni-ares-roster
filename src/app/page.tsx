@@ -196,6 +196,34 @@ export default async function HomePage() {
           </Container>
         </Section>
       )}
+
+      {/* Closing CTA */}
+      <section className="bg-ink py-20 text-center text-white">
+        <Container className="max-w-2xl">
+          <Reveal>
+            <p className="font-heading text-3xl font-extrabold leading-tight sm:text-4xl">
+              Join Us This Wednesday Morning.
+            </p>
+            <p className="mt-4 text-zinc-300">
+              Bring your business cards, your story, and an open mind. We&apos;ll handle the coffee.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/visitor"
+                className="rounded-full bg-brand-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/30 transition-colors hover:bg-brand-600"
+              >
+                Register as Visitor
+              </Link>
+              <Link
+                href="/members"
+                className="glass-dark rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                Meet Members
+              </Link>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
     </>
   );
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { ShieldCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section, SectionHeading } from "@/components/Section";
+import Reveal from "@/components/Reveal";
 import MembersDirectory from "@/components/MembersDirectory";
 import type { Member } from "@/types/database";
 
@@ -61,6 +63,22 @@ export default async function MembersPage() {
           <div className="mt-10">
             <MembersDirectory members={list} />
           </div>
+        </Container>
+      </Section>
+
+      <Section className="bg-zinc-50">
+        <Container className="max-w-2xl text-center">
+          <Reveal>
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-600">
+              <ShieldCheck size={22} />
+            </div>
+            <h2 className="mt-5 font-heading text-2xl font-bold text-ink sm:text-3xl">Why Our Members Matter</h2>
+            <p className="mt-4 text-zinc-600">
+              Every member here holds an exclusive seat in their category — no one else in the chapter can send
+              referrals to a competitor. So when you need a service, you&apos;re always being introduced to a
+              trusted professional, not shopping around blind.
+            </p>
+          </Reveal>
         </Container>
       </Section>
     </>
