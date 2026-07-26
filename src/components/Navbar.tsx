@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 
 const LINKS = [
   { href: "/", label: "Home" },
-  { href: "/#about", label: "About Ares" },
+  { href: "/about", label: "About Ares" },
   { href: "/members", label: "Members" },
   { href: "/coordinators", label: "Chapter Excellence" },
   { href: "/visitor", label: "Visit Ares" },
