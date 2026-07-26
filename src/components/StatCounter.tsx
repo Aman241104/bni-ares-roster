@@ -10,11 +10,15 @@ export default function StatCounter({
   label,
   suffix = "",
   prefix = "",
+  colorClass = "text-white",
+  labelClass = "text-zinc-400",
 }: {
   value: number;
   label: string;
   suffix?: string;
   prefix?: string;
+  colorClass?: string;
+  labelClass?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [display, setDisplay] = useState(0);
@@ -37,12 +41,12 @@ export default function StatCounter({
 
   return (
     <div className="text-center">
-      <span ref={ref} className="font-heading text-4xl font-extrabold text-white sm:text-5xl">
+      <span ref={ref} className={`font-heading text-4xl font-extrabold sm:text-5xl ${colorClass}`}>
         {prefix}
         {display.toLocaleString("en-IN")}
         {suffix}
       </span>
-      <p className="mt-2 text-sm font-medium text-zinc-400">{label}</p>
+      <p className={`mt-2 text-sm font-medium ${labelClass}`}>{label}</p>
     </div>
   );
 }

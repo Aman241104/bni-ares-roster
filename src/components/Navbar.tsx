@@ -6,9 +6,10 @@ import { Menu, X } from "lucide-react";
 
 const LINKS = [
   { href: "/", label: "Home" },
+  { href: "/#about", label: "About Ares" },
   { href: "/members", label: "Members" },
-  { href: "/coordinators", label: "Coordinators" },
-  { href: "/visitor", label: "Visit Us" },
+  { href: "/coordinators", label: "Chapter Excellence" },
+  { href: "/visitor", label: "Visit Ares" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },
 ];
@@ -27,22 +28,27 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass shadow-sm" : "bg-white/0"
+      className={`sticky top-0 z-50 transition-all duration-300 bg-ink ${
+        scrolled ? "shadow-md" : ""
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-        <Link href="/" className="font-heading text-xl font-bold tracking-tight text-ink">
-          BNI <span className="text-brand-500">Ares</span>
+        <Link href="/" className="flex flex-col">
+          <span className="font-heading text-xl font-bold tracking-tight text-white">
+            BNI <span className="text-brand-500">Ares</span>
+          </span>
+          <span className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">
+            Givers Gain®
+          </span>
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-8 lg:flex">
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={`text-sm font-medium transition-colors hover:text-brand-500 ${
-                pathname === link.href ? "text-brand-500" : "text-zinc-700"
+                pathname === link.href ? "text-brand-500" : "text-zinc-300"
               }`}
             >
               {link.label}
@@ -52,12 +58,12 @@ export default function Navbar() {
             href="/visitor"
             className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-600"
           >
-            Register as Visitor
+            VISIT A MEETING
           </Link>
         </div>
 
         <button
-          className="rounded-full p-2 text-ink md:hidden"
+          className="rounded-full p-2 text-white lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
         >
@@ -66,7 +72,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="glass border-t border-black/5 md:hidden">
+        <div className="bg-ink border-t border-white/10 lg:hidden">
           <div className="flex flex-col gap-1 px-5 py-4">
             {LINKS.map((link) => (
               <Link
@@ -74,7 +80,7 @@ export default function Navbar() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`rounded-lg px-3 py-3 text-base font-medium ${
-                  pathname === link.href ? "bg-brand-50 text-brand-600" : "text-zinc-700"
+                  pathname === link.href ? "bg-white/5 text-brand-500" : "text-zinc-300"
                 }`}
               >
                 {link.label}

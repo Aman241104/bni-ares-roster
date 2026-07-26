@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import { User, IndianRupee, Handshake, PieChart, Crown, Users, HeartHandshake, ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
-import { Container, Section, SectionHeading } from "@/components/Section";
+import { Container, Section } from "@/components/Section";
 import Reveal from "@/components/Reveal";
 import MembersDirectory from "@/components/MembersDirectory";
-import type { Member } from "@/types/database";
+import StatCounter from "@/components/StatCounter";
+import CoordinatorCard from "@/components/CoordinatorCard";
+import type { Member, Coordinator, Settings } from "@/types/database";
 
 export const metadata: Metadata = {
   title: "Members Directory",
@@ -14,73 +17,203 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function MembersPage() {
-  const { data: members } = await supabase
-    .from("members")
-    .select("*")
-    .eq("status", "active")
-    .order("display_order")
-    .order("name");
+  const [
+    { data: members },
+    { data: coordinators },
+    { data: settings }
+  ] = await Promise.all([
+    supabase.from("members").select("*").eq("status", "active").order("display_order").order("name"),
+    supabase.from("coordinators").select("*").eq("status", "active").order("display_order"),
+    supabase.from("settings").select("*").eq("id", 1).maybeSingle(),
+  ]);
 
   const list = (members as Member[] | null) ?? [];
-  const categoryCount = new Set(list.map((m) => m.business_category).filter(Boolean)).size;
+  const coords = (coordinators as Coordinator[] | null) ?? [];
+  const s = settings as Settings | null;
+
+  const supportTeam = coords.filter((c) => c.team === "chapter_coordinator");
+  const leadershipTeam = coords.filter((c) => c.team === "lt_team");
+
+  const uniqueCategories = new Set(list.map((m) => m.business_category).filter(Boolean)).size;
+
+  const hasRealStats = !!(
+    s?.stat_total_members ||
+    s?.stat_business_passed ||
+    s?.stat_total_referrals ||
+    s?.stat_visitors_hosted ||
+    s?.stat_years_chapter
+  );
 
   return (
     <>
-      <section className="bg-ink py-20 text-white sm:py-28">
-        <Container className="max-w-3xl text-center">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500">The Directory</p>
-          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">
-            The People Behind The Referrals.
-          </h1>
-          <p className="mt-6 text-lg text-zinc-300">
-            Every business inside BNI Ares holds an exclusive seat within its category. No competitors — only
-            collaboration.
-          </p>
-          {list.length > 0 && (
-            <div className="mt-10 flex justify-center gap-10">
-              <div>
-                <p className="font-heading text-3xl font-extrabold sm:text-4xl">{list.length}+</p>
-                <p className="mt-1 text-sm text-zinc-400">Business Leaders</p>
-              </div>
-              {categoryCount > 0 && (
-                <div>
-                  <p className="font-heading text-3xl font-extrabold sm:text-4xl">{categoryCount}+</p>
-                  <p className="mt-1 text-sm text-zinc-400">Industries</p>
-                </div>
-              )}
-            </div>
-          )}
-        </Container>
-      </section>
-
-      <Section>
-        <Container>
-          <SectionHeading
-            eyebrow="Explore"
-            title="Meet The Community"
-            description="Search by name or company, or explore by the industries our members cover."
+      {/* 1. Hero Section */}
+      <section className="relative overflow-hidden bg-ink text-white pt-24 sm:pt-32 pb-32">
+        <div className="absolute inset-0">
+          <img
+            src="https://placehold.co/1920x1080/1a1a1a/333333?text=Group+Photo"
+            alt="BNI Ares Members"
+            className="h-full w-full object-cover opacity-40"
           />
-          <div className="mt-10">
-            <MembersDirectory members={list} />
-          </div>
-        </Container>
-      </Section>
-
-      <Section className="bg-zinc-50">
-        <Container className="max-w-2xl text-center">
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+        <Container className="relative z-10 text-center max-w-3xl">
           <Reveal>
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-600">
-              <ShieldCheck size={22} />
-            </div>
-            <h2 className="mt-5 font-heading text-2xl font-bold text-ink sm:text-3xl">Why Our Members Matter</h2>
-            <p className="mt-4 text-zinc-600">
-              Every member here holds an exclusive seat in their category — no one else in the chapter can send
-              referrals to a competitor. So when you need a service, you&apos;re always being introduced to a
-              trusted professional, not shopping around blind.
+            <h1 className="font-heading text-5xl font-extrabold leading-tight sm:text-7xl text-white">
+              Members Directory
+            </h1>
+            <p className="mt-2 text-xl font-bold tracking-widest text-brand-500 uppercase">
+              BNI Ares Chapter
+            </p>
+            <p className="mt-6 text-lg text-zinc-300 leading-relaxed max-w-2xl mx-auto">
+              A community of trusted business professionals committed to building relationships and helping each other grow through quality referrals.
             </p>
           </Reveal>
         </Container>
+      </section>
+
+      {/* 2. Stats Banner */}
+      {hasRealStats && (
+        <section className="bg-gradient-to-r from-brand-900 to-ink py-12 text-white border-y border-white/10">
+          <Container>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <Reveal delay={0} className="flex flex-col items-center justify-center space-y-2">
+                <div className="text-white"><User size={32} strokeWidth={1.5} /></div>
+                <StatCounter value={s.stat_total_members ?? 0} label="Members" colorClass="text-white text-3xl sm:text-4xl" labelClass="text-white/80" suffix="+" />
+              </Reveal>
+              <Reveal delay={0.1} className="flex flex-col items-center justify-center space-y-2">
+                <div className="text-white"><PieChart size={32} strokeWidth={1.5} /></div>
+                <StatCounter value={uniqueCategories} label="Business Categories" colorClass="text-white text-3xl sm:text-4xl" labelClass="text-white/80" suffix="+" />
+              </Reveal>
+              <Reveal delay={0.2} className="flex flex-col items-center justify-center space-y-2">
+                <div className="text-white"><IndianRupee size={32} strokeWidth={1.5} /></div>
+                {s.stat_business_passed ? (
+                  <div className="text-center">
+                    <span className="font-heading text-3xl font-extrabold text-white sm:text-4xl">{s.stat_business_passed}</span>
+                    <p className="mt-2 text-sm font-medium text-white/80">Business Passed</p>
+                  </div>
+                ) : (
+                  <StatCounter value={0} label="Business Passed" colorClass="text-white text-3xl sm:text-4xl" labelClass="text-white/80" />
+                )}
+              </Reveal>
+              <Reveal delay={0.3} className="flex flex-col items-center justify-center space-y-2">
+                <div className="text-white"><Handshake size={32} strokeWidth={1.5} /></div>
+                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-white text-3xl sm:text-4xl" labelClass="text-white/80" suffix="+" />
+              </Reveal>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* Chapter Members Section with Filter Bar */}
+      <Section className="bg-zinc-50 pt-16">
+        <Container>
+          <Reveal className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-8">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-brand-500 border border-zinc-100 shrink-0">
+                <Users size={24} />
+              </div>
+              <div>
+                <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-ink">
+                  Chapter Members
+                </h2>
+                <p className="mt-1 text-zinc-500">
+                  Meet our amazing members and connect with them.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="#directory"
+              className="inline-flex items-center justify-center rounded-full border-2 border-ink px-6 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-white shrink-0"
+            >
+              View by Category
+            </Link>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <MembersDirectory members={list} />
+          </Reveal>
+        </Container>
       </Section>
+
+      {/* Leadership Team Section */}
+      {leadershipTeam.length > 0 && (
+        <Section className="bg-white border-t border-zinc-100">
+          <Container>
+            <Reveal className="flex items-center gap-4 mb-10">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-brand-500 border border-zinc-100 shrink-0">
+                <Crown size={24} />
+              </div>
+              <div>
+                <h2 className="font-heading text-3xl font-extrabold text-ink">
+                  Leadership Team
+                </h2>
+                <p className="mt-1 text-zinc-500">
+                  Leading BNI Ares with vision, commitment and passion.
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {leadershipTeam.map((leader, idx) => (
+                <Reveal key={leader.id} delay={idx * 0.1}>
+                  <CoordinatorCard coordinator={leader} />
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* Support Team Section */}
+      {supportTeam.length > 0 && (
+        <Section className="bg-zinc-50 border-t border-zinc-100">
+          <Container>
+            <Reveal className="flex items-center gap-4 mb-10">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-brand-500 border border-zinc-100 shrink-0">
+                <HeartHandshake size={24} />
+              </div>
+              <div>
+                <h2 className="font-heading text-3xl font-extrabold text-ink">
+                  Support Team
+                </h2>
+                <p className="mt-1 text-zinc-500">
+                  Experienced BNI leaders from other chapters who support and guide BNI Ares.
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+              {supportTeam.map((coordinator, idx) => (
+                <Reveal key={coordinator.id} delay={idx * 0.1}>
+                  <CoordinatorCard coordinator={coordinator} topAccent />
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* 7. Bottom Call to Action */}
+      <section className="bg-ink py-16 text-center text-white">
+        <Container className="max-w-2xl">
+          <Reveal>
+            <h2 className="font-heading text-3xl font-extrabold leading-tight sm:text-4xl">
+              Ready to grow your network with BNI Ares?
+            </h2>
+            <p className="mt-4 text-zinc-300">
+              Visit our meeting as a guest and experience the difference.
+            </p>
+            <div className="mt-8 flex justify-center">
+              <Link
+                href="/visitor"
+                className="flex items-center gap-2 rounded-full bg-brand-500 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-brand-500/30 transition-colors hover:bg-brand-600"
+              >
+                REGISTER AS VISITOR <ArrowRight size={16} />
+              </Link>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
     </>
   );
 }

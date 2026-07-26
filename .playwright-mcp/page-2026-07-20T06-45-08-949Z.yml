@@ -1,0 +1,60 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - complementary [ref=f9e3]:
+      - generic [ref=f9e4]:
+        - paragraph [ref=f9e5]: BNI Ares
+        - paragraph [ref=f9e6]: Admin
+      - navigation [ref=f9e7]:
+        - link "Dashboard" [ref=f9e8] [cursor=pointer]:
+          - /url: /admin
+        - link "Members" [ref=f9e14] [cursor=pointer]:
+          - /url: /admin/members
+        - link "Coordinators" [ref=f9e20] [cursor=pointer]:
+          - /url: /admin/coordinators
+        - link "Sponsors" [ref=f9e26] [cursor=pointer]:
+          - /url: /admin/sponsors
+        - link "Gallery" [ref=f9e30] [cursor=pointer]:
+          - /url: /admin/gallery
+        - link "Registrations" [ref=f9e36] [cursor=pointer]:
+          - /url: /admin/registrations
+        - link "Messages" [ref=f9e40] [cursor=pointer]:
+          - /url: /admin/messages
+        - link "Settings" [ref=f9e43] [cursor=pointer]:
+          - /url: /admin/settings
+    - generic [ref=f9e47]:
+      - banner [ref=f9e48]:
+        - link "← View Site" [ref=f9e49] [cursor=pointer]:
+          - /url: /
+        - button "Log Out" [ref=f9e51]
+      - main [ref=f9e52]:
+        - generic [ref=f9e53]:
+          - generic [ref=f9e54]:
+            - generic [ref=f9e55]:
+              - heading "Visitor Registrations" [level=1] [ref=f9e56]
+              - paragraph [ref=f9e57]: 1 total
+            - link "Export CSV" [ref=f9e58] [cursor=pointer]:
+              - /url: /admin/registrations/export
+          - textbox "Search by name, company, or mobile…" [ref=f9e63]
+          - table [ref=f9e65]:
+            - rowgroup [ref=f9e66]:
+              - row [ref=f9e67]:
+                - columnheader "Name" [ref=f9e68]
+                - columnheader "Company" [ref=f9e69]
+                - columnheader "Mobile" [ref=f9e70]
+                - columnheader "Invited By" [ref=f9e71]
+                - columnheader "Date" [ref=f9e72]
+                - columnheader [ref=f9e73]
+            - rowgroup [ref=f9e74]:
+              - row [ref=f9e75]:
+                - cell [ref=f9e76]:
+                  - paragraph [ref=f9e77]: Test Visitor QA
+                  - paragraph [ref=f9e78]: Testing
+                - cell "QA Co" [ref=f9e79]
+                - cell "9999999999" [ref=f9e80]
+                - cell [ref=f9e81]
+                - cell "7/20/2026" [ref=f9e82]
+                - cell [ref=f9e83]:
+                  - generic [ref=f9e84]:
+                    - button "Mark Contacted" [ref=f9e86]
+                    - button "Delete" [ref=f9e90]
+  - alert [ref=f9e94]

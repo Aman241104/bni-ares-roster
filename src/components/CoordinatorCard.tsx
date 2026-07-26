@@ -2,9 +2,11 @@ import Avatar from "@/components/Avatar";
 import ContactButtons from "@/components/ContactButtons";
 import type { Coordinator } from "@/types/database";
 
-export default function CoordinatorCard({ coordinator }: { coordinator: Coordinator }) {
+export default function CoordinatorCard({ coordinator, topAccent }: { coordinator: Coordinator, topAccent?: boolean }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+    <div className={`flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg ${
+      topAccent ? "border-zinc-200 border-t-4 border-t-brand-500" : "border-zinc-200"
+    }`}>
       <div className="relative aspect-square w-full overflow-hidden bg-zinc-100">
         <Avatar name={coordinator.name} photoUrl={coordinator.photo_url} />
       </div>

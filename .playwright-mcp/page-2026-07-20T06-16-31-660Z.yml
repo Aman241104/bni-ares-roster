@@ -1,0 +1,60 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e14]: Admin | BNI Ares
+  - generic [ref=e15]:
+    - complementary [ref=e16]:
+      - generic [ref=e17]:
+        - paragraph [ref=e18]: BNI Ares
+        - paragraph [ref=e19]: Admin
+      - navigation [ref=e20]:
+        - link "Dashboard" [ref=e21] [cursor=pointer]:
+          - /url: /admin
+        - link "Members" [ref=e27] [cursor=pointer]:
+          - /url: /admin/members
+        - link "Coordinators" [ref=e33] [cursor=pointer]:
+          - /url: /admin/coordinators
+        - link "Sponsors" [ref=e39] [cursor=pointer]:
+          - /url: /admin/sponsors
+        - link "Gallery" [ref=e43] [cursor=pointer]:
+          - /url: /admin/gallery
+        - link "Registrations" [ref=e49] [cursor=pointer]:
+          - /url: /admin/registrations
+        - link "Messages" [ref=e53] [cursor=pointer]:
+          - /url: /admin/messages
+        - link "Settings" [ref=e56] [cursor=pointer]:
+          - /url: /admin/settings
+    - generic [ref=e60]:
+      - banner [ref=e61]:
+        - link "← View Site" [ref=e62] [cursor=pointer]:
+          - /url: /
+        - button "Log Out" [ref=e64]
+      - main [ref=e65]:
+        - generic [ref=e66]:
+          - heading "Dashboard" [level=1] [ref=e67]
+          - paragraph [ref=e68]: Manage the BNI Ares public site.
+          - generic [ref=e69]:
+            - link "0 Members" [ref=e70] [cursor=pointer]:
+              - /url: /admin/members
+              - generic [ref=e71]: "0"
+              - paragraph [ref=e79]: Members
+            - link "0 Coordinators" [ref=e80] [cursor=pointer]:
+              - /url: /admin/coordinators
+              - generic [ref=e81]: "0"
+              - paragraph [ref=e89]: Coordinators
+            - link "0 Sponsors" [ref=e90] [cursor=pointer]:
+              - /url: /admin/sponsors
+              - generic [ref=e91]: "0"
+              - paragraph [ref=e97]: Sponsors
+            - link "0 Gallery Albums" [ref=e98] [cursor=pointer]:
+              - /url: /admin/gallery
+              - generic [ref=e99]: "0"
+              - paragraph [ref=e107]: Gallery Albums
+            - link "0 New Visitor Registrations" [ref=e108] [cursor=pointer]:
+              - /url: /admin/registrations
+              - generic [ref=e109]: "0"
+              - paragraph [ref=e115]: New Visitor Registrations
+            - link "0 New Messages" [ref=e116] [cursor=pointer]:
+              - /url: /admin/messages
+              - generic [ref=e117]: "0"
+              - paragraph [ref=e122]: New Messages
+          - link "Edit Chapter Settings →" [ref=e123] [cursor=pointer]:
+            - /url: /admin/settings

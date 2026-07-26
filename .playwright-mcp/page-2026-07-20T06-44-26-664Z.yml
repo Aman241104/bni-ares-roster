@@ -1,0 +1,86 @@
+- generic [active] [ref=f7e1]:
+  - banner [ref=f7e2]:
+    - navigation [ref=f7e3]:
+      - link "BNI Ares" [ref=f7e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f7e5]:
+        - link "Home" [ref=f7e6] [cursor=pointer]:
+          - /url: /
+        - link "Members" [ref=f7e7] [cursor=pointer]:
+          - /url: /members
+        - link "Coordinators" [ref=f7e8] [cursor=pointer]:
+          - /url: /coordinators
+        - link "Visit Us" [ref=f7e9] [cursor=pointer]:
+          - /url: /visitor
+        - link "Gallery" [ref=f7e10] [cursor=pointer]:
+          - /url: /gallery
+        - link "Contact" [ref=f7e11] [cursor=pointer]:
+          - /url: /contact
+        - link "Register as Visitor" [ref=f7e12] [cursor=pointer]:
+          - /url: /visitor
+  - main [ref=f7e13]:
+    - generic [ref=f7e15]:
+      - paragraph [ref=f7e16]: The Directory
+      - heading "The People Behind The Referrals." [level=1] [ref=f7e17]
+      - paragraph [ref=f7e18]: Every business inside BNI Ares holds an exclusive seat within its category. No competitors — only collaboration.
+      - generic [ref=f7e19]:
+        - generic [ref=f7e20]:
+          - paragraph [ref=f7e21]: 1+
+          - paragraph [ref=f7e22]: Business Leaders
+        - generic [ref=f7e23]:
+          - paragraph [ref=f7e24]: 1+
+          - paragraph [ref=f7e25]: Industries
+    - generic [ref=f7e27]:
+      - generic [ref=f7e28]:
+        - paragraph [ref=f7e29]: Explore
+        - heading "Meet The Community" [level=2] [ref=f7e30]
+        - paragraph [ref=f7e31]: Search by name or company, or explore by the industries our members cover.
+      - generic [ref=f7e33]:
+        - textbox "Search by name or company…" [ref=f7e35]
+        - generic [ref=f7e36]:
+          - paragraph [ref=f7e37]: Who Are You Looking For?
+          - generic [ref=f7e38]:
+            - button "All" [ref=f7e39]
+            - button "IT Services" [ref=f7e40]
+        - paragraph [ref=f7e41]: 1 member
+        - link "TM Test Member QA QA Testing Co IT Services Owner" [ref=f7e43] [cursor=pointer]:
+          - /url: /members/af205288-6e49-4d77-b8c7-f2bfceda929d
+          - generic [ref=f7e44]: TM
+          - generic [ref=f7e46]:
+            - generic [ref=f7e47]:
+              - heading "Test Member QA" [level=3] [ref=f7e48]
+              - paragraph [ref=f7e49]: QA Testing Co
+            - generic [ref=f7e50]:
+              - generic [ref=f7e51]: IT Services
+              - generic [ref=f7e52]: Owner
+    - generic [ref=f7e56]:
+      - heading "Why Our Members Matter" [level=2] [ref=f7e61]
+      - paragraph [ref=f7e62]: Every member here holds an exclusive seat in their category — no one else in the chapter can send referrals to a competitor. So when you need a service, you're always being introduced to a trusted professional, not shopping around blind.
+  - contentinfo [ref=f7e63]:
+    - generic [ref=f7e64]:
+      - generic [ref=f7e65]:
+        - generic [ref=f7e66]:
+          - paragraph [ref=f7e67]: BNI Ares
+          - paragraph [ref=f7e68]: Business Growth. Trusted Referrals. A chapter built on Givers Gain.
+        - generic [ref=f7e69]:
+          - paragraph [ref=f7e70]: Explore
+          - list [ref=f7e71]:
+            - listitem [ref=f7e72]:
+              - link "Members Directory" [ref=f7e73] [cursor=pointer]:
+                - /url: /members
+            - listitem [ref=f7e74]:
+              - link "Coordinators" [ref=f7e75] [cursor=pointer]:
+                - /url: /coordinators
+            - listitem [ref=f7e76]:
+              - link "Gallery" [ref=f7e77] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=f7e78]:
+              - link "Visit Us" [ref=f7e79] [cursor=pointer]:
+                - /url: /visitor
+        - generic [ref=f7e80]:
+          - paragraph [ref=f7e81]: Contact
+          - list [ref=f7e82]:
+            - listitem [ref=f7e83]: Details coming soon
+        - paragraph [ref=f7e85]: Follow
+      - generic [ref=f7e86]: © 2026 BNI Ares Chapter. All rights reserved.
+  - alert [ref=f7e87]

@@ -1,0 +1,13 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e3]:
+    - paragraph [ref=f4e4]: BNI Ares
+    - paragraph [ref=f4e5]: Admin Login
+    - generic [ref=f4e6]:
+      - generic [ref=f4e7]:
+        - generic [ref=f4e8]: Username
+        - textbox "Username" [ref=f4e9]
+      - generic [ref=f4e10]:
+        - generic [ref=f4e11]: Password
+        - textbox "Password" [ref=f4e12]
+      - button "Sign In" [ref=f4e13]
+  - alert [ref=f4e14]

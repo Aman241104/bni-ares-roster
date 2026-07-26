@@ -1,0 +1,13 @@
+- generic [active] [ref=f10e1]:
+  - alert [ref=f10e111]: BNI Ares — Chapter Roster
+  - generic [ref=f10e113]:
+    - paragraph [ref=f10e114]: BNI Ares
+    - paragraph [ref=f10e115]: Admin Login
+    - generic [ref=f10e116]:
+      - generic [ref=f10e117]:
+        - generic [ref=f10e118]: Username
+        - textbox "Username" [ref=f10e119]
+      - generic [ref=f10e120]:
+        - generic [ref=f10e121]: Password
+        - textbox "Password" [ref=f10e122]
+      - button "Sign In" [ref=f10e123]

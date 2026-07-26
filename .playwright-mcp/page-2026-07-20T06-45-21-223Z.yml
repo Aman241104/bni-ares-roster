@@ -1,0 +1,60 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e2]:
+    - complementary [ref=f10e3]:
+      - generic [ref=f10e4]:
+        - paragraph [ref=f10e5]: BNI Ares
+        - paragraph [ref=f10e6]: Admin
+      - navigation [ref=f10e7]:
+        - link "Dashboard" [ref=f10e8] [cursor=pointer]:
+          - /url: /admin
+        - link "Members" [ref=f10e14] [cursor=pointer]:
+          - /url: /admin/members
+        - link "Coordinators" [ref=f10e20] [cursor=pointer]:
+          - /url: /admin/coordinators
+        - link "Sponsors" [ref=f10e26] [cursor=pointer]:
+          - /url: /admin/sponsors
+        - link "Gallery" [ref=f10e30] [cursor=pointer]:
+          - /url: /admin/gallery
+        - link "Registrations" [ref=f10e36] [cursor=pointer]:
+          - /url: /admin/registrations
+        - link "Messages" [ref=f10e40] [cursor=pointer]:
+          - /url: /admin/messages
+        - link "Settings" [ref=f10e43] [cursor=pointer]:
+          - /url: /admin/settings
+    - generic [ref=f10e47]:
+      - banner [ref=f10e48]:
+        - link "← View Site" [ref=f10e49] [cursor=pointer]:
+          - /url: /
+        - button "Log Out" [ref=f10e51]
+      - main [ref=f10e52]:
+        - generic [ref=f10e53]:
+          - heading "Dashboard" [level=1] [ref=f10e54]
+          - paragraph [ref=f10e55]: Manage the BNI Ares public site.
+          - generic [ref=f10e56]:
+            - link "0 Members" [ref=f10e57] [cursor=pointer]:
+              - /url: /admin/members
+              - generic [ref=f10e58]: "0"
+              - paragraph [ref=f10e66]: Members
+            - link "0 Coordinators" [ref=f10e67] [cursor=pointer]:
+              - /url: /admin/coordinators
+              - generic [ref=f10e68]: "0"
+              - paragraph [ref=f10e76]: Coordinators
+            - link "0 Sponsors" [ref=f10e77] [cursor=pointer]:
+              - /url: /admin/sponsors
+              - generic [ref=f10e78]: "0"
+              - paragraph [ref=f10e84]: Sponsors
+            - link "0 Gallery Albums" [ref=f10e85] [cursor=pointer]:
+              - /url: /admin/gallery
+              - generic [ref=f10e86]: "0"
+              - paragraph [ref=f10e94]: Gallery Albums
+            - link "0 New Visitor Registrations" [ref=f10e95] [cursor=pointer]:
+              - /url: /admin/registrations
+              - generic [ref=f10e96]: "0"
+              - paragraph [ref=f10e102]: New Visitor Registrations
+            - link "0 New Messages" [ref=f10e103] [cursor=pointer]:
+              - /url: /admin/messages
+              - generic [ref=f10e104]: "0"
+              - paragraph [ref=f10e109]: New Messages
+          - link "Edit Chapter Settings →" [ref=f10e110] [cursor=pointer]:
+            - /url: /admin/settings
+  - alert [ref=f10e111]

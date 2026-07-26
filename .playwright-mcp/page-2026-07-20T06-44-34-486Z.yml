@@ -1,0 +1,53 @@
+- generic [active] [ref=f8e1]:
+  - generic [ref=f8e2]:
+    - complementary [ref=f8e3]:
+      - generic [ref=f8e4]:
+        - paragraph [ref=f8e5]: BNI Ares
+        - paragraph [ref=f8e6]: Admin
+      - navigation [ref=f8e7]:
+        - link "Dashboard" [ref=f8e8] [cursor=pointer]:
+          - /url: /admin
+        - link "Members" [ref=f8e14] [cursor=pointer]:
+          - /url: /admin/members
+        - link "Coordinators" [ref=f8e20] [cursor=pointer]:
+          - /url: /admin/coordinators
+        - link "Sponsors" [ref=f8e26] [cursor=pointer]:
+          - /url: /admin/sponsors
+        - link "Gallery" [ref=f8e30] [cursor=pointer]:
+          - /url: /admin/gallery
+        - link "Registrations" [ref=f8e36] [cursor=pointer]:
+          - /url: /admin/registrations
+        - link "Messages" [ref=f8e40] [cursor=pointer]:
+          - /url: /admin/messages
+        - link "Settings" [ref=f8e43] [cursor=pointer]:
+          - /url: /admin/settings
+    - generic [ref=f8e47]:
+      - banner [ref=f8e48]:
+        - link "← View Site" [ref=f8e49] [cursor=pointer]:
+          - /url: /
+        - button "Log Out" [ref=f8e51]
+      - main [ref=f8e52]:
+        - generic [ref=f8e53]:
+          - generic [ref=f8e54]:
+            - generic [ref=f8e55]:
+              - heading "Members" [level=1] [ref=f8e56]
+              - paragraph [ref=f8e57]: 1 total
+            - link "Add Member" [ref=f8e58] [cursor=pointer]:
+              - /url: /admin/members/new
+          - table [ref=f8e61]:
+            - rowgroup [ref=f8e62]:
+              - row [ref=f8e63]:
+                - cell "TM" [ref=f8e64]
+                - cell [ref=f8e67]:
+                  - paragraph [ref=f8e68]: Test Member QA
+                  - paragraph [ref=f8e69]: QA Testing Co
+                - cell "IT Services" [ref=f8e70]
+                - cell [ref=f8e71]:
+                  - generic [ref=f8e72]:
+                    - button "Move up" [ref=f8e74]
+                    - button "Move down" [ref=f8e78]
+                    - button "Hide" [ref=f8e82]
+                    - link "Edit" [ref=f8e86] [cursor=pointer]:
+                      - /url: /admin/members/af205288-6e49-4d77-b8c7-f2bfceda929d
+                    - button "Delete" [ref=f8e88]
+  - alert [ref=f8e92]

@@ -1,0 +1,112 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - navigation [ref=f1e3]:
+      - link "BNI Ares" [ref=f1e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f1e5]:
+        - link "Home" [ref=f1e6] [cursor=pointer]:
+          - /url: /
+        - link "Members" [ref=f1e7] [cursor=pointer]:
+          - /url: /members
+        - link "Coordinators" [ref=f1e8] [cursor=pointer]:
+          - /url: /coordinators
+        - link "Visit Us" [ref=f1e9] [cursor=pointer]:
+          - /url: /visitor
+        - link "Gallery" [ref=f1e10] [cursor=pointer]:
+          - /url: /gallery
+        - link "Contact" [ref=f1e11] [cursor=pointer]:
+          - /url: /contact
+        - link "Register as Visitor" [ref=f1e12] [cursor=pointer]:
+          - /url: /visitor
+  - main [ref=f1e13]:
+    - generic [ref=f1e17]:
+      - paragraph [ref=f1e18]: BNI Ares Chapter
+      - heading "Your Next Client Might Be Sitting At This Table." [level=1] [ref=f1e19]
+      - paragraph [ref=f1e20]: Every week, business owners gather to share opportunities, relationships, and referrals — powered by Givers Gain.
+      - generic [ref=f1e21]:
+        - link "Meet Members" [ref=f1e22] [cursor=pointer]:
+          - /url: /members
+        - link "Register as Visitor" [ref=f1e23] [cursor=pointer]:
+          - /url: /visitor
+    - generic [ref=f1e25]:
+      - generic [ref=f1e27]:
+        - paragraph [ref=f1e28]: Our Philosophy
+        - heading "Givers Gain" [level=2] [ref=f1e29]
+        - paragraph [ref=f1e30]: The more business you help create for others, the more opportunities return to you. Trust isn't built in one meeting — it's built every week.
+      - generic [ref=f1e31]:
+        - generic [ref=f1e32]:
+          - heading "Our Vision" [level=3] [ref=f1e33]
+          - paragraph [ref=f1e34]: To be the most trusted business referral community in the region, where every member's growth is a shared responsibility.
+        - generic [ref=f1e35]:
+          - heading "Our Mission" [level=3] [ref=f1e36]
+          - paragraph [ref=f1e37]: To help members increase their business through a structured, positive, and professional word-of-mouth referral program.
+    - generic [ref=f1e39]:
+      - generic [ref=f1e41]:
+        - paragraph [ref=f1e42]: How It Works
+        - heading "One Seat. One Business. One Opportunity." [level=2] [ref=f1e43]
+      - generic [ref=f1e44]:
+        - generic [ref=f1e45]:
+          - heading "One Seat" [level=3] [ref=f1e46]
+          - paragraph [ref=f1e47]: Every business category gets one seat per chapter — never two competitors in the same room.
+        - generic [ref=f1e48]:
+          - heading "One Business" [level=3] [ref=f1e49]
+          - paragraph [ref=f1e50]: That seat is yours alone. No one else in the chapter can send referrals to a rival in your category.
+        - generic [ref=f1e51]:
+          - heading "One Opportunity" [level=3] [ref=f1e52]
+          - paragraph [ref=f1e53]: No competition inside the room means every introduction is collaboration, not a pitch against someone else.
+    - generic [ref=f1e55]:
+      - generic [ref=f1e57]:
+        - paragraph [ref=f1e58]: Why Visit
+        - heading "Why Business Owners Keep Coming Back" [level=2] [ref=f1e59]
+      - generic [ref=f1e60]:
+        - generic [ref=f1e61]:
+          - heading "Opportunities" [level=3] [ref=f1e66]
+          - paragraph [ref=f1e67]: Tap into a room of business owners actively looking to send you work, not just swap cards.
+        - generic [ref=f1e68]:
+          - heading "Trusted Referrals" [level=3] [ref=f1e73]
+          - paragraph [ref=f1e74]: Every referral comes with a relationship behind it — vetted by people who know your business.
+        - generic [ref=f1e75]:
+          - heading "Relationships" [level=3] [ref=f1e82]
+          - paragraph [ref=f1e83]: Meet 40+ business owners across categories, every single week, without cold outreach.
+        - generic [ref=f1e84]:
+          - heading "Accountability" [level=3] [ref=f1e91]
+          - paragraph [ref=f1e92]: A room that shows up for you weekly holds you to the follow-through that actually closes referrals.
+        - generic [ref=f1e93]:
+          - heading "Leadership" [level=3] [ref=f1e97]
+          - paragraph [ref=f1e98]: Take on chapter roles that build your visibility and leadership track record in the room.
+    - generic [ref=f1e101]:
+      - paragraph [ref=f1e102]: Join Us This Wednesday Morning.
+      - paragraph [ref=f1e103]: Bring your business cards, your story, and an open mind. We'll handle the coffee.
+      - generic [ref=f1e104]:
+        - link "Register as Visitor" [ref=f1e105] [cursor=pointer]:
+          - /url: /visitor
+        - link "Meet Members" [ref=f1e106] [cursor=pointer]:
+          - /url: /members
+  - contentinfo [ref=f1e107]:
+    - generic [ref=f1e108]:
+      - generic [ref=f1e109]:
+        - generic [ref=f1e110]:
+          - paragraph [ref=f1e111]: BNI Ares
+          - paragraph [ref=f1e112]: Business Growth. Trusted Referrals. A chapter built on Givers Gain.
+        - generic [ref=f1e113]:
+          - paragraph [ref=f1e114]: Explore
+          - list [ref=f1e115]:
+            - listitem [ref=f1e116]:
+              - link "Members Directory" [ref=f1e117] [cursor=pointer]:
+                - /url: /members
+            - listitem [ref=f1e118]:
+              - link "Coordinators" [ref=f1e119] [cursor=pointer]:
+                - /url: /coordinators
+            - listitem [ref=f1e120]:
+              - link "Gallery" [ref=f1e121] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=f1e122]:
+              - link "Visit Us" [ref=f1e123] [cursor=pointer]:
+                - /url: /visitor
+        - generic [ref=f1e124]:
+          - paragraph [ref=f1e125]: Contact
+          - list [ref=f1e126]:
+            - listitem [ref=f1e127]: Details coming soon
+        - paragraph [ref=f1e129]: Follow
+      - generic [ref=f1e130]: © 2026 BNI Ares Chapter. All rights reserved.
+  - alert [ref=f1e131]

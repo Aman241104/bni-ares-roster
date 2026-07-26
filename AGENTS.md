@@ -29,7 +29,7 @@ Commissioned by Gaurav Mehta (manager) via WhatsApp brief on 2026-07-18, relayed
 `.env.local` (gitignored, never commit — **this repo is public on GitHub**, do not put real secrets in any committed file, AGENTS.md included):
 - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — public, safe for client and server code
 - `SUPABASE_SERVICE_ROLE_KEY` — server-only (`src/lib/supabase/server.ts`, guarded by `server-only` package), bypasses RLS entirely, used by every admin Server Action
-- `ADMIN_USERNAME` / `ADMIN_PASSWORD_HASH` — the shared admin login. Password was generated 2026-07-19 and given to the requester via chat, not stored anywhere in the repo. To set a new password: `node scripts/hash-password.mjs "new password"`, paste the output into `ADMIN_PASSWORD_HASH` in both `.env.local` and Vercel (all 3 environments), tell the requester the new plaintext password out of band.
+- `ADMIN_USERNAME` / `ADMIN_PASSWORD_HASH` — the shared admin login. Set to `admin` / `admin123` on 2026-07-20 (easy temp creds, requester's call — rotate before real chapter data goes in). To set a new password: `node scripts/hash-password.mjs "new password"`, paste the output into `ADMIN_PASSWORD_HASH` in both `.env.local` and Vercel (all 3 environments), tell the requester the new plaintext password out of band.
 - `ADMIN_SESSION_SECRET` — HMAC key for signing the admin session cookie. Rotating it invalidates all active admin sessions (harmless, just re-login).
 
 All four admin-related vars are also set in Vercel (Production/Preview/Development) via `vercel env add`.
@@ -102,13 +102,14 @@ See `supabase/migrations/0001_init.sql` (core schema) and `0002_storage.sql` (st
 
 ## Build Status
 - [x] Project scaffolded (Next.js 16 + Tailwind 4 + Supabase client)
-- [x] DB schema + RLS policies + storage bucket written (`0001_init.sql`, `0002_storage.sql`) — **not yet applied to the live Supabase project**, needs a human to run both in the SQL Editor. This is the only thing standing between the current empty-state site and a fully working one.
-- [x] Placeholder seed data written (`seed.sql`) — same caveat, not yet applied
+- [x] DB schema + RLS policies + storage bucket written (`0001_init.sql`, `0002_storage.sql`) — **applied to the live Supabase project 2026-07-20.** Verified via REST: all 8 tables + `media` storage bucket exist, RLS enforces correctly (public read active-only, public insert on registrations/messages).
+- [ ] Placeholder seed data (`seed.sql`) — not applied, and shouldn't be now that real content can go straight in through the admin panel
 - [x] All 6 public pages built, storytelling/copy pass done, `npm run build` / `npm run lint` pass clean
 - [x] Visitor registration form (multi-step) — inserts directly to `visitor_registrations` via RLS, shows success screen. **No email notification** (Phase 3, deferred)
 - [x] Contact form — inserts to `contact_messages` via RLS, shows success screen
 - [x] **Admin panel (Phase 2) — built 2026-07-19.** Single shared login, CRUD + show/hide + reorder for members/coordinators/sponsors/gallery albums, photo/logo/QR upload to Supabase Storage, chapter settings editor with dynamic FAQ list, visitor-registration + contact-message inboxes with search/mark-contacted/delete, CSV export for registrations.
 - [x] Manual browser QA pass (desktop + mobile, hamburger menu, scroll-reveal, full admin login/CRUD-page/logout flow) via Playwright, both locally and against the live production URL — see Handoff below
+- [x] Full end-to-end QA against live production, post-migration (2026-07-20): visitor registration form → inserts → shows in admin inbox; admin member create → writes to DB → renders on public directory with live stats; admin delete (member + registration) with confirm dialog. Test data created and cleaned up, site back to genuine 0-state.
 - [ ] Deliberately skipped in Phase 2: bulk CSV **import** for members (brief marks it optional), per-coordinator admin accounts (single shared login was the explicit call), drag-and-drop reorder (up/down buttons instead, no new dependency), image reorder within a gallery album (upload order only)
 - [ ] Email notification on visitor registration (Phase 3 — deferred by requester, "badme")
 - [ ] Real chapter content (members, coordinators, stats, logo, meeting details) — pending a PPT from the chapter, currently placeholder/empty. Now enterable through the admin panel once the migration runs — the requester no longer needs to wait for a PPT if they'd rather type it in directly.
@@ -118,7 +119,7 @@ See `supabase/migrations/0001_init.sql` (core schema) and `0002_storage.sql` (st
 ## Critical Gotchas
 - **Scroll-reveal elements start at `opacity: 0`** (`.sr`/`.sr-stagger` in `globals.css`, animated by `<Reveal>`). A full-page Playwright screenshot taken without scrolling first will show blank sections below the fold — this is expected animate-on-scroll behavior, not a bug. Scroll the page (or wait) before screenshotting for QA.
 - **lucide-react v1 has no brand icons** — see Stack section above.
-- **DB schema doesn't exist on the live Supabase project yet.** All pages (public and admin) defensively treat Supabase errors as empty data (`(data as X | null) ?? []`), so everything builds and renders empty-state UI fine either way — but no reads OR writes will work for real until `0001_init.sql` and `0002_storage.sql` are run. Admin create/edit forms will throw a visible "relation does not exist" error on submit until then — confirmed this is the only issue, not a code bug (see 2026-07-19 handoff).
+- **DB schema is live** (applied 2026-07-20). Pages still defensively treat Supabase errors as empty data (`(data as X | null) ?? []`) — this is permanent defensive coding, not a migration workaround, keep it.
 - **`service_role` key is in `.env.local` in plaintext** (came from the requester via chat). Never import `src/lib/supabase/server.ts` into client code — it's already guarded by `server-only`, which will throw a build error if you try. Consider rotating the key in the Supabase dashboard once this project is stable, since it passed through a chat transcript.
 - **Gallery/sponsor/coordinator/member photos are placeholder-free by default** — `Avatar.tsx` renders colored initials when `photo_url` is null instead of a fake stock photo, per the no-placeholder-content design rule. Real photos now upload through the admin panel to the Supabase `media` bucket.
 - **`src/proxy.ts` is this Next.js version's `middleware.ts`** — the file convention was renamed in v16 (deprecated, not removed yet, but don't create a `middleware.ts` file, it won't be picked up the same way going forward). Runs on Node.js runtime by default, which is why `node:crypto` works directly in `src/lib/admin/auth.ts` without any Edge-runtime workarounds.

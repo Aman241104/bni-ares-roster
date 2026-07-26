@@ -1,0 +1,130 @@
+- generic [active] [ref=f3e1]:
+  - banner [ref=f3e2]:
+    - navigation [ref=f3e3]:
+      - link "BNI Ares" [ref=f3e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f3e5]:
+        - link "Home" [ref=f3e6] [cursor=pointer]:
+          - /url: /
+        - link "Members" [ref=f3e7] [cursor=pointer]:
+          - /url: /members
+        - link "Coordinators" [ref=f3e8] [cursor=pointer]:
+          - /url: /coordinators
+        - link "Visit Us" [ref=f3e9] [cursor=pointer]:
+          - /url: /visitor
+        - link "Gallery" [ref=f3e10] [cursor=pointer]:
+          - /url: /gallery
+        - link "Contact" [ref=f3e11] [cursor=pointer]:
+          - /url: /contact
+        - link "Register as Visitor" [ref=f3e12] [cursor=pointer]:
+          - /url: /visitor
+  - main [ref=f3e13]:
+    - generic [ref=f3e15]:
+      - paragraph [ref=f3e16]: Come See Us
+      - heading "Your Next Client Might Be Waiting At Our Table." [level=1] [ref=f3e17]
+      - paragraph [ref=f3e18]: No pressure. No obligations. Just one seat waiting for you at our next weekly meeting.
+    - generic [ref=f3e20]:
+      - generic [ref=f3e22]:
+        - paragraph [ref=f3e23]: What You'll Get
+        - heading "What You'll Take Home With You" [level=2] [ref=f3e24]
+      - generic [ref=f3e25]:
+        - generic [ref=f3e26]: New Relationships
+        - generic [ref=f3e27]: Business Opportunities
+        - generic [ref=f3e28]: Fresh Perspectives
+        - generic [ref=f3e29]: Weekly Learning
+        - generic [ref=f3e30]: Trusted Connections
+        - generic [ref=f3e31]: Possibly Your Next Client
+    - generic [ref=f3e33]:
+      - generic [ref=f3e35]:
+        - paragraph [ref=f3e36]: No Pressure
+        - heading "Is This For You?" [level=2] [ref=f3e37]
+      - generic [ref=f3e38]:
+        - generic [ref=f3e39]:
+          - paragraph [ref=f3e40]: Yes, If You're
+          - list [ref=f3e41]:
+            - listitem [ref=f3e42]: Business owners and founders
+            - listitem [ref=f3e43]: Consultants and freelancers
+            - listitem [ref=f3e44]: Professionals looking to grow
+            - listitem [ref=f3e45]: People ready to build real relationships
+        - generic [ref=f3e46]:
+          - paragraph [ref=f3e47]: Maybe Not, If You're
+          - list [ref=f3e48]:
+            - listitem [ref=f3e49]: Looking to sell aggressively, once
+            - listitem [ref=f3e50]: Not interested in giving referrals back
+            - listitem [ref=f3e51]: Just here to collect business cards
+    - generic [ref=f3e53]:
+      - generic [ref=f3e55]:
+        - paragraph [ref=f3e56]: What To Expect
+        - heading "What Happens At A Meeting" [level=2] [ref=f3e57]
+      - generic [ref=f3e58]:
+        - generic [ref=f3e59]:
+          - text: "01"
+          - heading "Open Networking" [level=3] [ref=f3e60]
+          - paragraph [ref=f3e61]: Arrive, grab a coffee, and meet the room before the meeting starts.
+        - generic [ref=f3e62]:
+          - text: "02"
+          - heading "Weekly Meeting" [level=3] [ref=f3e63]
+          - paragraph [ref=f3e64]: A structured, fast-moving agenda — no wasted time, no small talk filler.
+        - generic [ref=f3e65]:
+          - text: "03"
+          - heading "Business Presentations" [level=3] [ref=f3e66]
+          - paragraph [ref=f3e67]: Members present who they're looking to meet, so the room knows who to refer.
+        - generic [ref=f3e68]:
+          - text: "04"
+          - heading "Referrals Shared" [level=3] [ref=f3e69]
+          - paragraph [ref=f3e70]: Real, structured referrals handed from one member to another, in the open.
+        - generic [ref=f3e71]:
+          - text: "05"
+          - heading "Visitors Connect" [level=3] [ref=f3e72]
+          - paragraph [ref=f3e73]: You're introduced around the room — no observing from the back.
+      - generic [ref=f3e74]:
+        - paragraph [ref=f3e75]: You'll Be Welcomed By
+        - paragraph [ref=f3e76]: Visitor Hosts · Leadership Team · Business Owners
+    - generic [ref=f3e78]:
+      - generic [ref=f3e80]:
+        - paragraph [ref=f3e81]: Testimonials
+        - heading "Success Stories" [level=2] [ref=f3e82]
+      - generic [ref=f3e83]: Our first visitor stories land after our next meeting — yours could be one of them.
+    - generic [ref=f3e86]:
+      - paragraph [ref=f3e87]: This Week, Your Story Might Change.
+      - paragraph [ref=f3e88]: One meeting. One introduction. One opportunity. That's all it takes.
+    - generic [ref=f3e90]:
+      - generic [ref=f3e92]:
+        - paragraph [ref=f3e93]: Register
+        - heading "Join Us This Week" [level=2] [ref=f3e94]
+      - generic [ref=f3e95]:
+        - generic [ref=f3e96]: Business Cards
+        - generic [ref=f3e97]: Your Story
+        - generic [ref=f3e98]: An Open Mind
+      - paragraph [ref=f3e99]: We'll handle the coffee.
+      - generic [ref=f3e163]:
+        - heading "You're Registered!" [level=3] [ref=f3e167]
+        - paragraph [ref=f3e168]: We'll see you Wednesday — meeting details are on their way.
+  - contentinfo [ref=f3e119]:
+    - generic [ref=f3e120]:
+      - generic [ref=f3e121]:
+        - generic [ref=f3e122]:
+          - paragraph [ref=f3e123]: BNI Ares
+          - paragraph [ref=f3e124]: Business Growth. Trusted Referrals. A chapter built on Givers Gain.
+        - generic [ref=f3e125]:
+          - paragraph [ref=f3e126]: Explore
+          - list [ref=f3e127]:
+            - listitem [ref=f3e128]:
+              - link "Members Directory" [ref=f3e129] [cursor=pointer]:
+                - /url: /members
+            - listitem [ref=f3e130]:
+              - link "Coordinators" [ref=f3e131] [cursor=pointer]:
+                - /url: /coordinators
+            - listitem [ref=f3e132]:
+              - link "Gallery" [ref=f3e133] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=f3e134]:
+              - link "Visit Us" [ref=f3e135] [cursor=pointer]:
+                - /url: /visitor
+        - generic [ref=f3e136]:
+          - paragraph [ref=f3e137]: Contact
+          - list [ref=f3e138]:
+            - listitem [ref=f3e139]: Details coming soon
+        - paragraph [ref=f3e141]: Follow
+      - generic [ref=f3e142]: © 2026 BNI Ares Chapter. All rights reserved.
+  - alert [ref=f3e143]
