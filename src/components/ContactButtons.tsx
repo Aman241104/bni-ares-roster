@@ -1,3 +1,4 @@
+"use client";
 import { Phone, MessageCircle, Mail, Globe } from "lucide-react";
 import { InstagramIcon, FacebookIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 
@@ -27,8 +28,8 @@ export default function ContactButtons({
   const iconSize = ICON_SIZE[size];
   const btnClass =
     size === "sm"
-      ? "flex h-8 w-8 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-brand-500 hover:text-white"
-      : "flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-brand-500 hover:text-white";
+      ? "flex h-11 w-11 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-brand-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+      : "flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition-colors hover:bg-brand-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500";
 
   const items = [
     phone && { href: `tel:${phone}`, icon: <Phone size={iconSize} />, label: "Call" },

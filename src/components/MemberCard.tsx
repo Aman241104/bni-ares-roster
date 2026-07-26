@@ -5,9 +5,8 @@ import type { Member } from "@/types/database";
 
 export default function MemberCard({ member }: { member: Member }) {
   return (
-    <Link
-      href={`/members/${member.id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+    <div
+      className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg relative"
     >
       <div className="relative aspect-square w-full overflow-hidden bg-zinc-100">
         <Avatar
@@ -18,7 +17,11 @@ export default function MemberCard({ member }: { member: Member }) {
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <div>
-          <h3 className="font-heading text-base font-bold text-ink">{member.name}</h3>
+          <h3 className="font-heading text-base font-bold text-ink">
+            <Link href={`/members/${member.id}`} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 before:absolute before:inset-0">
+              {member.name}
+            </Link>
+          </h3>
           {member.company && <p className="text-sm text-zinc-600">{member.company}</p>}
         </div>
         <div className="flex flex-wrap gap-1.5">
@@ -34,9 +37,9 @@ export default function MemberCard({ member }: { member: Member }) {
           )}
         </div>
         {member.description && (
-          <p className="line-clamp-2 text-sm text-zinc-500">{member.description}</p>
+          <p className="line-clamp-2 text-sm text-zinc-500" title={member.description}>{member.description}</p>
         )}
-        <div className="mt-auto pt-2">
+        <div className="mt-auto pt-2 relative z-10">
           <ContactButtons
             phone={member.phone}
             whatsapp={member.whatsapp}
@@ -48,6 +51,6 @@ export default function MemberCard({ member }: { member: Member }) {
           />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

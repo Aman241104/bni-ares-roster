@@ -28,14 +28,14 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 bg-ink ${
+      className={`sticky top-0 z-50 transition-all duration-300 glass-dark ${
         scrolled ? "shadow-md" : ""
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
         <Link href="/" className="flex flex-col">
           <span className="font-heading text-xl font-bold tracking-tight text-white">
-            BNI <span className="text-brand-500">Ares</span>
+            BNI <span className="text-red-400">Ares</span>
           </span>
           <span className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">
             Givers Gain®
@@ -47,8 +47,8 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-brand-500 ${
-                pathname === link.href ? "text-brand-500" : "text-zinc-300"
+              className={`text-sm font-medium transition-colors hover:text-red-400 ${
+                pathname === link.href ? "text-red-400" : "text-zinc-300"
               }`}
             >
               {link.label}
@@ -56,7 +56,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/visitor"
-            className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-600"
+            className="rounded-full bg-brand-500 px-7 py-3.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-brand-600"
           >
             VISIT A MEETING
           </Link>
@@ -72,7 +72,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="bg-ink border-t border-white/10 lg:hidden">
+        <div className="glass-dark border-t border-white/10 lg:hidden">
           <div className="flex flex-col gap-1 px-5 py-4">
             {LINKS.map((link) => (
               <Link
@@ -80,7 +80,7 @@ export default function Navbar() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`rounded-lg px-3 py-3 text-base font-medium ${
-                  pathname === link.href ? "bg-white/5 text-brand-500" : "text-zinc-300"
+                  pathname === link.href ? "bg-white/10 text-red-400" : "text-zinc-300"
                 }`}
               >
                 {link.label}

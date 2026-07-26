@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Clock, MapPin, Shirt, IndianRupee } from "lucide-react";
+import Image from "next/image";
+import { Clock, MapPin, Shirt, IndianRupee, CheckCircle2, XCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section, SectionHeading } from "@/components/Section";
 import Reveal from "@/components/Reveal";
@@ -66,8 +67,19 @@ export default async function VisitorPage() {
 
   return (
     <>
-      <section className="bg-ink py-24 text-white sm:py-32">
-        <Container className="max-w-3xl text-center">
+      <section className="relative overflow-hidden bg-ink py-24 text-white sm:py-32">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/group-photo.png"
+            alt=""
+            aria-hidden="true"
+            fill
+            priority
+            className="object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+        <Container className="relative z-10 max-w-3xl text-center">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500">Come See Us</p>
           <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">
             Your Next Client Might Be Waiting At Our Table.
@@ -118,19 +130,21 @@ export default async function VisitorPage() {
           <div className="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-2">
             <div className="rounded-2xl border border-zinc-200 bg-white p-6">
               <p className="text-sm font-semibold uppercase tracking-wider text-brand-600">Yes, If You&apos;re</p>
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-4 space-y-3">
                 {GOOD_FIT.map((item) => (
-                  <li key={item} className="text-sm text-zinc-600">
+                  <li key={item} className="flex items-start gap-3 text-sm text-zinc-600">
+                    <CheckCircle2 className="mt-0.5 shrink-0 text-brand-500" size={16} />
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
             <div className="rounded-2xl border border-zinc-200 bg-white p-6">
-              <p className="text-sm font-semibold uppercase tracking-wider text-zinc-400">Maybe Not, If You&apos;re</p>
-              <ul className="mt-4 space-y-2.5">
+              <p className="text-sm font-semibold uppercase tracking-wider text-zinc-600">Maybe Not, If You&apos;re</p>
+              <ul className="mt-4 space-y-3">
                 {NOT_A_FIT.map((item) => (
-                  <li key={item} className="text-sm text-zinc-500">
+                  <li key={item} className="flex items-start gap-3 text-sm text-zinc-500">
+                    <XCircle className="mt-0.5 shrink-0 text-zinc-400" size={16} />
                     {item}
                   </li>
                 ))}
@@ -145,12 +159,12 @@ export default async function VisitorPage() {
           <Reveal>
             <SectionHeading eyebrow="What To Expect" title="What Happens At A Meeting" center />
           </Reveal>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-5">
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {MEETING_FLOW.map((item) => (
               <Reveal key={item.step} className="text-center">
                 <span className="font-heading text-3xl font-extrabold text-brand-500">{item.step}</span>
                 <h3 className="mt-3 font-heading text-sm font-bold text-ink">{item.title}</h3>
-                <p className="mt-2 text-xs text-zinc-500">{item.copy}</p>
+                <p className="mt-2 text-sm text-zinc-500">{item.copy}</p>
               </Reveal>
             ))}
           </div>
@@ -192,6 +206,7 @@ export default async function VisitorPage() {
                     {d.href ? (
                       <a href={d.href} target="_blank" rel="noopener noreferrer" className="text-sm text-brand-600 hover:underline">
                         {d.value}
+                        <span className="sr-only"> (opens in a new tab)</span>
                       </a>
                     ) : (
                       <p className="text-sm text-zinc-600">{d.value}</p>

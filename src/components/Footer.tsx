@@ -13,7 +13,7 @@ export default async function Footer() {
           <div>
             <div className="flex flex-col">
               <span className="font-heading text-xl font-bold tracking-tight text-white">
-                BNI <span className="text-brand-500">Ares</span>
+                BNI <span className="text-red-400">Ares</span>
               </span>
               <span className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">
                 Givers Gain®
@@ -44,24 +44,24 @@ export default async function Footer() {
           <div>
             <p className="text-sm font-semibold text-zinc-300">Quick Links</p>
             <ul className="mt-4 space-y-2 text-sm text-zinc-400">
-              <li><Link href="/" className="hover:text-brand-500 transition-colors">Home</Link></li>
-              <li><Link href="/#about" className="hover:text-brand-500 transition-colors">About Ares</Link></li>
-              <li><Link href="/members" className="hover:text-brand-500 transition-colors">Members</Link></li>
-              <li><Link href="/coordinators" className="hover:text-brand-500 transition-colors">Chapter Excellence</Link></li>
-              <li><Link href="/visitor" className="hover:text-brand-500 transition-colors">Visit Ares</Link></li>
-              <li><Link href="/gallery" className="hover:text-brand-500 transition-colors">Gallery</Link></li>
-              <li><Link href="/contact" className="hover:text-brand-500 transition-colors">Contact</Link></li>
+              <li><Link href="/" className="hover:text-red-400 transition-colors">Home</Link></li>
+              <li><Link href="/#about" className="hover:text-red-400 transition-colors">About Ares</Link></li>
+              <li><Link href="/members" className="hover:text-red-400 transition-colors">Members</Link></li>
+              <li><Link href="/coordinators" className="hover:text-red-400 transition-colors">Chapter Excellence</Link></li>
+              <li><Link href="/visitor" className="hover:text-red-400 transition-colors">Visit Ares</Link></li>
+              <li><Link href="/gallery" className="hover:text-red-400 transition-colors">Gallery</Link></li>
+              <li><Link href="/contact" className="hover:text-red-400 transition-colors">Contact</Link></li>
             </ul>
           </div>
 
           <div>
             <p className="text-sm font-semibold text-zinc-300">Resources</p>
             <ul className="mt-4 space-y-2 text-sm text-zinc-400">
-              <li><Link href="#" className="hover:text-brand-500 transition-colors">About BNI</Link></li>
-              <li><Link href="#" className="hover:text-brand-500 transition-colors">How It Works</Link></li>
-              <li><Link href="/visitor" className="hover:text-brand-500 transition-colors">Visitor Information</Link></li>
-              <li><Link href="/#faq" className="hover:text-brand-500 transition-colors">FAQ</Link></li>
-              <li><Link href="#" className="hover:text-brand-500 transition-colors">Blog</Link></li>
+              <li><Link href="#" className="hover:text-red-400 transition-colors">About BNI</Link></li>
+              <li><Link href="#" className="hover:text-red-400 transition-colors">How It Works</Link></li>
+              <li><Link href="/visitor" className="hover:text-red-400 transition-colors">Visitor Information</Link></li>
+              <li><Link href="/#faq" className="hover:text-red-400 transition-colors">FAQ</Link></li>
+              <li><Link href="#" className="hover:text-red-400 transition-colors">Blog</Link></li>
             </ul>
           </div>
 
@@ -97,7 +97,7 @@ export default async function Footer() {
                       href={settings.meeting_maps_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-lg bg-white/10 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-brand-500 mt-2"
+                      className="inline-flex items-center justify-center rounded-full bg-white/10 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-brand-500 mt-2"
                     >
                       Get Directions
                     </a>

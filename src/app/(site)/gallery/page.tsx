@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
 import GalleryGrid from "@/components/GalleryGrid";
@@ -24,9 +25,13 @@ export default async function GalleryPage() {
 
   return (
     <>
-      <section className="bg-ink py-20 text-white sm:py-28">
-        <Container className="max-w-3xl text-center">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500">Life at BNI Ares</p>
+      <section className="relative overflow-hidden bg-ink py-20 text-white sm:py-28">
+        <div className="absolute inset-0">
+          <Image src="/images/group-photo.png" alt="" aria-hidden="true" fill priority className="object-cover opacity-40" />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+        <Container className="relative z-10 max-w-3xl text-center">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-red-400">Life at BNI Ares</p>
           <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">
             Memories. Relationships. Opportunities.
           </h1>
@@ -39,7 +44,7 @@ export default async function GalleryPage() {
 
       <Section>
         <Container>
-          <div className="mt-2">
+          <div className="mt-12">
             <GalleryGrid albums={albums} />
           </div>
         </Container>

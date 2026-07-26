@@ -23,6 +23,8 @@ export default function ContactForm() {
     const name = String(form.get("name") ?? "").trim();
     const message = String(form.get("message") ?? "").trim();
     const topic = String(form.get("topic") ?? "").trim();
+    const email = form.get("email")?.toString() || null;
+    const phone = form.get("phone")?.toString() || null;
 
     if (!name || !message) {
       setError("Name and message are required.");
@@ -30,24 +32,29 @@ export default function ContactForm() {
     }
 
     setSubmitting(true);
-    const { error: insertError } = await supabase.from("contact_messages").insert({
-      name,
-      email: form.get("email") || null,
-      phone: form.get("phone") || null,
-      message: topic ? `[${topic}] ${message}` : message,
-    });
-    setSubmitting(false);
+    try {
+      const { error: insertError } = await supabase.from("contact_messages").insert({
+        name,
+        email,
+        phone,
+        message: topic ? `[${topic}] ${message}` : message,
+      });
 
-    if (insertError) {
-      setError("Something went wrong — please try again.");
-      return;
+      if (insertError) {
+        setError("Something went wrong — please try again.");
+        return;
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError("Network error — please try again.");
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitted(true);
   }
 
   if (submitted) {
     return (
-      <div className="rounded-2xl border border-zinc-200 bg-white p-10 text-center">
+      <div role="status" aria-live="polite" className="rounded-2xl border border-zinc-200 bg-white p-10 text-center">
         <CheckCircle2 className="mx-auto text-brand-500" size={36} />
         <h3 className="mt-4 font-heading text-base font-bold text-ink">Message Sent</h3>
         <p className="mt-2 text-sm text-zinc-600">We&apos;ll get back to you as soon as we can.</p>
@@ -80,16 +87,16 @@ export default function ContactForm() {
           <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-ink">
             Name <span className="text-brand-500">*</span>
           </label>
-          <input id="name" name="name" type="text" required className="w-full rounded-lg border border-zinc-200 px-4 py-2.5 text-sm outline-none ring-brand-500 focus:ring-2" />
+          <input id="name" name="name" type="text" autoComplete="name" required className="w-full rounded-lg border border-zinc-200 px-4 py-2.5 text-sm outline-none ring-brand-500 focus:ring-2" />
         </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink">Email</label>
-            <input id="email" name="email" type="email" className="w-full rounded-lg border border-zinc-200 px-4 py-2.5 text-sm outline-none ring-brand-500 focus:ring-2" />
+            <input id="email" name="email" type="email" autoComplete="email" className="w-full rounded-lg border border-zinc-200 px-4 py-2.5 text-sm outline-none ring-brand-500 focus:ring-2" />
           </div>
           <div>
             <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-ink">Phone</label>
-            <input id="phone" name="phone" type="tel" className="w-full rounded-lg border border-zinc-200 px-4 py-2.5 text-sm outline-none ring-brand-500 focus:ring-2" />
+            <input id="phone" name="phone" type="tel" autoComplete="tel" className="w-full rounded-lg border border-zinc-200 px-4 py-2.5 text-sm outline-none ring-brand-500 focus:ring-2" />
           </div>
         </div>
         <div>
@@ -100,12 +107,12 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {error && <p className="mt-4 text-sm text-brand-600">{error}</p>}
+      {error && <p role="alert" className="mt-4 text-sm text-brand-600">{error}</p>}
 
       <button
         type="submit"
         disabled={submitting}
-        className="mt-6 w-full rounded-full bg-brand-500 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600 disabled:opacity-60"
+        className="mt-6 w-full rounded-full bg-brand-500 py-3.5 text-sm font-bold text-white transition-colors hover:bg-brand-600 disabled:opacity-60"
       >
         {submitting ? "Sending…" : "Send Message"}
       </button>

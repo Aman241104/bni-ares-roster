@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Trophy } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
@@ -32,10 +33,13 @@ export default async function ChapterExcellencePage() {
       {/* 1. Hero Section */}
       <section className="relative overflow-hidden bg-ink text-white pt-24 sm:pt-32 pb-32 sm:pb-48">
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/images/award-ceremony.png"
-            alt="BNI Ares Hall of Fame"
-            className="h-full w-full object-cover opacity-40"
+            alt=""
+            aria-hidden="true"
+            fill
+            priority
+            className="object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>
@@ -44,7 +48,7 @@ export default async function ChapterExcellencePage() {
             <h1 className="font-heading text-5xl font-extrabold leading-tight sm:text-7xl text-white">
               Chapter Excellence
             </h1>
-            <p className="mt-2 text-xl font-bold tracking-widest text-brand-500 uppercase">
+            <p className="mt-2 text-xl font-bold tracking-widest text-red-400 uppercase">
               Celebrating Impact. Inspiring Growth.
             </p>
             <p className="mt-6 text-lg text-zinc-300 leading-relaxed max-w-2xl mx-auto">
@@ -55,7 +59,7 @@ export default async function ChapterExcellencePage() {
       </section>
 
       {/* 2. Hall of Fame & Achievements */}
-      <Section className="bg-white pt-24 pb-16">
+      <Section className="bg-white">
         <Container>
           <Reveal className="text-center mb-16 max-w-2xl mx-auto">
             <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
@@ -72,12 +76,12 @@ export default async function ChapterExcellencePage() {
           {/* Coming Soon State */}
           <Reveal>
             <div className="rounded-3xl border-2 border-dashed border-zinc-200 bg-zinc-50 py-24 text-center">
-              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-sm text-brand-500 mb-6">
-                <Trophy size={40} />
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-md border border-zinc-200 text-brand-500 mb-6">
+                <Trophy size={40} aria-hidden="true" />
               </div>
               <h3 className="font-heading text-2xl font-bold text-ink">Awards & Milestones</h3>
               <p className="mt-3 text-zinc-500 max-w-sm mx-auto">
-                We are currently compiling our chapter's greatest achievements. Check back soon for our Hall of Fame!
+                We are currently compiling our chapter&apos;s greatest achievements. Check back soon for our Hall of Fame!
               </p>
             </div>
           </Reveal>
@@ -108,7 +112,7 @@ export default async function ChapterExcellencePage() {
       </Section>
 
       {/* 4. Bottom Call to Action */}
-      <section className="bg-ink py-16 text-center text-white">
+      <Section className="bg-ink text-center text-white">
         <Container className="max-w-2xl">
           <Reveal>
             <h2 className="font-heading text-3xl font-extrabold leading-tight sm:text-4xl">
@@ -122,12 +126,12 @@ export default async function ChapterExcellencePage() {
                 href="/visitor"
                 className="flex items-center gap-2 rounded-full bg-brand-500 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-brand-500/30 transition-colors hover:bg-brand-600"
               >
-                REGISTER AS A VISITOR <ArrowRight size={16} />
+                REGISTER AS A VISITOR <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </div>
           </Reveal>
         </Container>
-      </section>
+      </Section>
     </>
   );
 }

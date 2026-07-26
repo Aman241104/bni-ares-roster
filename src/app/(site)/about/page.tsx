@@ -38,11 +38,13 @@ const ACHIEVEMENTS = [
 ];
 
 export default async function AboutPage() {
-  const { data: settings } = await supabase.from("settings").select("*").eq("id", 1).maybeSingle();
-  const { data: members } = await supabase.from("members").select("business_category").eq("status", "active");
+  const [settingsRes, membersRes] = await Promise.all([
+    supabase.from("settings").select("*").eq("id", 1).maybeSingle(),
+    supabase.from("members").select("business_category").eq("status", "active"),
+  ]);
 
-  const s = settings as Settings | null;
-  const list = members || [];
+  const s = settingsRes.data as Settings | null;
+  const list = membersRes.data || [];
   const uniqueCategories = new Set(list.map((m) => m.business_category).filter(Boolean)).size;
 
   const hasRealStats = !!(
@@ -56,11 +58,12 @@ export default async function AboutPage() {
   return (
     <>
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden bg-ink text-white pt-24 sm:pt-32 pb-32 sm:pb-48">
-        <div className="absolute inset-0">
+      <section className="relative bg-ink text-white pt-24 sm:pt-32 pb-32 sm:pb-48">
+        <div className="absolute inset-0 overflow-hidden">
           <img
             src="/images/group-photo.png"
-            alt="BNI Ares Members"
+            alt=""
+            aria-hidden="true"
             className="h-full w-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-black/60" />
@@ -79,17 +82,17 @@ export default async function AboutPage() {
             </p>
           </div>
           
-          <div className="w-full lg:w-[400px] shrink-0 translate-y-12 lg:translate-y-24">
+          <div className="w-full lg:w-[400px] shrink-0 -mb-12 lg:-mb-24">
             <Reveal className="bg-brand-500 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute -right-10 -top-10 opacity-10">
-                <Eye size={160} />
+                <Eye size={160} aria-hidden="true" />
               </div>
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-white/20 rounded-lg">
-                    <Eye className="text-white" size={24} />
+                    <Eye className="text-white" size={24} aria-hidden="true" />
                   </div>
-                  <h3 className="text-xl font-bold font-heading">Our Vision</h3>
+                  <h2 className="text-xl font-bold font-heading">Our Vision</h2>
                 </div>
                 <p className="text-white/90 leading-relaxed font-medium">
                   To be the most impactful and respected business networking chapter, recognized for transforming businesses and lives through meaningful connections.
@@ -101,7 +104,7 @@ export default async function AboutPage() {
       </section>
 
       {/* 2. "Our Story" & Core Values Section */}
-      <Section className="bg-white pt-24 sm:pt-32 pb-16">
+      <Section className="bg-white pt-32 sm:pt-40 lg:pt-48 pb-16">
         <Container>
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
             <Reveal>
@@ -111,7 +114,7 @@ export default async function AboutPage() {
               <h2 className="mt-4 font-heading text-4xl sm:text-5xl font-extrabold text-ink leading-tight">
                 The Journey of BNI Ares
               </h2>
-              <div className="mt-8 space-y-6 text-zinc-600 text-lg leading-relaxed">
+              <div className="mt-6 space-y-6 text-zinc-600 text-lg leading-relaxed">
                 <p>
                   BNI Ares was formed with a vision to create a strong platform for Ahmedabad's business owners. What started as a small group of ambitious professionals has now grown into one of the most dynamic and high-performing networking chapters in the region.
                 </p>
@@ -121,7 +124,7 @@ export default async function AboutPage() {
               </div>
               <Link
                 href="/visitor"
-                className="inline-flex mt-10 items-center justify-center rounded-full border-2 border-brand-500 px-8 py-3.5 text-sm font-bold text-brand-500 transition-colors hover:bg-brand-500 hover:text-white"
+                className="inline-flex mt-10 items-center justify-center rounded-full border-2 border-brand-500 px-8 py-3.5 text-sm font-bold text-brand-500 transition-colors hover:bg-brand-500 hover:text-white focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:outline-none"
               >
                 JOIN US AS A VISITOR
               </Link>
@@ -130,12 +133,12 @@ export default async function AboutPage() {
             <div className="flex flex-col gap-6">
               <Reveal delay={0.1} className="bg-zinc-50 border border-zinc-100 rounded-2xl p-8">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-brand-50 text-brand-500 rounded-xl shrink-0 mt-1">
-                    <Target size={24} />
+                  <div className="p-3 bg-brand-50 text-brand-500 rounded-xl shrink-0">
+                    <Target size={24} aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="font-heading font-bold text-xl text-brand-500">Our Mission</h3>
-                    <p className="mt-2 text-zinc-600 leading-relaxed">
+                    <p className="mt-6 text-zinc-600 leading-relaxed">
                       To help members increase their business through a structured, positive, and professional word-of-mouth referral program that enables them to develop long-term, meaningful relationships.
                     </p>
                   </div>
@@ -144,17 +147,17 @@ export default async function AboutPage() {
 
               <Reveal delay={0.2} className="bg-zinc-50 border border-zinc-100 rounded-2xl p-8">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-brand-50 text-brand-500 rounded-xl shrink-0 mt-1">
-                    <Star size={24} />
+                  <div className="p-3 bg-brand-50 text-brand-500 rounded-xl shrink-0">
+                    <Star size={24} aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="font-heading font-bold text-xl text-brand-500">Our Values</h3>
-                    <ul className="mt-3 space-y-2 text-zinc-600 font-medium">
-                      <li className="flex items-center gap-2"><ChevronRight size={16} className="text-brand-500" /> Givers Gain®</li>
-                      <li className="flex items-center gap-2"><ChevronRight size={16} className="text-brand-500" /> Building Relationships</li>
-                      <li className="flex items-center gap-2"><ChevronRight size={16} className="text-brand-500" /> Lifelong Learning</li>
-                      <li className="flex items-center gap-2"><ChevronRight size={16} className="text-brand-500" /> Traditions + Innovation</li>
-                      <li className="flex items-center gap-2"><ChevronRight size={16} className="text-brand-500" /> Positive Attitude</li>
+                    <ul className="mt-6 space-y-2 text-zinc-600 font-medium">
+                      <li className="flex items-center gap-2"><ChevronRight size={16} aria-hidden="true" className="text-brand-500" /> Givers Gain®</li>
+                      <li className="flex items-center gap-2"><ChevronRight size={16} aria-hidden="true" className="text-brand-500" /> Building Relationships</li>
+                      <li className="flex items-center gap-2"><ChevronRight size={16} aria-hidden="true" className="text-brand-500" /> Lifelong Learning</li>
+                      <li className="flex items-center gap-2"><ChevronRight size={16} aria-hidden="true" className="text-brand-500" /> Traditions + Innovation</li>
+                      <li className="flex items-center gap-2"><ChevronRight size={16} aria-hidden="true" className="text-brand-500" /> Positive Attitude</li>
                     </ul>
                   </div>
                 </div>
@@ -162,12 +165,12 @@ export default async function AboutPage() {
 
               <Reveal delay={0.3} className="bg-zinc-50 border border-zinc-100 rounded-2xl p-8">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-brand-50 text-brand-500 rounded-xl shrink-0 mt-1">
-                    <Heart size={24} />
+                  <div className="p-3 bg-brand-50 text-brand-500 rounded-xl shrink-0">
+                    <Heart size={24} aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="font-heading font-bold text-xl text-brand-500">Our Culture</h3>
-                    <p className="mt-2 text-zinc-600 leading-relaxed">
+                    <p className="mt-6 text-zinc-600 leading-relaxed">
                       We celebrate each other's successes as our own. BNI Ares is built on a foundation of trust, accountability, and a genuine desire to see fellow members thrive in their respective industries.
                     </p>
                   </div>
@@ -179,19 +182,19 @@ export default async function AboutPage() {
       </Section>
 
       {/* 3. Stats Banner */}
-      {hasRealStats && (
+      {s && hasRealStats && (
         <section className="bg-gradient-to-r from-brand-900 to-ink py-16 text-white border-y border-white/10">
           <Container>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
               <Reveal delay={0} className="flex flex-col items-center justify-center space-y-2">
-                <div className="text-white"><User size={36} strokeWidth={1.5} /></div>
+                <div className="text-white"><User size={36} strokeWidth={1.5} aria-hidden="true" /></div>
                 <StatCounter value={s.stat_total_members ?? 0} label="Total Members" colorClass="text-white text-2xl sm:text-3xl" labelClass="text-white/80" suffix="+" />
               </Reveal>
               <Reveal delay={0.1} className="flex flex-col items-center justify-center space-y-2">
-                <div className="text-white"><IndianRupee size={36} strokeWidth={1.5} /></div>
+                <div className="text-white"><IndianRupee size={36} strokeWidth={1.5} aria-hidden="true" /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-2xl font-extrabold text-white sm:text-3xl">{s.stat_business_passed}</span>
+                    <span className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-2xl sm:text-3xl">{s.stat_business_passed}</span>
                     <p className="mt-2 text-sm font-medium text-white/80">Business Passed</p>
                   </div>
                 ) : (
@@ -199,19 +202,19 @@ export default async function AboutPage() {
                 )}
               </Reveal>
               <Reveal delay={0.2} className="flex flex-col items-center justify-center space-y-2">
-                <div className="text-white"><Handshake size={36} strokeWidth={1.5} /></div>
+                <div className="text-white"><Handshake size={36} strokeWidth={1.5} aria-hidden="true" /></div>
                 <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-white text-2xl sm:text-3xl" labelClass="text-white/80" suffix="+" />
               </Reveal>
               <Reveal delay={0.3} className="flex flex-col items-center justify-center space-y-2">
-                <div className="text-white"><Users size={36} strokeWidth={1.5} /></div>
+                <div className="text-white"><Users size={36} strokeWidth={1.5} aria-hidden="true" /></div>
                 <StatCounter value={s.stat_visitors_hosted ?? 0} label="Visitors Hosted" colorClass="text-white text-2xl sm:text-3xl" labelClass="text-white/80" suffix="+" />
               </Reveal>
               <Reveal delay={0.4} className="flex flex-col items-center justify-center space-y-2">
-                <div className="text-white"><Calendar size={36} strokeWidth={1.5} /></div>
+                <div className="text-white"><Calendar size={36} strokeWidth={1.5} aria-hidden="true" /></div>
                 <StatCounter value={s.stat_years_chapter ?? 0} label="Years of Excellence" colorClass="text-white text-2xl sm:text-3xl" labelClass="text-white/80" suffix="+" />
               </Reveal>
               <Reveal delay={0.5} className="flex flex-col items-center justify-center space-y-2">
-                <div className="text-white"><PieChart size={36} strokeWidth={1.5} /></div>
+                <div className="text-white"><PieChart size={36} strokeWidth={1.5} aria-hidden="true" /></div>
                 <StatCounter value={uniqueCategories} label="Business Categories" colorClass="text-white text-2xl sm:text-3xl" labelClass="text-white/80" suffix="+" />
               </Reveal>
             </div>
@@ -236,7 +239,7 @@ export default async function AboutPage() {
                 </p>
                 <Link
                   href="/visitor"
-                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+                  className="mt-10 inline-flex items-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:outline-none"
                 >
                   LEARN MORE ABOUT BNI
                 </Link>
@@ -246,15 +249,15 @@ export default async function AboutPage() {
             <div className="lg:col-span-7 lg:pl-12">
               <div className="grid sm:grid-cols-2 gap-6">
                 {TIMELINE.map((step, idx) => (
-                  <Reveal key={idx} delay={idx * 0.1} className="bg-zinc-50 border border-zinc-100 p-8 rounded-2xl relative overflow-hidden group hover:border-brand-500 transition-colors">
-                    <div className="text-brand-500 mb-6 bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                      <step.icon size={28} />
+                  <Reveal key={idx} delay={idx * 0.1} className="bg-zinc-50 border border-zinc-100 p-8 rounded-2xl relative overflow-hidden">
+                    <div className="text-brand-500 mb-6 bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center">
+                      <step.icon size={28} aria-hidden="true" />
                     </div>
-                    <div className="absolute top-8 right-8 text-6xl font-extrabold text-zinc-100 group-hover:text-zinc-200 transition-colors pointer-events-none z-0">
+                    <div className="absolute top-8 right-8 text-6xl font-extrabold text-zinc-100 pointer-events-none z-0" aria-hidden="true">
                       0{idx + 1}
                     </div>
                     <h3 className="font-bold text-ink text-xl mb-3 relative z-10">{step.title}</h3>
-                    <p className="text-zinc-500 relative z-10">{step.desc}</p>
+                    <p className="text-zinc-600 relative z-10">{step.desc}</p>
                   </Reveal>
                 ))}
               </div>
@@ -279,9 +282,9 @@ export default async function AboutPage() {
                 {ACHIEVEMENTS.map((ach, idx) => (
                   <div key={idx} className="flex flex-col gap-4">
                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-brand-500 border border-zinc-100">
-                      <ach.icon size={20} />
+                      <ach.icon size={20} aria-hidden="true" />
                     </div>
-                    <h4 className="font-bold text-ink text-lg max-w-[200px]">{ach.title}</h4>
+                    <h3 className="font-bold text-ink text-lg max-w-[200px]">{ach.title}</h3>
                   </div>
                 ))}
               </div>
@@ -314,7 +317,7 @@ export default async function AboutPage() {
               </div>
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-full border-2 border-ink px-8 py-3.5 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-white shrink-0"
+                className="inline-flex items-center justify-center rounded-full border-2 border-ink px-8 py-3.5 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-white shrink-0 focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:outline-none"
               >
                 CONTACT US
               </Link>

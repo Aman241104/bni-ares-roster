@@ -43,14 +43,15 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
   };
 
   return (
-    <div id="directory" className="w-full">
+    <div id="directory" className="w-full scroll-mt-24">
       {/* Filter Bar */}
       <div className="bg-white rounded-2xl shadow-sm border border-zinc-200 p-4 flex flex-col md:flex-row gap-4 items-center justify-between mb-12">
         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto flex-1">
-          <div className="relative flex-1 max-w-sm">
+          <div className="relative flex-1">
             <Search size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
             <input
               type="text"
+              aria-label="Search members"
               value={query}
               onChange={(e) => { setQuery(e.target.value); setVisibleCount(8); }}
               placeholder="Search members..."
@@ -60,9 +61,10 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
           
           <div className="relative">
             <select
+              aria-label="Filter by category"
               value={category}
               onChange={(e) => { setCategory(e.target.value); setVisibleCount(8); }}
-              className="appearance-none w-full md:w-48 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-4 pr-10 text-sm outline-none ring-brand-500 focus:ring-2 transition-shadow text-zinc-700 font-medium cursor-pointer"
+              className="appearance-none w-full md:w-auto min-w-48 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-4 pr-10 text-sm outline-none ring-brand-500 focus:ring-2 transition-shadow text-zinc-700 font-medium cursor-pointer"
             >
               <option value="">All Categories</option>
               {categories.map((c) => (
@@ -74,9 +76,10 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
 
           <div className="relative">
             <select
+              aria-label="Filter by designation"
               value={designation}
               onChange={(e) => { setDesignation(e.target.value); setVisibleCount(8); }}
-              className="appearance-none w-full md:w-48 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-4 pr-10 text-sm outline-none ring-brand-500 focus:ring-2 transition-shadow text-zinc-700 font-medium cursor-pointer"
+              className="appearance-none w-full md:w-auto min-w-48 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-4 pr-10 text-sm outline-none ring-brand-500 focus:ring-2 transition-shadow text-zinc-700 font-medium cursor-pointer"
             >
               <option value="">All Designations</option>
               {designations.map((d) => (
@@ -89,7 +92,7 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
 
         <button
           onClick={resetFilters}
-          className="flex items-center gap-2 text-sm font-semibold text-zinc-500 hover:text-brand-500 transition-colors px-4 py-2"
+          className="flex items-center gap-2 text-sm font-semibold text-zinc-500 hover:text-brand-500 transition-colors px-4 py-2 focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:outline-none"
         >
           <RotateCcw size={16} /> Reset Filters
         </button>

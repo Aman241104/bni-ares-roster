@@ -51,7 +51,9 @@ export default async function MembersPage() {
         <div className="absolute inset-0">
           <img
             src="/images/group-photo.png"
-            alt="BNI Ares Chapter"
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
             className="h-full w-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-black/60" />
@@ -72,7 +74,7 @@ export default async function MembersPage() {
       </section>
 
       {/* 2. Stats Banner */}
-      {hasRealStats && (
+      {hasRealStats && s && (
         <section className="bg-gradient-to-r from-brand-900 to-ink py-12 text-white border-y border-white/10">
           <Container>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -88,7 +90,7 @@ export default async function MembersPage() {
                 <div className="text-white"><IndianRupee size={32} strokeWidth={1.5} /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-3xl font-extrabold text-white sm:text-4xl">{s.stat_business_passed}</span>
+                    <span className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-3xl sm:text-4xl">{s.stat_business_passed}</span>
                     <p className="mt-2 text-sm font-medium text-white/80">Business Passed</p>
                   </div>
                 ) : (
@@ -116,7 +118,7 @@ export default async function MembersPage() {
                 <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-ink">
                   Chapter Members
                 </h2>
-                <p className="mt-1 text-zinc-500">
+                <p className="mt-1 text-zinc-600">
                   Meet our amazing members and connect with them.
                 </p>
               </div>
@@ -147,7 +149,7 @@ export default async function MembersPage() {
                 <h2 className="font-heading text-3xl font-extrabold text-ink">
                   Leadership Team
                 </h2>
-                <p className="mt-1 text-zinc-500">
+                <p className="mt-1 text-zinc-600">
                   Leading BNI Ares with vision, commitment and passion.
                 </p>
               </div>
@@ -176,7 +178,7 @@ export default async function MembersPage() {
                 <h2 className="font-heading text-3xl font-extrabold text-ink">
                   Support Team
                 </h2>
-                <p className="mt-1 text-zinc-500">
+                <p className="mt-1 text-zinc-600">
                   Experienced BNI leaders from other chapters who support and guide BNI Ares.
                 </p>
               </div>

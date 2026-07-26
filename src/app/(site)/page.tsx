@@ -68,7 +68,7 @@ export default async function HomePage() {
   return (
     <>
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden bg-ink text-white pt-20 sm:pt-28 pb-32 sm:pb-40">
+      <section className="relative overflow-hidden bg-ink text-white pt-20 pb-32 sm:pt-28 sm:pb-40">
         <div className="absolute inset-0">
           <img
             src="/images/group-photo.png"
@@ -83,9 +83,7 @@ export default async function HomePage() {
               AHMEDABAD'S PREMIER BNI CHAPTER
             </span>
             <h1 className="font-heading text-5xl font-extrabold leading-tight sm:text-7xl">
-              Building Relationships.<br />
-              Growing Businesses.<br />
-              <span className="text-brand-500">Changing Lives.</span>
+              Building Relationships. Growing Businesses. <span className="text-red-400">Changing Lives.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-zinc-300">
               BNI Ares is a community of trusted business professionals committed to mutual growth through meaningful referrals.
@@ -93,21 +91,15 @@ export default async function HomePage() {
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 href="/visitor"
-                className="flex items-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-brand-600"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 text-sm font-bold text-white shadow-lg transition-colors hover:bg-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 sm:w-auto"
               >
                 VISIT A MEETING <ArrowRight size={16} />
               </Link>
               <Link
                 href="/members"
-                className="flex items-center gap-2 rounded-full border-2 border-white px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 sm:w-auto"
               >
                 MEET OUR MEMBERS <ArrowRight size={16} />
-              </Link>
-              <Link
-                href="/visitor"
-                className="flex items-center gap-2 rounded-full border-2 border-white px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                BECOME A VISITOR <User size={16} />
               </Link>
             </div>
           </div>
@@ -116,39 +108,39 @@ export default async function HomePage() {
 
       {/* 2. Stats Banner (Floating) */}
       {hasRealStats && (
-        <div className="relative z-20 -mt-16 px-5 sm:px-8 max-w-7xl mx-auto">
+        <div className="relative z-20 px-5 sm:px-8 max-w-7xl mx-auto -mt-16 sm:-mt-24">
           <Reveal className="bg-white rounded-2xl shadow-xl border border-zinc-100 p-6 sm:p-10">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
               <div className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-brand-500"><User size={28} strokeWidth={1.5} /></div>
-                <StatCounter value={s.stat_total_members ?? 0} label="Total Members" colorClass="text-ink text-2xl sm:text-3xl" labelClass="text-zinc-500" suffix="+" />
+                <StatCounter value={s.stat_total_members ?? 0} label="Total Members" colorClass="text-ink" labelClass="text-zinc-500" suffix="+" />
               </div>
               <div className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-brand-500"><IndianRupee size={28} strokeWidth={1.5} /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-2xl font-extrabold text-ink sm:text-3xl">{s.stat_business_passed}</span>
+                    <span className="font-heading text-4xl font-extrabold text-ink sm:text-5xl">{s.stat_business_passed}</span>
                     <p className="mt-2 text-sm font-medium text-zinc-500">Business Passed</p>
                   </div>
                 ) : (
-                  <StatCounter value={0} label="Business Passed" colorClass="text-ink text-2xl sm:text-3xl" labelClass="text-zinc-500" />
+                  <StatCounter value={0} label="Business Passed" colorClass="text-ink" labelClass="text-zinc-500" />
                 )}
               </div>
               <div className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-brand-500"><Handshake size={28} strokeWidth={1.5} /></div>
-                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-ink text-2xl sm:text-3xl" labelClass="text-zinc-500" suffix="+" />
+                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-ink" labelClass="text-zinc-500" suffix="+" />
               </div>
               <div className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-brand-500"><Users size={28} strokeWidth={1.5} /></div>
-                <StatCounter value={s.stat_visitors_hosted ?? 0} label="Visitors Hosted" colorClass="text-ink text-2xl sm:text-3xl" labelClass="text-zinc-500" suffix="+" />
+                <StatCounter value={s.stat_visitors_hosted ?? 0} label="Visitors Hosted" colorClass="text-ink" labelClass="text-zinc-500" suffix="+" />
               </div>
               <div className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-brand-500"><Calendar size={28} strokeWidth={1.5} /></div>
-                <StatCounter value={s.stat_years_chapter ?? 0} label="Years of Excellence" colorClass="text-ink text-2xl sm:text-3xl" labelClass="text-zinc-500" suffix="+" />
+                <StatCounter value={s.stat_years_chapter ?? 0} label="Years of Excellence" colorClass="text-ink" labelClass="text-zinc-500" suffix="+" />
               </div>
               <div className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-brand-500"><PieChart size={28} strokeWidth={1.5} /></div>
-                <StatCounter value={uniqueCategories} label="Business Categories" colorClass="text-ink text-2xl sm:text-3xl" labelClass="text-zinc-500" suffix="+" />
+                <StatCounter value={uniqueCategories} label="Business Categories" colorClass="text-ink" labelClass="text-zinc-500" suffix="+" />
               </div>
             </div>
           </Reveal>
@@ -156,7 +148,7 @@ export default async function HomePage() {
       )}
 
       {/* 3. Why Join BNI Ares */}
-      <Section className="bg-zinc-50 pt-32 sm:pt-40">
+      <Section className="bg-zinc-50 py-16 sm:py-20">
         <Container>
           <Reveal>
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
@@ -176,9 +168,9 @@ export default async function HomePage() {
             </div>
           </Reveal>
           
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-center gap-6">
             {WHY_JOIN.map((feature, idx) => (
-              <Reveal key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-md border border-zinc-100">
+              <Reveal key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-md border border-zinc-100 lg:flex-1 lg:basis-[calc(30%-1rem)] xl:basis-[calc(20%-1rem)] lg:min-w-[200px]">
                 <div className="text-brand-500 mb-4">
                   <feature.icon size={28} />
                 </div>
@@ -196,16 +188,16 @@ export default async function HomePage() {
           <Container>
             <Reveal className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-12">
               <div>
-                <span className="text-zinc-500 font-bold tracking-wider text-sm uppercase">
+                <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
                   MEET OUR MEMBERS
                 </span>
-                <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">
+                <h2 className="mt-2 font-heading text-4xl sm:text-5xl font-extrabold text-ink">
                   A Community of Trusted Professionals
                 </h2>
               </div>
               <Link
                 href="/members"
-                className="inline-flex items-center justify-center rounded-full border-2 border-ink px-6 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-white"
+                className="inline-flex items-center justify-center rounded-full border-2 border-ink px-7 py-3.5 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
               >
                 View All Members
               </Link>
@@ -222,30 +214,30 @@ export default async function HomePage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center bg-zinc-200 text-3xl font-bold text-zinc-400">
+                      <div className="flex h-full items-center justify-center bg-ink text-3xl font-bold text-white">
                         {member.name.charAt(0)}
                       </div>
                     )}
                   </div>
                   <div className="p-5 text-center flex flex-col flex-1 justify-between">
                     <div>
-                      <h3 className="font-bold text-ink text-lg line-clamp-1">{member.name}</h3>
-                      <p className="text-brand-500 text-sm font-semibold mt-1 line-clamp-1">{member.business_category}</p>
-                      <p className="text-zinc-500 text-xs mt-1 line-clamp-1">{member.company}</p>
+                      <h3 className="font-bold text-ink text-lg line-clamp-1" title={member.name}>{member.name}</h3>
+                      <p className="text-brand-500 text-sm font-semibold mt-1 line-clamp-1" title={member.business_category ?? undefined}>{member.business_category}</p>
+                      <p className="text-zinc-500 text-xs mt-1 line-clamp-1" title={member.company ?? undefined}>{member.company}</p>
                     </div>
                     
                     <div className="mt-4 flex justify-center gap-2">
                       {member.phone && (
-                        <a href={`tel:${member.phone}`} className="p-2 bg-zinc-50 text-zinc-400 rounded-full hover:bg-brand-50 hover:text-brand-500 transition-colors"><Phone size={14} /></a>
+                        <a href={`tel:${member.phone}`} aria-label={`Call ${member.name}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><Phone size={16} /></a>
                       )}
                       {member.whatsapp && (
-                        <a href={`https://wa.me/${member.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-50 text-zinc-400 rounded-full hover:bg-brand-50 hover:text-brand-500 transition-colors"><MessageCircle size={14} /></a>
+                        <a href={`https://wa.me/${member.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${member.name}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><MessageCircle size={16} /></a>
                       )}
                       {member.email && (
-                        <a href={`mailto:${member.email}`} className="p-2 bg-zinc-50 text-zinc-400 rounded-full hover:bg-brand-50 hover:text-brand-500 transition-colors"><Mail size={14} /></a>
+                        <a href={`mailto:${member.email}`} aria-label={`Email ${member.name}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><Mail size={16} /></a>
                       )}
                       {member.linkedin && (
-                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-50 text-zinc-400 rounded-full hover:bg-brand-50 hover:text-brand-500 transition-colors"><LinkedinIcon size={14} /></a>
+                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn ${member.name}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><LinkedinIcon size={16} /></a>
                       )}
                     </div>
                   </div>
@@ -261,19 +253,19 @@ export default async function HomePage() {
         <Container className="relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <Reveal>
-              <span className="text-zinc-400 font-bold tracking-wider text-sm uppercase">
+              <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
                 WEEKLY MEETING
               </span>
-              <h2 className="mt-4 font-heading text-4xl sm:text-6xl font-extrabold leading-tight">
+              <h2 className="mt-4 font-heading text-4xl sm:text-5xl font-extrabold leading-tight">
                 Join Us Every Week,<br />
-                <span className="text-brand-500">Be Our Guest!</span>
+                <span className="text-red-400">Be Our Guest!</span>
               </h2>
               <p className="mt-6 text-lg text-zinc-300 max-w-md">
                 Experience the power of networking, collaboration and referral marketing at our weekly meeting.
               </p>
               <Link
                 href="/visitor"
-                className="mt-10 inline-flex items-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+                className="mt-10 inline-flex items-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 REGISTER AS VISITOR <ArrowRight size={16} />
               </Link>
@@ -282,12 +274,12 @@ export default async function HomePage() {
             <Reveal delay={0.2} className="relative">
               <div className="absolute inset-0 -mx-4 sm:mx-0 sm:-right-10 sm:-top-10 sm:-bottom-10 bg-[url('/images/group-photo.png')] bg-cover bg-center rounded-3xl opacity-40"></div>
               
-              <div className="relative bg-white/10 backdrop-blur-md border border-white/20 p-8 sm:p-10 rounded-3xl shadow-2xl">
+              <div className="relative glass-dark p-8 sm:p-10 rounded-3xl shadow-2xl">
                 <h3 className="font-bold text-2xl mb-8">Meeting Details</h3>
                 
                 <div className="space-y-6">
                   <div className="flex gap-4 items-start">
-                    <div className="p-3 bg-brand-500/20 text-brand-500 rounded-xl shrink-0">
+                    <div className="p-3 bg-brand-500/20 text-white rounded-xl shrink-0">
                       <Calendar size={24} />
                     </div>
                     <div>
@@ -297,7 +289,7 @@ export default async function HomePage() {
                   </div>
                   
                   <div className="flex gap-4 items-start">
-                    <div className="p-3 bg-brand-500/20 text-brand-500 rounded-xl shrink-0">
+                    <div className="p-3 bg-brand-500/20 text-white rounded-xl shrink-0">
                       <MapPin size={24} />
                     </div>
                     <div>
@@ -308,7 +300,7 @@ export default async function HomePage() {
                 </div>
 
                 {s?.meeting_maps_link && (
-                  <a href={s.meeting_maps_link} target="_blank" rel="noopener noreferrer" className="mt-8 flex w-full justify-center items-center gap-2 rounded-xl bg-white text-ink px-6 py-3 text-sm font-bold transition-colors hover:bg-zinc-200">
+                  <a href={s.meeting_maps_link} target="_blank" rel="noopener noreferrer" className="mt-8 flex w-full justify-center items-center gap-2 rounded-full bg-white text-ink px-7 py-3.5 text-sm font-bold transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                     Get Directions <MapPin size={16} />
                   </a>
                 )}
@@ -328,7 +320,7 @@ export default async function HomePage() {
             <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
               MEMBER TESTIMONIALS
             </span>
-            <h2 className="mt-2 font-heading text-4xl font-extrabold text-ink">
+            <h2 className="mt-2 font-heading text-4xl sm:text-5xl font-extrabold text-ink">
               Hear From Our Members
             </h2>
           </Reveal>
@@ -338,7 +330,7 @@ export default async function HomePage() {
             <div className="text-brand-500 mb-6">
               <Quote size={48} />
             </div>
-            <p className="text-zinc-600 text-lg font-medium text-center">Testimonials coming soon.</p>
+            <p className="text-zinc-700 text-lg font-medium text-center">Testimonials coming soon.</p>
           </div>
         </Container>
       </Section>
@@ -348,13 +340,9 @@ export default async function HomePage() {
         <Section className="bg-white py-16 border-t border-zinc-100">
           <Container>
             <div className="flex items-center gap-6">
-              <button className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 text-zinc-400 hover:text-brand-500 hover:border-brand-500 transition-colors">
-                <ChevronLeft size={20} />
-              </button>
-              
               <div className="flex-1 flex justify-center items-center gap-8 overflow-hidden px-4 flex-wrap">
                 {activeSponsors.map((sponsor) => (
-                  <a key={sponsor.id} href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity">
+                  <a key={sponsor.id} href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded">
                     {sponsor.logo_url ? (
                       <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-16 max-w-[150px] object-contain" />
                     ) : (
@@ -363,10 +351,6 @@ export default async function HomePage() {
                   </a>
                 ))}
               </div>
-
-              <button className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 text-zinc-400 hover:text-brand-500 hover:border-brand-500 transition-colors">
-                <ChevronRight size={20} />
-              </button>
             </div>
           </Container>
         </Section>
@@ -381,13 +365,13 @@ export default async function HomePage() {
                 <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
                   MOMENTS THAT DEFINE US
                 </span>
-                <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">
+                <h2 className="mt-2 font-heading text-4xl sm:text-5xl font-extrabold text-ink">
                   Glimpses from Our Chapter
                 </h2>
               </div>
               <Link
                 href="/gallery"
-                className="inline-flex items-center justify-center rounded-full border-2 border-ink px-6 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-white"
+                className="inline-flex items-center justify-center rounded-full border-2 border-ink px-7 py-3.5 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
               >
                 View Full Gallery
               </Link>
