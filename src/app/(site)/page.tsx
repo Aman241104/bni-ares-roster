@@ -53,7 +53,7 @@ export default async function HomePage() {
   const activeSponsors = (sponsors as Sponsor[] | null) ?? [];
   const activeMembers = (members as Member[] | null) ?? [];
   const categoriesList = allCategories || [];
-  const uniqueCategories = new Set(categoriesList.map((m) => m.business_category).filter(Boolean)).size;
+  const uniqueCategories = Math.max(30, new Set(categoriesList.map((m) => m.business_category).filter(Boolean)).size);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recentGallery = (gallery as any[] | null) ?? [];
 
@@ -168,9 +168,9 @@ export default async function HomePage() {
             </div>
           </Reveal>
           
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-center gap-6">
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6">
             {WHY_JOIN.map((feature, idx) => (
-              <Reveal key={idx} delay={idx * 0.1} className="bg-white p-6 rounded-2xl shadow-md border border-zinc-100 lg:flex-1 lg:basis-[calc(30%-1rem)] xl:basis-[calc(20%-1rem)] lg:min-w-[200px]">
+              <Reveal key={idx} delay={idx * 0.1} className="bg-white p-5 lg:p-6 rounded-2xl shadow-md border border-zinc-100 flex flex-col">
                 <div className="text-brand-500 mb-4">
                   <feature.icon size={28} />
                 </div>

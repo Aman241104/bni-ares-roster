@@ -45,7 +45,7 @@ export default async function AboutPage() {
 
   const s = settingsRes.data as Settings | null;
   const list = membersRes.data || [];
-  const uniqueCategories = new Set(list.map((m) => m.business_category).filter(Boolean)).size;
+  const uniqueCategories = Math.max(30, new Set(list.map((m) => m.business_category).filter(Boolean)).size);
 
   const hasRealStats = !!(
     s?.stat_total_members ||

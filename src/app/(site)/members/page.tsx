@@ -34,7 +34,7 @@ export default async function MembersPage() {
   const supportTeam = coords.filter((c) => c.team === "chapter_coordinator");
   const leadershipTeam = coords.filter((c) => c.team === "lt_team");
 
-  const uniqueCategories = new Set(list.map((m) => m.business_category).filter(Boolean)).size;
+  const uniqueCategories = Math.max(30, new Set(list.map((m) => m.business_category).filter(Boolean)).size);
 
   const hasRealStats = !!(
     s?.stat_total_members ||
