@@ -59,7 +59,7 @@ export default async function AboutPage() {
       <section className="relative overflow-hidden bg-ink text-white pt-24 sm:pt-32 pb-32 sm:pb-48">
         <div className="absolute inset-0">
           <img
-            src="https://placehold.co/1920x1080/1a1a1a/333333?text=Group+Photo"
+            src="/images/group-photo.png"
             alt="BNI Ares Members"
             className="h-full w-full object-cover opacity-40"
           />
@@ -289,7 +289,7 @@ export default async function AboutPage() {
 
             <Reveal delay={0.2} className="relative aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="https://placehold.co/800x600/e4e4e7/a1a1aa?text=Award+Ceremony"
+                src="/images/award-ceremony.png"
                 alt="Award Ceremony"
                 className="w-full h-full object-cover"
               />

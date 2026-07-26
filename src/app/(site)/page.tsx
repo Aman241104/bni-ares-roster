@@ -71,8 +71,8 @@ export default async function HomePage() {
       <section className="relative overflow-hidden bg-ink text-white pt-20 sm:pt-28 pb-32 sm:pb-40">
         <div className="absolute inset-0">
           <img
-            src="https://placehold.co/1920x1080/1a1a1a/333333?text=Hero+Image"
-            alt="Hero Background"
+            src="/images/group-photo.png"
+            alt="BNI Ares Network"
             className="h-full w-full object-cover opacity-30"
           />
           <div className="absolute inset-0 bg-black/50" />
@@ -280,7 +280,7 @@ export default async function HomePage() {
             </Reveal>
 
             <Reveal delay={0.2} className="relative">
-              <div className="absolute inset-0 -mx-4 sm:mx-0 sm:-right-10 sm:-top-10 sm:-bottom-10 bg-[url('https://placehold.co/800x800/222/333?text=Meeting')] bg-cover bg-center rounded-3xl opacity-40"></div>
+              <div className="absolute inset-0 -mx-4 sm:mx-0 sm:-right-10 sm:-top-10 sm:-bottom-10 bg-[url('/images/group-photo.png')] bg-cover bg-center rounded-3xl opacity-40"></div>
               
               <div className="relative bg-white/10 backdrop-blur-md border border-white/20 p-8 sm:p-10 rounded-3xl shadow-2xl">
                 <h3 className="font-bold text-2xl mb-8">Meeting Details</h3>

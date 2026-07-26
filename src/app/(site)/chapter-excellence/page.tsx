@@ -33,8 +33,8 @@ export default async function ChapterExcellencePage() {
       <section className="relative overflow-hidden bg-ink text-white pt-24 sm:pt-32 pb-32 sm:pb-48">
         <div className="absolute inset-0">
           <img
-            src="https://placehold.co/1920x1080/1a1a1a/333333?text=Golden+Trophy"
-            alt="Excellence Trophy"
+            src="/images/award-ceremony.png"
+            alt="BNI Ares Hall of Fame"
             className="h-full w-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-black/60" />

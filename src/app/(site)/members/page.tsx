@@ -50,8 +50,8 @@ export default async function MembersPage() {
       <section className="relative overflow-hidden bg-ink text-white pt-24 sm:pt-32 pb-32">
         <div className="absolute inset-0">
           <img
-            src="https://placehold.co/1920x1080/1a1a1a/333333?text=Group+Photo"
-            alt="BNI Ares Members"
+            src="/images/group-photo.png"
+            alt="BNI Ares Chapter"
             className="h-full w-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-black/60" />
