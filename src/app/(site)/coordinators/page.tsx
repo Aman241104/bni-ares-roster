@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase/client";
 import { Container, Section, SectionHeading } from "@/components/Section";
 import CoordinatorCard from "@/components/CoordinatorCard";
 import Reveal from "@/components/Reveal";
-import { Award } from "lucide-react";
+import { Award, Users, Handshake } from "lucide-react";
 import type { Coordinator, CoordinatorTeam, Sponsor } from "@/types/database";
 
 export const metadata: Metadata = {
@@ -140,53 +140,61 @@ export default async function CoordinatorsPage() {
         </Container>
       </Section>
 
-      {/* Hall of Fame */}
-      <Section className="bg-white border-t border-zinc-100">
-        <Container>
-          <Reveal className="text-center mb-12">
-            <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">HALL OF FAME</span>
-            <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">Celebrating Excellence</h2>
-            <p className="mt-4 max-w-2xl mx-auto text-zinc-500">Honoring our members who have gone above and beyond in their commitment to Givers Gain.</p>
+      {/* Hall of Fame - Premium Design */}
+      <Section className="bg-ink py-20 sm:py-28 relative overflow-hidden text-white">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-500/50 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-500/10 via-transparent to-transparent pointer-events-none"></div>
+        
+        <Container className="relative z-10">
+          <Reveal className="text-center mb-16">
+            <span className="inline-block px-3 py-1 bg-brand-500/20 text-brand-400 font-bold tracking-wider text-sm uppercase rounded-full mb-4 border border-brand-500/30">
+              HALL OF FAME
+            </span>
+            <h2 className="mt-2 font-heading text-4xl sm:text-5xl font-extrabold">Celebrating Excellence</h2>
+            <p className="mt-6 max-w-2xl mx-auto text-zinc-400 text-lg">Honoring our most distinguished members who have consistently gone above and beyond in their commitment to Givers Gain.</p>
           </Reveal>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: "Rahul Sharma", title: "Member of the Year 2025", desc: "For outstanding contribution to chapter growth and highest referrals passed." },
-              { name: "Priya Desai", title: "Maximum Visitors Hosted", desc: "Recognized for bringing the highest number of qualified visitors in a single term." },
-              { name: "Amit Patel", title: "Givers Gain Award", desc: "For exemplifying the core BNI philosophy and supporting fellow members' growth." }
+              { name: "Rahul Sharma", title: "Member of the Year", desc: "For outstanding contribution to chapter growth and passing record-breaking referrals.", icon: Award, color: "text-yellow-400", bg: "bg-yellow-400/10" },
+              { name: "Priya Desai", title: "Maximum Visitors", desc: "Recognized for bringing the highest number of qualified visitors in a single term.", icon: Users, color: "text-blue-400", bg: "bg-blue-400/10" },
+              { name: "Amit Patel", title: "Givers Gain Award", desc: "For exemplifying the core BNI philosophy and unconditionally supporting fellow members.", icon: Handshake, color: "text-emerald-400", bg: "bg-emerald-400/10" }
             ].map((inductee, idx) => (
-              <Reveal key={idx} delay={idx * 0.1} className="rounded-2xl bg-zinc-50 p-6 sm:p-8 text-center border border-zinc-200">
-                <div className="mx-auto w-16 h-16 bg-brand-50 rounded-full flex items-center justify-center mb-4">
-                  <Award className="text-brand-500" size={32} />
+              <Reveal key={idx} delay={idx * 0.15} className="group relative rounded-3xl bg-white/5 border border-white/10 p-8 text-center hover:bg-white/10 transition-all duration-300 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className={`mx-auto w-20 h-20 rounded-full flex items-center justify-center mb-6 relative z-10 ${inductee.bg}`}>
+                  <inductee.icon className={inductee.color} size={40} />
                 </div>
-                <h3 className="font-heading text-xl font-bold text-ink">{inductee.name}</h3>
-                <p className="text-sm font-bold text-brand-500 mt-1 uppercase tracking-wider">{inductee.title}</p>
-                <p className="mt-4 text-zinc-600 text-sm leading-relaxed">{inductee.desc}</p>
+                <h3 className="font-heading text-2xl font-bold text-white relative z-10">{inductee.name}</h3>
+                <p className={`text-sm font-bold mt-2 uppercase tracking-wider relative z-10 ${inductee.color}`}>{inductee.title}</p>
+                <div className="w-12 h-1 bg-white/20 mx-auto my-5 rounded-full relative z-10"></div>
+                <p className="text-zinc-400 leading-relaxed relative z-10">{inductee.desc}</p>
               </Reveal>
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* Sponsors */}
+      {/* Sponsors - Elegant Grid */}
       {displaySponsors.length > 0 && (
-        <Section className="bg-zinc-50 py-16 border-t border-zinc-100">
+        <Section className="bg-zinc-50 py-24 relative overflow-hidden">
           <Container>
-            <Reveal className="text-center mb-12">
-              <h2 className="font-heading text-2xl font-bold text-ink">Our Sponsors</h2>
+            <Reveal className="text-center mb-16">
+              <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">OUR PARTNERS</span>
+              <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">Chapter Sponsors</h2>
             </Reveal>
-            <div className="flex items-center gap-6">
-              <div className="flex-1 flex justify-center items-center gap-8 overflow-hidden px-4 flex-wrap">
-                {displaySponsors.map((sponsor) => (
-                  <a key={sponsor.id} href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+              {displaySponsors.map((sponsor, idx) => (
+                <Reveal key={sponsor.id} delay={idx * 0.1} className="flex h-32 items-center justify-center rounded-2xl bg-white p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-100 transition-all group">
+                  <a href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full h-full focus-visible:outline-none">
                     {sponsor.logo_url ? (
-                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-16 max-w-[150px] object-contain" />
+                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
                     ) : (
-                      <span className="text-zinc-500 font-bold text-sm uppercase">{sponsor.name}</span>
+                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest group-hover:text-brand-500 transition-colors text-center">{sponsor.name}</span>
                     )}
                   </a>
-                ))}
-              </div>
+                </Reveal>
+              ))}
             </div>
           </Container>
         </Section>
