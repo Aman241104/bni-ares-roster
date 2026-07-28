@@ -28,6 +28,7 @@ const ONE_PLUS_ACHIEVERS = [
   "Vishva Ambasana",
   "Rohan Shah",
   "Yash Thakkar",
+  "Minakshi Bhavsar",
   "Manush Patel",
   "Varun Bagaria",
   "Harsh Brahmbhatt",
