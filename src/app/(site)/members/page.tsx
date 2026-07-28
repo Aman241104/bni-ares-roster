@@ -90,7 +90,7 @@ export default async function MembersPage() {
                 <div className="text-white"><IndianRupee size={32} strokeWidth={1.5} /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-3xl sm:text-4xl">{s.stat_business_passed}</span>
+                    <span className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-3xl sm:text-4xl whitespace-nowrap">{s.stat_business_passed}</span>
                     <p className="mt-2 text-sm font-medium text-white/80">Business Passed</p>
                   </div>
                 ) : (

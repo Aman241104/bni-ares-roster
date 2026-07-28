@@ -194,7 +194,7 @@ export default async function AboutPage() {
                 <div className="text-white"><IndianRupee size={36} strokeWidth={1.5} aria-hidden="true" /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-2xl sm:text-3xl">{s.stat_business_passed}</span>
+                    <span className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-2xl sm:text-3xl whitespace-nowrap">{s.stat_business_passed}</span>
                     <p className="mt-2 text-sm font-medium text-white/80">Business Passed</p>
                   </div>
                 ) : (

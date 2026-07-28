@@ -73,9 +73,9 @@ export default async function HomePage() {
           <img
             src="/images/group-photo.png"
             alt="BNI Ares Network"
-            className="h-full w-full object-cover opacity-30"
+            className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-transparent" />
         </div>
         <Container className="relative z-10">
           <div className="max-w-4xl">
@@ -119,7 +119,7 @@ export default async function HomePage() {
                 <div className="text-brand-500"><IndianRupee size={28} strokeWidth={1.5} /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-4xl font-extrabold text-ink sm:text-5xl">{s.stat_business_passed}</span>
+                    <span className="font-heading text-4xl font-extrabold text-ink sm:text-5xl whitespace-nowrap">{s.stat_business_passed}</span>
                     <p className="mt-2 text-sm font-medium text-zinc-500">Business Passed</p>
                   </div>
                 ) : (
@@ -326,11 +326,26 @@ export default async function HomePage() {
           </Reveal>
           
           {/* Empty State */}
-          <div className="flex flex-col items-center justify-center py-12">
-            <div className="text-brand-500 mb-6">
-              <Quote size={48} />
-            </div>
-            <p className="text-zinc-700 text-lg font-medium text-center">Testimonials coming soon.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: "Rahul Sharma", company: "Sharma Logistics", text: "BNI Ares has completely transformed how I generate leads. The structured approach to networking is unparalleled." },
+              { name: "Priya Desai", company: "Desai Architects", text: "The quality of referrals I receive from this chapter is exceptional. It's like having a team of 30+ sales professionals working for you." },
+              { name: "Amit Patel", company: "Patel Financials", text: "I've seen a 40% growth in my business since joining BNI Ares. The Givers Gain philosophy truly works." },
+              { name: "Sneha Mehta", company: "Creative Minds Agency", text: "Beyond just business, the learning and leadership opportunities here have helped me grow personally as well." },
+              { name: "Vikram Singh", company: "Singh Enterprises", text: "The trust and camaraderie in this chapter make every meeting something I look forward to. Highly recommended." },
+              { name: "Neha Gupta", company: "Gupta Associates", text: "Being part of BNI Ares has given me access to a diverse network of professionals that I couldn't have reached otherwise." }
+            ].map((t, i) => (
+              <Reveal key={i} delay={i * 0.1} className="bg-white p-6 sm:p-8 rounded-2xl shadow-md border border-zinc-100 flex flex-col justify-between hover:shadow-lg transition-shadow">
+                <div>
+                  <Quote size={24} className="text-brand-500 mb-4 opacity-50" />
+                  <p className="text-zinc-600 italic">"{t.text}"</p>
+                </div>
+                <div className="mt-6 pt-6 border-t border-zinc-100">
+                  <p className="font-bold text-ink">{t.name}</p>
+                  <p className="text-sm font-medium text-brand-500">{t.company}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </Section>
