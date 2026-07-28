@@ -57,6 +57,20 @@ export default async function HomePage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recentGallery = (gallery as any[] | null) ?? [];
 
+  const displaySponsors = activeSponsors.length > 0 ? activeSponsors : [
+    { id: 'demo1', name: 'Sharma Logistics', logo_url: null, website_url: '#' },
+    { id: 'demo2', name: 'Desai Architects', logo_url: null, website_url: '#' },
+    { id: 'demo3', name: 'Patel Financials', logo_url: null, website_url: '#' },
+    { id: 'demo4', name: 'Creative Minds', logo_url: null, website_url: '#' }
+  ] as Sponsor[];
+
+  const displayGallery = recentGallery.length > 0 ? recentGallery : [
+    { id: 'g1', image_url: '/images/group-photo.png', caption: 'Chapter Meeting' },
+    { id: 'g2', image_url: '/images/group-photo.png', caption: 'Networking Event' },
+    { id: 'g3', image_url: '/images/group-photo.png', caption: 'Awards Night' },
+    { id: 'g4', image_url: '/images/group-photo.png', caption: 'Training Session' }
+  ];
+
   const hasRealStats = !!(
     s?.stat_total_members ||
     s?.stat_business_passed ||
@@ -351,29 +365,33 @@ export default async function HomePage() {
       </Section>
 
       {/* 7. Our Chapter Sponsors */}
-      {activeSponsors.length > 0 && (
-        <Section className="bg-white py-16 border-t border-zinc-100">
+      {displaySponsors.length > 0 && (
+        <Section className="bg-white py-24 relative overflow-hidden">
           <Container>
-            <div className="flex items-center gap-6">
-              <div className="flex-1 flex justify-center items-center gap-8 overflow-hidden px-4 flex-wrap">
-                {activeSponsors.map((sponsor) => (
-                  <a key={sponsor.id} href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded">
+            <Reveal className="text-center mb-16">
+              <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">OUR PARTNERS</span>
+              <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">Chapter Sponsors</h2>
+            </Reveal>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+              {displaySponsors.map((sponsor, idx) => (
+                <Reveal key={sponsor.id} delay={idx * 0.1} className="flex h-32 items-center justify-center rounded-2xl bg-zinc-50 p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-100 transition-all group">
+                  <a href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full h-full focus-visible:outline-none">
                     {sponsor.logo_url ? (
-                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-16 max-w-[150px] object-contain" />
+                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
                     ) : (
-                      <span className="text-zinc-500 font-bold text-sm uppercase">{sponsor.name}</span>
+                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest group-hover:text-brand-500 transition-colors text-center">{sponsor.name}</span>
                     )}
                   </a>
-                ))}
-              </div>
+                </Reveal>
+              ))}
             </div>
           </Container>
         </Section>
       )}
 
       {/* 8. Moments that Define Us */}
-      {recentGallery.length > 0 && (
-        <Section className="bg-zinc-50">
+      {displayGallery.length > 0 && (
+        <Section className="bg-zinc-50 py-16 sm:py-24">
           <Container>
             <Reveal className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-12">
               <div>
@@ -393,7 +411,7 @@ export default async function HomePage() {
             </Reveal>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {recentGallery.map((img, idx) => (
+              {displayGallery.map((img, idx) => (
                 <Reveal key={img.id} delay={idx * 0.1} className="aspect-square rounded-2xl overflow-hidden bg-zinc-200 relative group">
                   <img
                     src={img.image_url}
