@@ -366,26 +366,45 @@ export default async function HomePage() {
 
       {/* 7. Our Chapter Sponsors */}
       {displaySponsors.length > 0 && (
-        <Section className="bg-white py-24 relative overflow-hidden">
-          <Container>
-            <Reveal className="text-center mb-16">
+        <Section className="bg-white py-24 relative overflow-hidden border-t border-zinc-100">
+          <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+          
+          <Container className="mb-12 relative z-20">
+            <Reveal className="text-center">
               <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">OUR PARTNERS</span>
               <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">Chapter Sponsors</h2>
             </Reveal>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-              {displaySponsors.map((sponsor, idx) => (
-                <Reveal key={sponsor.id} delay={idx * 0.1} className="flex h-32 items-center justify-center rounded-2xl bg-zinc-50 p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-100 transition-all group">
+          </Container>
+          
+          <div className="flex overflow-hidden group whitespace-nowrap">
+            <div className="flex animate-marquee pause-marquee items-center gap-6 sm:gap-8 pr-6 sm:pr-8 w-max">
+              {[...displaySponsors, ...displaySponsors, ...displaySponsors, ...displaySponsors].map((sponsor, idx) => (
+                <div key={`s1-${sponsor.id}-${idx}`} className="flex shrink-0 h-28 sm:h-32 w-56 sm:w-64 items-center justify-center rounded-2xl bg-zinc-50 p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-200 transition-all cursor-pointer">
                   <a href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full h-full focus-visible:outline-none">
                     {sponsor.logo_url ? (
-                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
+                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                     ) : (
-                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest group-hover:text-brand-500 transition-colors text-center">{sponsor.name}</span>
+                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest hover:text-brand-500 transition-colors text-center whitespace-normal">{sponsor.name}</span>
                     )}
                   </a>
-                </Reveal>
+                </div>
               ))}
             </div>
-          </Container>
+            <div className="flex animate-marquee pause-marquee items-center gap-6 sm:gap-8 pr-6 sm:pr-8 w-max" aria-hidden="true">
+              {[...displaySponsors, ...displaySponsors, ...displaySponsors, ...displaySponsors].map((sponsor, idx) => (
+                <div key={`s2-${sponsor.id}-${idx}`} className="flex shrink-0 h-28 sm:h-32 w-56 sm:w-64 items-center justify-center rounded-2xl bg-zinc-50 p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-200 transition-all cursor-pointer">
+                  <a href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full h-full focus-visible:outline-none">
+                    {sponsor.logo_url ? (
+                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    ) : (
+                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest hover:text-brand-500 transition-colors text-center whitespace-normal">{sponsor.name}</span>
+                    )}
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
         </Section>
       )}
 
@@ -410,16 +429,23 @@ export default async function HomePage() {
               </Link>
             </Reveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {displayGallery.map((img, idx) => (
-                <Reveal key={img.id} delay={idx * 0.1} className="aspect-square rounded-2xl overflow-hidden bg-zinc-200 relative group">
-                  <img
-                    src={img.image_url}
-                    alt={img.caption || "Gallery image"}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </Reveal>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
+              {displayGallery.map((img, idx) => {
+                const isLarge = idx === 0;
+                return (
+                  <Reveal key={img.id} delay={idx * 0.1} className={`relative group rounded-3xl overflow-hidden bg-zinc-200 ${isLarge ? 'md:col-span-2 md:row-span-2 h-[300px] md:h-full' : 'h-[250px] md:h-full'}`}>
+                    <img
+                      src={img.image_url}
+                      alt={img.caption || "Gallery image"}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <p className="text-white font-bold text-lg">{img.caption || "Chapter Event"}</p>
+                    </div>
+                  </Reveal>
+                );
+              })}
             </div>
           </Container>
         </Section>
