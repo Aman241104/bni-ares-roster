@@ -45,7 +45,7 @@ export default function ContactForm() {
         return;
       }
       setSubmitted(true);
-    } catch (_err) {
+    } catch (err) {
       setError("Network error — please try again.");
     } finally {
       setSubmitting(false);
