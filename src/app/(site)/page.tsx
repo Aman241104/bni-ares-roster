@@ -53,19 +53,9 @@ export default async function HomePage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recentGallery = (gallery as any[] | null) ?? [];
 
-  const displaySponsors = activeSponsors.length > 0 ? activeSponsors : [
-    { id: 'demo1', name: 'Sharma Logistics', logo_url: null, website_url: '#' },
-    { id: 'demo2', name: 'Desai Architects', logo_url: null, website_url: '#' },
-    { id: 'demo3', name: 'Patel Financials', logo_url: null, website_url: '#' },
-    { id: 'demo4', name: 'Creative Minds', logo_url: null, website_url: '#' }
-  ] as Sponsor[];
+  const displaySponsors = activeSponsors;
 
-  const displayGallery = recentGallery.length > 0 ? recentGallery : [
-    { id: 'g1', image_url: '/images/group-photo.png', caption: 'Chapter Meeting' },
-    { id: 'g2', image_url: '/images/group-photo.png', caption: 'Networking Event' },
-    { id: 'g3', image_url: '/images/group-photo.png', caption: 'Awards Night' },
-    { id: 'g4', image_url: '/images/group-photo.png', caption: 'Training Session' }
-  ];
+  const displayGallery = recentGallery;
 
   const hasRealStats = !!(
     s?.stat_total_members ||
@@ -336,26 +326,8 @@ export default async function HomePage() {
           </Reveal>
           
           {/* Empty State */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { name: "Rahul Sharma", company: "Sharma Logistics", text: "BNI Ares has completely transformed how I generate leads. The structured approach to networking is unparalleled." },
-              { name: "Priya Desai", company: "Desai Architects", text: "The quality of referrals I receive from this chapter is exceptional. It's like having a team of 30+ sales professionals working for you." },
-              { name: "Amit Patel", company: "Patel Financials", text: "I've seen a 40% growth in my business since joining BNI Ares. The Givers Gain philosophy truly works." },
-              { name: "Sneha Mehta", company: "Creative Minds Agency", text: "Beyond just business, the learning and leadership opportunities here have helped me grow personally as well." },
-              { name: "Vikram Singh", company: "Singh Enterprises", text: "The trust and camaraderie in this chapter make every meeting something I look forward to. Highly recommended." },
-              { name: "Neha Gupta", company: "Gupta Associates", text: "Being part of BNI Ares has given me access to a diverse network of professionals that I couldn't have reached otherwise." }
-            ].map((t, i) => (
-              <Reveal key={i} delay={i * 0.1} className="bg-white p-6 sm:p-8 rounded-2xl shadow-md border border-zinc-100 flex flex-col justify-between hover:shadow-lg transition-shadow">
-                <div>
-                  <Quote size={24} className="text-brand-500 mb-4 opacity-50" />
-                  <p className="text-zinc-600 italic">&ldquo;{t.text}&rdquo;</p>
-                </div>
-                <div className="mt-6 pt-6 border-t border-zinc-100">
-                  <p className="font-bold text-ink">{t.name}</p>
-                  <p className="text-sm font-medium text-brand-500">{t.company}</p>
-                </div>
-              </Reveal>
-            ))}
+          <div className="mt-10 rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 py-14 text-center text-zinc-500">
+            Our member success stories will be featured here soon.
           </div>
         </Container>
       </Section>
@@ -425,11 +397,11 @@ export default async function HomePage() {
               </Link>
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
+            <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
               {displayGallery.map((img, idx) => {
                 const isLarge = idx === 0;
                 return (
-                  <Reveal key={img.id} delay={idx * 0.1} className={`relative group rounded-3xl overflow-hidden bg-zinc-200 ${isLarge ? 'md:col-span-2 md:row-span-2 h-[300px] md:h-full' : 'h-[250px] md:h-full'}`}>
+                  <Reveal key={img.id} delay={idx * 0.1} className={`relative group rounded-3xl overflow-hidden bg-zinc-200 ${isLarge ? 'md:col-span-2 md:row-span-2' : ''}`}>
                     <img
                       src={img.image_url}
                       alt={img.caption || "Gallery image"}

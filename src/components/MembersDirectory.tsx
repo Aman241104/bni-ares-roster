@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import Image from "next/image";
 import { Search, RotateCcw, ChevronDown } from "lucide-react";
 import MemberCard from "@/components/MemberCard";
 import type { Member } from "@/types/database";
