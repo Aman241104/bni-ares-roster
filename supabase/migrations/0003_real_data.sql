@@ -425,14 +425,14 @@ update settings set
   contact_whatsapp      = '+918104933816',
 
   -- Meeting details (update these once confirmed by the chapter)
-  meeting_time          = 'Every Tuesday, 7:00 AM – 9:00 AM',
+  meeting_time          = 'Come before 7:30 AM, Meeting starts 8:00 AM sharp',
   dress_code            = 'Business Formal',
 
   -- FAQs seeded from BNI standard + chapter context
   faqs = '[
     {"question": "Do I need to be invited to visit?", "answer": "It helps to come with a member, but you can also register directly on our Visitor Invite page and we will connect you with a host."},
     {"question": "Is there a fee to attend as a visitor?", "answer": "Yes, a small visitor fee is charged to cover breakfast and materials. Exact details are shared when your visit is confirmed."},
-    {"question": "What time does the meeting start?", "answer": "Meetings begin at 7:00 AM sharp every Tuesday. We recommend arriving by 6:45 AM to network before the formal programme."},
+    {"question": "What time does the meeting start?", "answer": "We recommend arriving before 7:30 AM for open networking. The formal meeting starts at 8:00 AM sharp."},
     {"question": "What is the dress code?", "answer": "Business formal. First impressions matter — dress the part and make the most of the introductions."},
     {"question": "How do I become a member?", "answer": "Visit at least once, experience the chapter energy, then speak with any member or contact us. One seat per business category is available."},
     {"question": "What is the ''One Seat One Business'' rule?", "answer": "BNI allows only one member per business category in a chapter — so your seat is exclusively yours, with no competition from within the chapter."},

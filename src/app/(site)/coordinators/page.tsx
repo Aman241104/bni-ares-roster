@@ -103,7 +103,6 @@ function AchievementSection({
   bgClass,
   borderClass,
 }: {
-  eyebrow: string;
   title: string;
   description: string;
   names: string[];
@@ -121,9 +120,7 @@ function AchievementSection({
             <Icon size={28} className="text-white" />
           </div>
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-1">
-              {eyebrow}
-            </p>
+
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-ink">{title}</h2>
             <p className="mt-1 text-sm text-zinc-500 max-w-lg">{description}</p>
           </div>
@@ -186,14 +183,13 @@ export default async function ChapterExcellencePage() {
               Our Achievers
             </h2>
             <p className="mt-3 text-zinc-500 max-w-xl mx-auto">
-              Four tiers of excellence — each representing a different level of commitment to giving, growing, and leading.
+              Four pillars of excellence — each representing a different level of commitment to giving, growing, and leading.
             </p>
           </Reveal>
 
           <div className="space-y-6">
             {/* 1. Green Club */}
             <AchievementSection
-              eyebrow="Tier 1"
               title="Green Club Members"
               description="Members who consistently score 70–100 points on the Traffic Light system — the benchmark of a great BNI member."
               names={GREEN_CLUB}
@@ -205,7 +201,6 @@ export default async function ChapterExcellencePage() {
 
             {/* 2. One Plus Achievers */}
             <AchievementSection
-              eyebrow="Tier 2"
               title="One Plus Achievers"
               description="Members who go one step further — consistently giving more than the baseline, week after week."
               names={ONE_PLUS_ACHIEVERS}
@@ -217,7 +212,6 @@ export default async function ChapterExcellencePage() {
 
             {/* 3. Gold Club */}
             <AchievementSection
-              eyebrow="Tier 3"
               title="Gold Club Members"
               description="An elite recognition for members who have demonstrated exceptional, sustained performance across referrals, attendance, and 1-2-1s."
               names={GOLD_CLUB}
@@ -229,7 +223,6 @@ export default async function ChapterExcellencePage() {
 
             {/* 4. Crorepati Givers */}
             <AchievementSection
-              eyebrow="Tier 4 — Highest Honour"
               title="Crorepati Givers"
               description="Members who have passed ₹1 Crore or more in closed business through referrals within BNI Ares. The pinnacle of Givers Gain®."
               names={CROREPATI_GIVERS}
@@ -259,12 +252,6 @@ export default async function ChapterExcellencePage() {
                   created — made possible by members who volunteer to serve.
                 </p>
               </div>
-              <Link
-                href="/contact"
-                className="shrink-0 inline-flex items-center gap-2 rounded-full border-2 border-ink px-6 py-3 text-sm font-bold text-ink hover:bg-ink hover:text-white transition-colors"
-              >
-                <Handshake size={16} /> Interested in a Role?
-              </Link>
             </div>
           </Reveal>
 
@@ -286,16 +273,6 @@ export default async function ChapterExcellencePage() {
                     <div className="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 px-6 py-12 text-center">
                       <p className="font-heading text-base font-bold text-ink">
                         Our next {group.title} will be announced soon.
-                      </p>
-                      <p className="mx-auto mt-2 max-w-sm text-sm text-zinc-500">
-                        Interested in serving?{" "}
-                        <Link
-                          href="/contact"
-                          className="font-semibold text-brand-600 hover:underline"
-                        >
-                          Speak with our leadership team
-                        </Link>
-                        .
                       </p>
                     </div>
                   ) : (
