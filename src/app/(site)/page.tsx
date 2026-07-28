@@ -11,12 +11,9 @@ import {
   Mail,
   MessageCircle,
   MapPin,
-  ChevronLeft,
-  ChevronRight,
   Quote,
   ShieldCheck,
   TrendingUp,
-  BookOpen,
   Award,
 } from "lucide-react";
 import { LinkedinIcon } from "@/components/icons/BrandIcons";
@@ -30,7 +27,6 @@ const WHY_JOIN = [
   { icon: Handshake, title: "Qualified Referrals", text: "Get quality business referrals from trusted professionals." },
   { icon: ShieldCheck, title: "Trusted Network", text: "Build meaningful relationships with vetted business owners." },
   { icon: TrendingUp, title: "Business Growth", text: "Expand your reach and significantly increase your revenue." },
-  { icon: BookOpen, title: "Learning", text: "Gain access to exclusive training and mentorship programs." },
   { icon: Award, title: "Leadership", text: "Develop your leadership skills by taking up chapter roles." },
 ];
 
@@ -94,13 +90,13 @@ export default async function HomePage() {
         <Container className="relative z-10">
           <div className="max-w-4xl">
             <span className="inline-block bg-brand-500 text-white text-xs font-bold px-3 py-1 uppercase tracking-wider mb-6 rounded-sm">
-              AHMEDABAD'S PREMIER BNI CHAPTER
+              AHMEDABAD WEST&apos;S FIRST PLATINUM CHAPTER
             </span>
             <h1 className="font-heading text-5xl font-extrabold leading-tight sm:text-7xl">
-              Building Relationships. Growing Businesses. <span className="text-red-400">Changing Lives.</span>
+              Where Ahmedabad&apos;s Most Trusted Businesses <span className="text-red-400">Grow Together.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-zinc-300">
-              BNI Ares is a community of trusted business professionals committed to mutual growth through meaningful referrals.
+              30+ verified business leaders. Thousands of quality referrals. One chapter focused on helping members grow through meaningful business relationships.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
@@ -171,7 +167,7 @@ export default async function HomePage() {
                   WHY JOIN BNI ARES?
                 </span>
                 <h2 className="mt-4 font-heading text-4xl sm:text-5xl font-extrabold text-ink leading-tight">
-                  More Than Networking, It's About <span className="text-brand-500">Growing Together.</span>
+                  More Than Networking, It&apos;s About <span className="text-brand-500">Growing Together.</span>
                 </h2>
               </div>
               <div className="lg:mt-10">
@@ -352,7 +348,7 @@ export default async function HomePage() {
               <Reveal key={i} delay={i * 0.1} className="bg-white p-6 sm:p-8 rounded-2xl shadow-md border border-zinc-100 flex flex-col justify-between hover:shadow-lg transition-shadow">
                 <div>
                   <Quote size={24} className="text-brand-500 mb-4 opacity-50" />
-                  <p className="text-zinc-600 italic">"{t.text}"</p>
+                  <p className="text-zinc-600 italic">&ldquo;{t.text}&rdquo;</p>
                 </div>
                 <div className="mt-6 pt-6 border-t border-zinc-100">
                   <p className="font-bold text-ink">{t.name}</p>

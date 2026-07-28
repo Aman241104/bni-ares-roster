@@ -92,7 +92,8 @@ src/types/database.ts        — hand-written types mirroring the SQL schema (no
 scripts/hash-password.mjs    — CLI to generate a new ADMIN_PASSWORD_HASH
 supabase/migrations/0001_init.sql — core schema + RLS, run manually in SQL Editor
 supabase/migrations/0002_storage.sql — "media" storage bucket + public-read policy
-supabase/seed/seed.sql       — placeholder demo data, run manually after 0001
+supabase/migrations/0003_real_data.sql — **real chapter data** (33 members + settings from May-4 PDF); truncates placeholder data and inserts real roster
+supabase/seed/seed.sql       — placeholder demo data (superseded by 0003 — do not apply if 0003 has been run)
 ```
 
 ## Database Schema
@@ -103,7 +104,7 @@ See `supabase/migrations/0001_init.sql` (core schema) and `0002_storage.sql` (st
 ## Build Status
 - [x] Project scaffolded (Next.js 16 + Tailwind 4 + Supabase client)
 - [x] DB schema + RLS policies + storage bucket written (`0001_init.sql`, `0002_storage.sql`) — **applied to the live Supabase project 2026-07-20.** Verified via REST: all 8 tables + `media` storage bucket exist, RLS enforces correctly (public read active-only, public insert on registrations/messages).
-- [ ] Placeholder seed data (`seed.sql`) — not applied, and shouldn't be now that real content can go straight in through the admin panel
+- [ ] Placeholder seed data (`seed.sql`) — superseded by `0003_real_data.sql`; do NOT apply this if 0003 has been run
 - [x] All 6 public pages built, storytelling/copy pass done, `npm run build` / `npm run lint` pass clean
 - [x] Visitor registration form (multi-step) — inserts directly to `visitor_registrations` via RLS, shows success screen. **No email notification** (Phase 3, deferred)
 - [x] Contact form — inserts to `contact_messages` via RLS, shows success screen
@@ -112,7 +113,7 @@ See `supabase/migrations/0001_init.sql` (core schema) and `0002_storage.sql` (st
 - [x] Full end-to-end QA against live production, post-migration (2026-07-20): visitor registration form → inserts → shows in admin inbox; admin member create → writes to DB → renders on public directory with live stats; admin delete (member + registration) with confirm dialog. Test data created and cleaned up, site back to genuine 0-state.
 - [ ] Deliberately skipped in Phase 2: bulk CSV **import** for members (brief marks it optional), per-coordinator admin accounts (single shared login was the explicit call), drag-and-drop reorder (up/down buttons instead, no new dependency), image reorder within a gallery album (upload order only)
 - [ ] Email notification on visitor registration (Phase 3 — deferred by requester, "badme")
-- [ ] Real chapter content (members, coordinators, stats, logo, meeting details) — pending a PPT from the chapter, currently placeholder/empty. Now enterable through the admin panel once the migration runs — the requester no longer needs to wait for a PPT if they'd rather type it in directly.
+- [x] **Real chapter content — members populated (2026-07-28).** `supabase/migrations/0003_real_data.sql` created from `ARESCHAPTERROASTER-May-4.pdf`: 33 real members with name/company/designation/category/description/referral expectations/phone/email/website, plus real chapter stats (13,326 referrals, ₹115 Cr+ business, 630+ visitors). **Pending human action: run 0003 in Supabase SQL Editor.** Still needed: coordinator list, member photos (upload via admin panel), meeting venue/fee/QR details, sponsor logos.
 - [ ] "Download Visiting Card" on member profile — brief marks this optional, not built
 - [ ] Domain — requester said decide later ("Last mai dekh lenge")
 
@@ -160,7 +161,12 @@ npm run dev      # local dev server
 npm run build    # production build (also used for lint/type-check gating)
 npm run lint     # eslint
 ```
-**To apply the DB schema (do this first — nothing works without it):** open the Supabase dashboard for project `ijmyvtnyytehjxprpwdc` → SQL Editor → paste and run, in order: `supabase/migrations/0001_init.sql`, then `supabase/migrations/0002_storage.sql`, then optionally `supabase/seed/seed.sql` for placeholder demo data.
+**To apply the DB schema (do this first — nothing works without it):** open the Supabase dashboard for project `ijmyvtnyytehjxprpwdc` → SQL Editor → paste and run, in order:
+1. `supabase/migrations/0001_init.sql` — core schema + RLS
+2. `supabase/migrations/0002_storage.sql` — storage bucket
+3. `supabase/migrations/0003_real_data.sql` — **real chapter data** (33 members from May-4 PDF + real stats). This replaces the placeholder `seed.sql`. Safe to re-run.
+
+Do NOT run `supabase/seed/seed.sql` if 0003 has been applied — it contains placeholder data that 0003 overwrites anyway.
 
 **To change the admin password:** `node scripts/hash-password.mjs "new password"` → copy the output into `ADMIN_PASSWORD_HASH` in `.env.local` and in Vercel (`vercel env add ADMIN_PASSWORD_HASH <environment>`, once per environment) → tell whoever needs it the new plaintext password directly, never commit it anywhere.
 
@@ -227,4 +233,33 @@ Code is 100% done and deployed for both Phase 1 and Phase 2. The site and admin 
 - A layout with no `cookies()`/`headers()` call doesn't automatically opt a route into dynamic rendering — admin pages were getting statically prerendered at build time until `export const dynamic = "force-dynamic"` was added to `(dashboard)/layout.tsx`. Easy to miss since the build succeeds either way; only shows up as "stale data" in production.
 - File inputs in a Server Action form need `encType="multipart/form-data"` explicitly on the `<form>` — the browser does not infer it from the presence of an `<input type="file">`.
 - `react-hooks/set-state-in-effect` also flaged a `useFormStatus`-adjacent pattern initially; resolved the same way as the earlier Navbar fix (move the state change to an event handler instead of an effect).
+---
+
+## Handoff — Antigravity — 2026-07-28
+
+### Completed This Session
+- [x] Read and extracted all data from `ARESCHAPTERROASTER-May-4.pdf` (located at `/home/whoever/work/sweet-web/code/public/products/`) using `pdftotext`
+- [x] Created `supabase/migrations/0003_real_data.sql` — the definitive real-data seed file with all 33 chapter members from the May 2026 PDF roster, including: name, company, designation, business_category, description, referral_expectations, phone, whatsapp, email, website, display_order
+- [x] Settings updated in that same migration: stat_total_members=33, stat_total_referrals=13326, stat_business_passed="₹115 Cr+", stat_visitors_hosted=630, contact info, meeting_time, dress_code, and 7 real FAQs
+- [x] Updated AGENTS.md Build Status, File Map, and Deploy Commands to reflect the new migration
+
+### State Left In
+`0003_real_data.sql` is written and committed. **The SQL has NOT been run yet** — a human must paste it into the Supabase SQL Editor for project `ijmyvtnyytehjxprpwdc`. Once run, the public site will immediately show all 33 members with real data and real stats — no redeploy needed.
+
+### Next Steps (priority order)
+1. **REQUIRED: Run `supabase/migrations/0003_real_data.sql`** in Supabase dashboard → project `ijmyvtnyytehjxprpwdc` → SQL Editor. This populates the live DB.
+2. **Upload member photos** via the admin panel (`/admin/members`) — photos were not in the PDF. Avatar initials will show until photos are added.
+3. **Fill in meeting venue details** (address, maps link, visitor fee, QR code, UPI ID, bank details) via `/admin/settings` — the PDF did not contain these.
+4. **Add coordinators** (LT Team, MC Committee, Visitor Host, Chapter Coordinators) via `/admin/coordinators` — not included in the May roster PDF.
+5. **Sponsor logos** via `/admin/sponsors`.
+6. Note: Rajvi Prajapati (SAS Power Semiconductor, row 31) has the same phone number (+919726811419) as Samarth Sisodia in the PDF — this appears to be a PDF data error. The real contact can be updated via the admin panel once confirmed.
+
+### Data Notes from PDF
+- **Mentors** (listed in PDF but not members): Maunil Parikh, Jigar Shah, Sunil Agarwal, Ankit Patel — these 4 are also members of the chapter; the mentor designation is a BNI role, not a separate table entry.
+- **Top Performers (last month)**: Max Referral → Jigar Shah; Highest TYFCB → Adv Jay Patel; Highest 1-2-1 → Priyank Vora; Notable Networker → Jigar Shah.
+- **Birthdays (July)**: Rohan Shah — 17 July; Priyank Vora — 18 July.
+- **Green Smiley**: Ashutosh Mehta, Ankit Patel, Harsh Brahmbhatt, Sunil Agarwal.
+- **One Plus Achievers**: Jay Patel, Vishva Ambasana, Rohan Shah, Yash Thakkar, Manush Patel, Varun Bagaria, Harsh Brahmbhatt, Sunil Agarwal.
+- **Crorepati Givers**: Sunil Agarwal, Ashutosh Mehta, Maunil Parikh, Jigar Shah, Harsh Brahmbhatt, Shruti Agarwal, Rohan Shah, Het Patel, Minakshi Bhavsar, Ankit Patel, Manush Patel.
+- **Gold Club Member**: Ashutosh Mehta.
 ---

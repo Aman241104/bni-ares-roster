@@ -78,7 +78,7 @@ export default async function AboutPage() {
               Creating unlimited opportunities.
             </p>
             <p className="mt-6 max-w-2xl text-lg text-zinc-300 leading-relaxed">
-              BNI Ares is Ahmedabad's leading business networking chapter, where trusted relationships and quality referrals help businesses grow together. We are a community of like-minded professionals committed to Givers Gain® and collective success.
+              BNI Ares is Ahmedabad&apos;s leading business networking chapter, where trusted relationships and quality referrals help businesses grow together. We are a community of like-minded professionals committed to Givers Gain® and collective success.
             </p>
           </div>
           
@@ -116,10 +116,10 @@ export default async function AboutPage() {
               </h2>
               <div className="mt-6 space-y-6 text-zinc-600 text-lg leading-relaxed">
                 <p>
-                  BNI Ares was formed with a vision to create a strong platform for Ahmedabad's business owners. What started as a small group of ambitious professionals has now grown into one of the most dynamic and high-performing networking chapters in the region.
+                  BNI Ares was formed with a vision to create a strong platform for Ahmedabad&apos;s business owners. What started as a small group of ambitious professionals has now grown into one of the most dynamic and high-performing networking chapters in the region.
                 </p>
                 <p>
-                  Over the years, we have broken records, fostered unbreakable bonds, and generated hundreds of crores in closed business. But beyond the numbers, it's the culture of unwavering support and mutual respect that truly defines us.
+                  Over the years, we have broken records, fostered unbreakable bonds, and generated hundreds of crores in closed business. But beyond the numbers, it&apos;s the culture of unwavering support and mutual respect that truly defines us.
                 </p>
               </div>
               <Link
@@ -171,7 +171,7 @@ export default async function AboutPage() {
                   <div>
                     <h3 className="font-heading font-bold text-xl text-brand-500">Our Culture</h3>
                     <p className="mt-6 text-zinc-600 leading-relaxed">
-                      We celebrate each other's successes as our own. BNI Ares is built on a foundation of trust, accountability, and a genuine desire to see fellow members thrive in their respective industries.
+                      We celebrate each other&apos;s successes as our own. BNI Ares is built on a foundation of trust, accountability, and a genuine desire to see fellow members thrive in their respective industries.
                     </p>
                   </div>
                 </div>

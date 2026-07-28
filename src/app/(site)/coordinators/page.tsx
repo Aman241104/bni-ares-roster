@@ -1,20 +1,56 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
-import { Container, Section, SectionHeading } from "@/components/Section";
+import { Container, Section } from "@/components/Section";
 import CoordinatorCard from "@/components/CoordinatorCard";
 import Reveal from "@/components/Reveal";
-import { Award, Users, Handshake } from "lucide-react";
-import type { Coordinator, CoordinatorTeam, Sponsor } from "@/types/database";
+import { Trophy, Star, Gem, IndianRupee, Users, Handshake } from "lucide-react";
+import type { Coordinator, CoordinatorTeam } from "@/types/database";
 
 export const metadata: Metadata = {
-  title: "Coordinators",
-  description: "Meet the leadership team, MC committee, visitor host team, and chapter coordinators of BNI Ares.",
+  title: "Chapter Excellence — BNI Ares",
+  description:
+    "Recognising the members who go above and beyond — Green Club, One Plus Achievers, Gold Club, Crorepati Givers, and the chapter's leadership team.",
 };
 
 export const revalidate = 60;
 
-const GROUPS: { team: CoordinatorTeam; title: string; role: string }[] = [
+// ── Achievement data (from May 2026 chapter roster PDF) ──────────────────────
+const GREEN_CLUB = [
+  "Ashutosh Mehta",
+  "Ankit Patel",
+  "Harsh Brahmbhatt",
+  "Sunil Agarwal",
+];
+
+const ONE_PLUS_ACHIEVERS = [
+  "Jay Patel",
+  "Vishva Ambasana",
+  "Rohan Shah",
+  "Yash Thakkar",
+  "Manush Patel",
+  "Varun Bagaria",
+  "Harsh Brahmbhatt",
+  "Sunil Agarwal",
+];
+
+const GOLD_CLUB = ["Ashutosh Mehta"];
+
+const CROREPATI_GIVERS = [
+  "Sunil Agarwal",
+  "Ashutosh Mehta",
+  "Maunil Parikh",
+  "Jigar Shah",
+  "Harsh Brahmbhatt",
+  "Shruti Agarwal",
+  "Rohan Shah",
+  "Het Patel",
+  "Minakshi Bhavsar",
+  "Ankit Patel",
+  "Manush Patel",
+];
+
+const COORDINATOR_GROUPS: { team: CoordinatorTeam; title: string; role: string }[] = [
   {
     team: "lt_team",
     title: "Leadership Team",
@@ -37,95 +73,233 @@ const GROUPS: { team: CoordinatorTeam; title: string; role: string }[] = [
   },
 ];
 
-export default async function CoordinatorsPage() {
-  const [
-    { data: coordinatorsData },
-    { data: sponsorsData },
-    { data: galleryData }
-  ] = await Promise.all([
-    supabase.from("coordinators").select("*").eq("status", "active").order("display_order"),
-    supabase.from("sponsors").select("*").eq("status", "active").order("priority"),
-    supabase.from("gallery_images").select("*, gallery_albums!inner(*)").eq("gallery_albums.status", "active").order("created_at", { ascending: false }).limit(4),
-  ]);
+// ── Sub-components ────────────────────────────────────────────────────────────
+
+function AchieverBadge({ name }: { name: string }) {
+  const initials = name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-zinc-100 bg-white px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink text-sm font-bold text-white">
+        {initials}
+      </div>
+      <span className="font-semibold text-ink text-sm">{name}</span>
+    </div>
+  );
+}
+
+function AchievementSection({
+  eyebrow,
+  title,
+  description,
+  names,
+  icon: Icon,
+  accentClass,
+  bgClass,
+  borderClass,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  names: string[];
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  accentClass: string;
+  bgClass: string;
+  borderClass: string;
+}) {
+  return (
+    <Reveal>
+      <div className={`rounded-3xl border ${borderClass} ${bgClass} p-8 sm:p-10`}>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${accentClass}`}>
+            <Icon size={28} className="text-white" />
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-1">
+              {eyebrow}
+            </p>
+            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-ink">{title}</h2>
+            <p className="mt-1 text-sm text-zinc-500 max-w-lg">{description}</p>
+          </div>
+          <div className="sm:ml-auto shrink-0">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white border border-zinc-200 px-4 py-1.5 text-sm font-bold text-zinc-600 shadow-sm">
+              <Users size={14} /> {names.length} Members
+            </span>
+          </div>
+        </div>
+
+        {/* Members grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {names.map((name) => (
+            <AchieverBadge key={name} name={name} />
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+export default async function ChapterExcellencePage() {
+  const { data: coordinatorsData } = await supabase
+    .from("coordinators")
+    .select("*")
+    .eq("status", "active")
+    .order("display_order");
 
   const coordinators = (coordinatorsData as Coordinator[] | null) ?? [];
-  const activeSponsors = (sponsorsData as Sponsor[] | null) ?? [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const recentGallery = (galleryData as any[] | null) ?? [];
-
-  const displaySponsors = activeSponsors.length > 0 ? activeSponsors : [
-    { id: 'demo1', name: 'Sharma Logistics', logo_url: null, website_url: '#' },
-    { id: 'demo2', name: 'Desai Architects', logo_url: null, website_url: '#' },
-    { id: 'demo3', name: 'Patel Financials', logo_url: null, website_url: '#' },
-    { id: 'demo4', name: 'Creative Minds', logo_url: null, website_url: '#' }
-  ] as Sponsor[];
-
-  const displayGallery = recentGallery.length > 0 ? recentGallery : [
-    { id: 'g1', image_url: '/images/group-photo.png', caption: 'Chapter Meeting' },
-    { id: 'g2', image_url: '/images/group-photo.png', caption: 'Networking Event' },
-    { id: 'g3', image_url: '/images/group-photo.png', caption: 'Awards Night' },
-    { id: 'g4', image_url: '/images/group-photo.png', caption: 'Training Session' }
-  ];
 
   return (
     <>
-      <section className="bg-ink py-20 text-white sm:py-28">
-        <Container className="max-w-3xl text-center">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500">The Team</p>
-          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">
-            The People Behind The Community.
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <section className="bg-ink py-20 text-white sm:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-brand-500/15 via-transparent to-transparent pointer-events-none" />
+        <Container className="relative z-10 max-w-3xl text-center">
+          <span className="inline-block px-4 py-1.5 bg-brand-500/20 text-brand-400 font-bold tracking-wider text-xs uppercase rounded-full mb-6 border border-brand-500/30">
+            Chapter Excellence
+          </span>
+          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-6xl">
+            Recognising Those Who{" "}
+            <span className="text-red-400">Go Above &amp; Beyond.</span>
           </h1>
-          <p className="mt-6 text-lg text-zinc-300">
-            Every referral shared, every visitor welcomed, every opportunity created — made possible by people who
-            volunteer their time to help other businesses grow.
+          <p className="mt-6 text-lg text-zinc-300 max-w-2xl mx-auto">
+            BNI Ares celebrates members who consistently give referrals, bring
+            visitors, and live the Givers Gain® philosophy every single week.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-2 text-sm">
-            {GROUPS.map((g) => (
-              <span key={g.team} className="rounded-full border border-white/15 px-4 py-1.5 text-zinc-300">
-                {g.title}
-              </span>
-            ))}
-          </div>
         </Container>
       </section>
 
-      <Section>
-        <Container className="max-w-2xl text-center">
-          <Reveal>
-            <SectionHeading eyebrow="Our Philosophy" title="Leadership Isn't a Position. It's a Responsibility." center />
-            <p className="mt-4 text-zinc-600">
-              We don&apos;t just manage weekly meetings — we create an environment where businesses grow through
-              trust and service. Every role on this page is a volunteer commitment, made because we believe in
-              Givers Gain.
+      {/* ── Achievement Sections ─────────────────────────────────────────── */}
+      <Section className="bg-zinc-50">
+        <Container>
+          <Reveal className="text-center mb-12">
+            <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
+              BNI Recognition Programme
+            </span>
+            <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">
+              Our Achievers
+            </h2>
+            <p className="mt-3 text-zinc-500 max-w-xl mx-auto">
+              Four tiers of excellence — each representing a different level of commitment to giving, growing, and leading.
             </p>
           </Reveal>
+
+          <div className="space-y-6">
+            {/* 1. Green Club */}
+            <AchievementSection
+              eyebrow="Tier 1"
+              title="Green Club Members"
+              description="Members who consistently score 70–100 points on the Traffic Light system — the benchmark of a great BNI member."
+              names={GREEN_CLUB}
+              icon={Star}
+              accentClass="bg-emerald-500"
+              bgClass="bg-emerald-50/50"
+              borderClass="border-emerald-200"
+            />
+
+            {/* 2. One Plus Achievers */}
+            <AchievementSection
+              eyebrow="Tier 2"
+              title="One Plus Achievers"
+              description="Members who go one step further — consistently giving more than the baseline, week after week."
+              names={ONE_PLUS_ACHIEVERS}
+              icon={Trophy}
+              accentClass="bg-amber-500"
+              bgClass="bg-amber-50/50"
+              borderClass="border-amber-200"
+            />
+
+            {/* 3. Gold Club */}
+            <AchievementSection
+              eyebrow="Tier 3"
+              title="Gold Club Members"
+              description="An elite recognition for members who have demonstrated exceptional, sustained performance across referrals, attendance, and 1-2-1s."
+              names={GOLD_CLUB}
+              icon={Gem}
+              accentClass="bg-yellow-500"
+              bgClass="bg-yellow-50/60"
+              borderClass="border-yellow-300"
+            />
+
+            {/* 4. Crorepati Givers */}
+            <AchievementSection
+              eyebrow="Tier 4 — Highest Honour"
+              title="Crorepati Givers"
+              description="Members who have passed ₹1 Crore or more in closed business through referrals within BNI Ares. The pinnacle of Givers Gain®."
+              names={CROREPATI_GIVERS}
+              icon={IndianRupee}
+              accentClass="bg-brand-500"
+              bgClass="bg-red-50/50"
+              borderClass="border-red-200"
+            />
+          </div>
         </Container>
       </Section>
 
-      <Section className="bg-zinc-50">
+      {/* ── Coordinators ─────────────────────────────────────────────────── */}
+      <Section className="bg-white">
         <Container>
-          <div className="space-y-16">
-            {GROUPS.map((group) => {
+          <Reveal className="mb-12">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+              <div>
+                <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
+                  Chapter Leadership
+                </span>
+                <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">
+                  The People Behind the Chapter
+                </h2>
+                <p className="mt-3 text-zinc-500 max-w-xl">
+                  Every referral shared, every visitor welcomed, every opportunity
+                  created — made possible by members who volunteer to serve.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="shrink-0 inline-flex items-center gap-2 rounded-full border-2 border-ink px-6 py-3 text-sm font-bold text-ink hover:bg-ink hover:text-white transition-colors"
+              >
+                <Handshake size={16} /> Interested in a Role?
+              </Link>
+            </div>
+          </Reveal>
+
+          <div className="space-y-14">
+            {COORDINATOR_GROUPS.map((group) => {
               const members = coordinators.filter((c) => c.team === group.team);
               return (
                 <div key={group.team}>
-                  <h2 className="font-heading text-2xl font-bold text-ink">{group.title}</h2>
-                  <p className="mt-1 max-w-xl text-zinc-500">{group.role}</p>
+                  <div className="mb-6 border-b border-zinc-100 pb-4">
+                    <h3 className="font-heading text-xl font-bold text-ink">
+                      {group.title}
+                    </h3>
+                    <p className="mt-1 text-sm text-zinc-500 max-w-xl">
+                      {group.role}
+                    </p>
+                  </div>
+
                   {members.length === 0 ? (
-                    <div className="mt-6 rounded-2xl border border-dashed border-zinc-300 bg-white px-6 py-12 text-center">
+                    <div className="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 px-6 py-12 text-center">
                       <p className="font-heading text-base font-bold text-ink">
                         Our next {group.title} will be announced soon.
                       </p>
                       <p className="mx-auto mt-2 max-w-sm text-sm text-zinc-500">
-                        Interested in serving your chapter?{" "}
-                        <Link href="/contact" className="font-semibold text-brand-600 hover:underline">
-                          Speak with our current leadership team
+                        Interested in serving?{" "}
+                        <Link
+                          href="/contact"
+                          className="font-semibold text-brand-600 hover:underline"
+                        >
+                          Speak with our leadership team
                         </Link>
                         .
                       </p>
                     </div>
                   ) : (
-                    <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                       {members.map((c) => (
                         <Reveal key={c.id}>
                           <CoordinatorCard coordinator={c} />
@@ -140,120 +314,26 @@ export default async function CoordinatorsPage() {
         </Container>
       </Section>
 
-      {/* Hall of Fame - Premium Design */}
-      <Section className="bg-ink py-20 sm:py-28 relative overflow-hidden text-white">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-500/50 to-transparent"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-500/10 via-transparent to-transparent pointer-events-none"></div>
-        
-        <Container className="relative z-10">
-          <Reveal className="text-center mb-16">
-            <span className="inline-block px-3 py-1 bg-brand-500/20 text-brand-400 font-bold tracking-wider text-sm uppercase rounded-full mb-4 border border-brand-500/30">
-              HALL OF FAME
-            </span>
-            <h2 className="mt-2 font-heading text-4xl sm:text-5xl font-extrabold">Celebrating Excellence</h2>
-            <p className="mt-6 max-w-2xl mx-auto text-zinc-400 text-lg">Honoring our most distinguished members who have consistently gone above and beyond in their commitment to Givers Gain.</p>
+      {/* ── CTA ──────────────────────────────────────────────────────────── */}
+      <section className="bg-ink py-20 text-center text-white">
+        <Container className="max-w-2xl">
+          <Reveal>
+            <p className="font-heading text-3xl font-extrabold leading-tight sm:text-4xl">
+              Your Name Could Be On This List.
+            </p>
+            <p className="mt-4 text-zinc-300">
+              Every Crorepati Giver started with their first referral. Come see
+              what Givers Gain® looks like in action.
+            </p>
+            <Link
+              href="/visitor"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand-500 px-8 py-4 text-sm font-bold text-white hover:bg-brand-600 transition-colors"
+            >
+              Visit a Meeting →
+            </Link>
           </Reveal>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { name: "Rahul Sharma", title: "Member of the Year", desc: "For outstanding contribution to chapter growth and passing record-breaking referrals.", icon: Award, color: "text-yellow-400", bg: "bg-yellow-400/10" },
-              { name: "Priya Desai", title: "Maximum Visitors", desc: "Recognized for bringing the highest number of qualified visitors in a single term.", icon: Users, color: "text-blue-400", bg: "bg-blue-400/10" },
-              { name: "Amit Patel", title: "Givers Gain Award", desc: "For exemplifying the core BNI philosophy and unconditionally supporting fellow members.", icon: Handshake, color: "text-emerald-400", bg: "bg-emerald-400/10" }
-            ].map((inductee, idx) => (
-              <Reveal key={idx} delay={idx * 0.15} className="group relative rounded-3xl bg-white/5 border border-white/10 p-8 text-center hover:bg-white/10 transition-all duration-300 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className={`mx-auto w-20 h-20 rounded-full flex items-center justify-center mb-6 relative z-10 ${inductee.bg}`}>
-                  <inductee.icon className={inductee.color} size={40} />
-                </div>
-                <h3 className="font-heading text-2xl font-bold text-white relative z-10">{inductee.name}</h3>
-                <p className={`text-sm font-bold mt-2 uppercase tracking-wider relative z-10 ${inductee.color}`}>{inductee.title}</p>
-                <div className="w-12 h-1 bg-white/20 mx-auto my-5 rounded-full relative z-10"></div>
-                <p className="text-zinc-400 leading-relaxed relative z-10">{inductee.desc}</p>
-              </Reveal>
-            ))}
-          </div>
         </Container>
-      </Section>
-
-      {/* Sponsors - Premium Marquee */}
-      {displaySponsors.length > 0 && (
-        <Section className="bg-zinc-50 py-24 relative overflow-hidden border-t border-zinc-100">
-          <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-zinc-50 to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-zinc-50 to-transparent z-10 pointer-events-none"></div>
-          
-          <Container className="mb-12 relative z-20">
-            <Reveal className="text-center">
-              <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">OUR PARTNERS</span>
-              <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">Chapter Sponsors</h2>
-            </Reveal>
-          </Container>
-          
-          <div className="flex overflow-hidden group whitespace-nowrap">
-            <div className="flex animate-marquee pause-marquee items-center gap-6 sm:gap-8 pr-6 sm:pr-8 w-max">
-              {[...displaySponsors, ...displaySponsors, ...displaySponsors, ...displaySponsors].map((sponsor, idx) => (
-                <div key={`s1-${sponsor.id}-${idx}`} className="flex shrink-0 h-28 sm:h-32 w-56 sm:w-64 items-center justify-center rounded-2xl bg-white p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-200 transition-all cursor-pointer">
-                  <a href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full h-full focus-visible:outline-none">
-                    {sponsor.logo_url ? (
-                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
-                    ) : (
-                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest hover:text-brand-500 transition-colors text-center whitespace-normal">{sponsor.name}</span>
-                    )}
-                  </a>
-                </div>
-              ))}
-            </div>
-            <div className="flex animate-marquee pause-marquee items-center gap-6 sm:gap-8 pr-6 sm:pr-8 w-max" aria-hidden="true">
-              {[...displaySponsors, ...displaySponsors, ...displaySponsors, ...displaySponsors].map((sponsor, idx) => (
-                <div key={`s2-${sponsor.id}-${idx}`} className="flex shrink-0 h-28 sm:h-32 w-56 sm:w-64 items-center justify-center rounded-2xl bg-white p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-200 transition-all cursor-pointer">
-                  <a href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full h-full focus-visible:outline-none">
-                    {sponsor.logo_url ? (
-                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
-                    ) : (
-                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest hover:text-brand-500 transition-colors text-center whitespace-normal">{sponsor.name}</span>
-                    )}
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Section>
-      )}
-
-      {/* Gallery - Bento Grid */}
-      {displayGallery.length > 0 && (
-        <Section className="bg-white py-16 sm:py-24">
-          <Container>
-            <Reveal className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-12">
-              <div>
-                <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">MOMENTS THAT DEFINE US</span>
-                <h2 className="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">Glimpses from Our Chapter</h2>
-              </div>
-              <Link href="/gallery" className="inline-flex items-center justify-center rounded-full border-2 border-ink px-7 py-3.5 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-                View Full Gallery
-              </Link>
-            </Reveal>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
-              {displayGallery.map((img, idx) => {
-                const isLarge = idx === 0;
-                return (
-                  <Reveal key={img.id} delay={idx * 0.1} className={`relative group rounded-3xl overflow-hidden bg-zinc-200 ${isLarge ? 'md:col-span-2 md:row-span-2 h-[300px] md:h-full' : 'h-[250px] md:h-full'}`}>
-                    <img
-                      src={img.image_url}
-                      alt={img.caption || "Gallery image"}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <p className="text-white font-bold text-lg">{img.caption || "Chapter Event"}</p>
-                    </div>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </Container>
-        </Section>
-      )}
+      </section>
     </>
   );
 }

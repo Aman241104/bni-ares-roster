@@ -55,8 +55,8 @@ export default async function VisitorPage() {
   ]);
   const s = settings as Settings | null;
   const memberList = (members as Pick<Member, "business_category">[] | null) ?? [];
-  const memberCount = memberList.length;
-  const categoryCount = new Set(memberList.map((m) => m.business_category).filter(Boolean)).size;
+  const memberCount = Math.max(30, memberList.length);
+  const categoryCount = Math.max(30, new Set(memberList.map((m) => m.business_category).filter(Boolean)).size);
 
   const details = [
     s?.meeting_venue && { icon: MapPin, label: "Venue", value: s.meeting_venue, href: s.meeting_maps_link ?? undefined },
@@ -82,7 +82,7 @@ export default async function VisitorPage() {
         <Container className="relative z-10 max-w-3xl text-center">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500">Come See Us</p>
           <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Your Next Client Might Be Waiting At Our Table.
+            Your Next Client Referral Might Be Waiting At Our Table.
           </h1>
           <p className="mt-6 text-lg text-zinc-300">
             No pressure. No obligations. Just one seat waiting for you at our next weekly meeting.
