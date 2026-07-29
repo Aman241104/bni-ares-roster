@@ -95,7 +95,6 @@ function AchieverBadge({ name }: { name: string }) {
 }
 
 function AchievementSection({
-  eyebrow,
   title,
   description,
   names,

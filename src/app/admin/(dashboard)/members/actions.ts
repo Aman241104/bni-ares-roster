@@ -50,6 +50,7 @@ export async function createMember(formData: FormData) {
 
   revalidatePath("/admin/members");
   revalidatePath("/members");
+  revalidatePath("/");
   redirect("/admin/members");
 }
 
@@ -70,6 +71,7 @@ export async function updateMember(formData: FormData) {
   revalidatePath("/admin/members");
   revalidatePath("/members");
   revalidatePath(`/members/${id}`);
+  revalidatePath("/");
   redirect("/admin/members");
 }
 
@@ -79,6 +81,7 @@ export async function deleteMember(formData: FormData) {
   if (error) throw new Error(error.message);
   revalidatePath("/admin/members");
   revalidatePath("/members");
+  revalidatePath("/");
 }
 
 export async function toggleMemberStatus(formData: FormData) {
@@ -89,6 +92,7 @@ export async function toggleMemberStatus(formData: FormData) {
   if (error) throw new Error(error.message);
   revalidatePath("/admin/members");
   revalidatePath("/members");
+  revalidatePath("/");
 }
 
 export async function moveMember(formData: FormData) {
@@ -111,4 +115,5 @@ export async function moveMember(formData: FormData) {
 
   revalidatePath("/admin/members");
   revalidatePath("/members");
+  revalidatePath("/");
 }
