@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
 import Avatar from "@/components/Avatar";
 import ContactButtons from "@/components/ContactButtons";
-import { MapPin } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import type { Member } from "@/types/database";
 
 async function getMember(id: string) {
@@ -61,13 +61,19 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
               />
             </div>
           </div>
+          {member.company_logo_url && (
+            <div className="flex h-24 w-24 shrink-0 items-center justify-center self-start rounded-2xl border border-zinc-200 bg-white p-3 sm:h-28 sm:w-28">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={member.company_logo_url} alt={member.company ?? ""} className="max-h-full max-w-full object-contain" />
+            </div>
+          )}
         </div>
 
         <div className="mt-12 grid gap-10 sm:grid-cols-3">
           <div className="sm:col-span-2 space-y-8">
             {member.description && (
               <div>
-                <h2 className="font-heading text-lg font-bold text-ink">About</h2>
+                <h2 className="font-heading text-lg font-bold text-ink">About the company</h2>
                 <p className="mt-2 whitespace-pre-line text-zinc-600">{member.description}</p>
               </div>
             )}
@@ -92,22 +98,41 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
                 Register as Visitor
               </a>
             </div>
-            {(member.address || member.google_maps_link) && (
+            {(member.address || member.phone || member.email) && (
               <div className="rounded-2xl border border-zinc-200 p-5">
-                <h3 className="flex items-center gap-2 font-heading text-sm font-bold text-ink">
-                  <MapPin size={16} className="text-brand-500" /> Address
-                </h3>
-                {member.address && <p className="mt-2 text-sm text-zinc-600">{member.address}</p>}
-                {member.google_maps_link && (
-                  <a
-                    href={member.google_maps_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-block text-sm font-semibold text-brand-600 hover:underline"
-                  >
-                    View on Google Maps →
-                  </a>
-                )}
+                <h3 className="font-heading text-sm font-bold text-ink">Contact</h3>
+                <div className="mt-3 space-y-3">
+                  {member.address && (
+                    <div className="flex items-start gap-2 text-sm text-zinc-600">
+                      <MapPin size={16} className="mt-0.5 shrink-0 text-brand-500" />
+                      <div>
+                        <span>{member.address}</span>
+                        {member.google_maps_link && (
+                          <a
+                            href={member.google_maps_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-1 block text-sm font-semibold text-brand-600 hover:underline"
+                          >
+                            View on Google Maps →
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  {member.phone && (
+                    <div className="flex items-center gap-2 text-sm text-zinc-600">
+                      <Phone size={16} className="shrink-0 text-brand-500" />
+                      <a href={`tel:${member.phone}`} className="hover:underline">{member.phone}</a>
+                    </div>
+                  )}
+                  {member.email && (
+                    <div className="flex items-center gap-2 text-sm text-zinc-600">
+                      <Mail size={16} className="shrink-0 text-brand-500" />
+                      <a href={`mailto:${member.email}`} className="hover:underline">{member.email}</a>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>

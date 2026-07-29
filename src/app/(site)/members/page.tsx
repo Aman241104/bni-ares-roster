@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { User, IndianRupee, Handshake, PieChart, Crown, Users, HeartHandshake, ArrowRight } from "lucide-react";
+import { User, IndianRupee, Handshake, PieChart, Users, HeartHandshake, ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
 import Reveal from "@/components/Reveal";
@@ -32,7 +32,6 @@ export default async function MembersPage() {
   const s = settings as Settings | null;
 
   const supportTeam = coords.filter((c) => c.team === "chapter_coordinator");
-  const leadershipTeam = coords.filter((c) => c.team === "lt_team");
 
   const uniqueCategories = Math.max(30, new Set(list.map((m) => m.business_category).filter(Boolean)).size);
 
@@ -136,35 +135,6 @@ export default async function MembersPage() {
           </Reveal>
         </Container>
       </Section>
-
-      {/* Leadership Team Section */}
-      {leadershipTeam.length > 0 && (
-        <Section className="bg-white border-t border-zinc-100">
-          <Container>
-            <Reveal className="flex items-center gap-4 mb-10">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-brand-500 border border-zinc-100 shrink-0">
-                <Crown size={24} />
-              </div>
-              <div>
-                <h2 className="font-heading text-3xl font-extrabold text-ink">
-                  Leadership Team
-                </h2>
-                <p className="mt-1 text-zinc-600">
-                  Leading BNI Ares with vision, commitment and passion.
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {leadershipTeam.map((leader, idx) => (
-                <Reveal key={leader.id} delay={idx * 0.1}>
-                  <CoordinatorCard coordinator={leader} />
-                </Reveal>
-              ))}
-            </div>
-          </Container>
-        </Section>
-      )}
 
       {/* Support Team Section */}
       {supportTeam.length > 0 && (

@@ -9,7 +9,7 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
   const [designation, setDesignation] = useState("");
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(16);
 
   const categories = useMemo(
     () => Array.from(new Set(members.map((m) => m.business_category).filter(Boolean))) as string[],
@@ -39,7 +39,7 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
     setQuery("");
     setCategory("");
     setDesignation("");
-    setVisibleCount(8);
+    setVisibleCount(16);
   };
 
   return (
@@ -53,7 +53,7 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
               type="text"
               aria-label="Search members"
               value={query}
-              onChange={(e) => { setQuery(e.target.value); setVisibleCount(8); }}
+              onChange={(e) => { setQuery(e.target.value); setVisibleCount(16); }}
               placeholder="Search members..."
               className="w-full rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-11 pr-4 text-sm outline-none ring-brand-500 focus:ring-2 transition-shadow"
             />
@@ -63,7 +63,7 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
             <select
               aria-label="Filter by category"
               value={category}
-              onChange={(e) => { setCategory(e.target.value); setVisibleCount(8); }}
+              onChange={(e) => { setCategory(e.target.value); setVisibleCount(16); }}
               className="appearance-none w-full md:w-auto min-w-48 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-4 pr-10 text-sm outline-none ring-brand-500 focus:ring-2 transition-shadow text-zinc-700 font-medium cursor-pointer"
             >
               <option value="">All Categories</option>
@@ -78,7 +78,7 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
             <select
               aria-label="Filter by designation"
               value={designation}
-              onChange={(e) => { setDesignation(e.target.value); setVisibleCount(8); }}
+              onChange={(e) => { setDesignation(e.target.value); setVisibleCount(16); }}
               className="appearance-none w-full md:w-auto min-w-48 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-4 pr-10 text-sm outline-none ring-brand-500 focus:ring-2 transition-shadow text-zinc-700 font-medium cursor-pointer"
             >
               <option value="">All Designations</option>
@@ -124,7 +124,7 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
           {hasMore && (
             <div className="mt-12 flex justify-center">
               <button
-                onClick={() => setVisibleCount((prev) => prev + 8)}
+                onClick={() => setVisibleCount((prev) => prev + 16)}
                 className="inline-flex items-center justify-center rounded-full border-2 border-brand-500 text-brand-500 px-8 py-3 text-sm font-bold transition-colors hover:bg-brand-500 hover:text-white"
               >
                 Load More Members

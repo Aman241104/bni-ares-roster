@@ -93,6 +93,8 @@ scripts/hash-password.mjs    — CLI to generate a new ADMIN_PASSWORD_HASH
 supabase/migrations/0001_init.sql — core schema + RLS, run manually in SQL Editor
 supabase/migrations/0002_storage.sql — "media" storage bucket + public-read policy
 supabase/migrations/0003_real_data.sql — **real chapter data** (33 members + settings from May-4 PDF); truncates placeholder data and inserts real roster
+supabase/migrations/0004_fix_support_team.sql — fixes `coordinators` rows with team='chapter_coordinator': clears out members that were mistakenly saved there (via admin panel) and reseeds the real 4-person support team
+supabase/migrations/0005_member_company_logo.sql — adds `members.company_logo_url` (per-member company logo, shown on member cards + profile page)
 supabase/seed/seed.sql       — placeholder demo data (superseded by 0003 — do not apply if 0003 has been run)
 ```
 
@@ -114,6 +116,8 @@ See `supabase/migrations/0001_init.sql` (core schema) and `0002_storage.sql` (st
 - [ ] Deliberately skipped in Phase 2: bulk CSV **import** for members (brief marks it optional), per-coordinator admin accounts (single shared login was the explicit call), drag-and-drop reorder (up/down buttons instead, no new dependency), image reorder within a gallery album (upload order only)
 - [ ] Email notification on visitor registration (Phase 3 — deferred by requester, "badme")
 - [x] **Real chapter content — members populated (2026-07-28).** `supabase/migrations/0003_real_data.sql` created from `ARESCHAPTERROASTER-May-4.pdf`: 33 real members with name/company/designation/category/description/referral expectations/phone/email/website, plus real chapter stats (13,326 referrals, ₹115 Cr+ business, 630+ visitors). **Pending human action: run 0003 in Supabase SQL Editor.** Still needed: coordinator list, member photos (upload via admin panel), meeting venue/fee/QR details, sponsor logos.
+- [x] **Support Team data fix (2026-07-29).** Requester (Gaurav, via WhatsApp) flagged that the "Support Team" section on the Members page (`chapter_coordinator` team) had been mistakenly populated with actual chapter members instead of the real 4-person support team (Dinesh Sitlani – Senior Support Director, Alpesh Shah – Support Director, Divyang Adawadkar & Ankit Katharia – Support Ambassadors, all leaders from other BNI chapters). `0004_fix_support_team.sql` written and **run in the Supabase SQL Editor 2026-07-29** — confirmed live. Note: the Chapter Excellence page's "Chapter Coordinators" section reads the same `team='chapter_coordinator'` rows, so it now shows these same 4 people too — flagged to requester, not yet confirmed if that's desired (that page's framing text still describes a different role than "support from other chapters").
+- [x] **Support Team photos (2026-07-29).** Found photos for 3 of 4 (Dinesh Sitlani, Alpesh Shah, Divyang Adawadkar) in `27TH MAY BNI ARES FINAL.pptx` (slides 24-25, at `/home/whoever/work/sweet-web/code/public/products/`), uploaded to the `media/coordinators` storage folder and attached to their DB rows directly via the Supabase MCP tools (this session, unlike prior ones, had `execute_sql`/`list_projects` access to project `ijmyvtnyytehjxprpwdc` — the "not connected" note earlier in this file may be stale, worth re-checking in future sessions). Also corrected the spelling to "Divyang" (PPT) from "Diwyang" (WhatsApp brief). Ankit Katharia isn't in that PPT — no photo found anywhere, still shows initials avatar; upload his photo via `/admin/coordinators` once someone has it. `0004_fix_support_team.sql` updated in place to include the photo URLs so it stays safe to re-run.
 - [ ] "Download Visiting Card" on member profile — brief marks this optional, not built
 - [ ] Domain — requester said decide later ("Last mai dekh lenge")
 
@@ -165,6 +169,8 @@ npm run lint     # eslint
 1. `supabase/migrations/0001_init.sql` — core schema + RLS
 2. `supabase/migrations/0002_storage.sql` — storage bucket
 3. `supabase/migrations/0003_real_data.sql` — **real chapter data** (33 members from May-4 PDF + real stats). This replaces the placeholder `seed.sql`. Safe to re-run.
+4. `supabase/migrations/0004_fix_support_team.sql` — fixes the Support Team / Chapter Coordinators data (deletes mistaken entries, reseeds the real 4-person team). Safe to re-run (idempotent: it deletes-then-inserts by team).
+5. `supabase/migrations/0005_member_company_logo.sql` — adds `members.company_logo_url` (`alter table ... add column if not exists`, safe to re-run). Already applied live 2026-07-29 via Supabase MCP `execute_sql`.
 
 Do NOT run `supabase/seed/seed.sql` if 0003 has been applied — it contains placeholder data that 0003 overwrites anyway.
 
@@ -262,4 +268,26 @@ Code is 100% done and deployed for both Phase 1 and Phase 2. The site and admin 
 - **One Plus Achievers**: Jay Patel, Vishva Ambasana, Rohan Shah, Yash Thakkar, Manush Patel, Varun Bagaria, Harsh Brahmbhatt, Sunil Agarwal.
 - **Crorepati Givers**: Sunil Agarwal, Ashutosh Mehta, Maunil Parikh, Jigar Shah, Harsh Brahmbhatt, Shruti Agarwal, Rohan Shah, Het Patel, Minakshi Bhavsar, Ankit Patel, Manush Patel.
 - **Gold Club Member**: Ashutosh Mehta.
+---
+
+## Handoff — Claude Code — 2026-07-29 (session 2)
+
+### Completed This Session
+- [x] Updated `settings.stat_total_referrals` to 14,000 (was 13,326) via Supabase MCP `execute_sql` — requester confirmed this is a real updated count, not cosmetic rounding.
+- [x] Removed the "Leadership Team" section from `/members` (`chapter_coordinator`-adjacent `lt_team` block) per requester request.
+- [x] Bumped `MembersDirectory` pagination from 8→16 initial members and 16 per "Load More" click.
+- [x] Added a real `WhatsAppIcon` to `BrandIcons.tsx` and swapped it in everywhere the generic lucide `MessageCircle` was standing in for WhatsApp (`ContactButtons.tsx`, home page member cards).
+- [x] Member profile page (`members/[id]/page.tsx`): renamed "About" → "About the company", added a "Contact" card (address/phone/email as labeled text, not just icon buttons), added a company-logo display slot next to the name/photo header.
+- [x] Visitor page hero: lightened the dark overlay (image opacity 40→70, black overlay 60→40) so the meeting photo shows through more, added drop-shadows to hero text for legibility, added Referrals Passed + Visitors Hosted to the hero stat row (previously only Business Owners/Industries).
+- [x] Home page "Meet Our Members" cards: made the whole card clickable to the member profile (stretched-link pattern, same as the directory's `MemberCard.tsx`), reduced from 5 to 4 cards/columns so they're visibly bigger, added a company-logo badge overlaid on the photo.
+- [x] **New migration `0005_member_company_logo.sql`** — added `members.company_logo_url text`. Applied live via Supabase MCP `execute_sql` (this session had `execute_sql`/`list_projects` access to project `ijmyvtnyytehjxprpwdc`, confirming the "not connected" note elsewhere in this file is stale). Wired through `MemberForm.tsx` (new upload field, uploads to `media/members/logos`), `members/actions.ts`, `MemberCard.tsx`, and both member-card renderings on the home page.
+
+### Flagged, Partially Overridden By Requester
+- **Fabricated "Member Testimonials" section on the home page** (`src/app/(site)/page.tsx` ~line 335): has 6 fake names/companies/quotes (e.g. "Rahul Sharma — Sharma Logistics"), contradicting this file's own documented rule ("Testimonials sections keep an honest 'coming soon' empty state... don't add fabricated content even if a future review asks for it the same way"). Requester (via Aman, citing manager/client deadline pressure) asked to swap in **real chapter members' names** on the invented quotes — declined that specific step since it attributes fabricated statements to real, identifiable, contactable people (real names appear elsewhere on this same site with real phone/email) without their consent. As a middle ground, restored the placeholder testimonials **with the original generic names, none of which match a real member in the May-2026 roster** (Rahul Sharma, Priya Desai, Amit Patel, Sneha Mehta, Vikram Singh, Neha Gupta — cross-checked against the real 33-member list, no match). Requester's own plan is to swap these for real quotes+names post-deployment. **Still open / do this before it's forgotten**: get real quotes from real members and replace this section — it's fabricated content on a live production site until then, same concern as when it was first flagged.
+- **Same fabrication pattern also exists in two other spots on the home page**, not yet addressed (out of scope for what was asked this session, flagging for a future pass): `displaySponsors` fallback (`page.tsx` ~line 56) shows 4 fake sponsor names ("Sharma Logistics", "Desai Architects", etc.) when the real `sponsors` table is empty; `displayGallery` fallback (~line 63) reuses `/images/group-photo.png` four times with invented captions ("Awards Night", "Training Session") that didn't happen. Both violate the same no-fabrication rule as the testimonials section did.
+
+### Next Steps
+1. Decide what to do about the sponsor/gallery placeholder fallbacks flagged above — likely the same fix as testimonials (empty state instead of fake data).
+2. Upload company logos for existing members via `/admin/members` (new field, all `company_logo_url` are currently null since this is a brand-new column).
+3. Everything else from the prior handoff (coordinator lists, meeting venue details, sponsor logos, member photos) still stands.
 ---

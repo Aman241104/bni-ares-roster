@@ -19,6 +19,7 @@ export interface Member {
   name: string;
   photo_url: string | null;
   company: string | null;
+  company_logo_url: string | null;
   designation: string | null;
   business_category: string | null;
   description: string | null;

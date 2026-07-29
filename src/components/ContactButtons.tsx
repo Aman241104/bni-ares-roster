@@ -1,6 +1,6 @@
 "use client";
-import { Phone, MessageCircle, Mail, Globe } from "lucide-react";
-import { InstagramIcon, FacebookIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
+import { Phone, Mail, Globe } from "lucide-react";
+import { InstagramIcon, FacebookIcon, LinkedinIcon, WhatsAppIcon } from "@/components/icons/BrandIcons";
 
 interface Props {
   phone?: string | null;
@@ -33,7 +33,7 @@ export default function ContactButtons({
 
   const items = [
     phone && { href: `tel:${phone}`, icon: <Phone size={iconSize} />, label: "Call" },
-    whatsapp && { href: `https://wa.me/${whatsapp.replace(/\D/g, "")}`, icon: <MessageCircle size={iconSize} />, label: "WhatsApp" },
+    whatsapp && { href: `https://wa.me/${whatsapp.replace(/\D/g, "")}`, icon: <WhatsAppIcon size={iconSize} />, label: "WhatsApp" },
     email && { href: `mailto:${email}`, icon: <Mail size={iconSize} />, label: "Email" },
     website && { href: website, icon: <Globe size={iconSize} />, label: "Website" },
     linkedin && { href: linkedin, icon: <LinkedinIcon size={iconSize} />, label: "LinkedIn" },

@@ -75,28 +75,40 @@ export default async function VisitorPage() {
             aria-hidden="true"
             fill
             priority
-            className="object-cover opacity-40"
+            className="object-cover opacity-70"
           />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         <Container className="relative z-10 max-w-3xl text-center">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500">Come See Us</p>
-          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500 drop-shadow">Come See Us</p>
+          <h1 className="font-heading text-4xl font-extrabold tracking-tight drop-shadow-lg sm:text-5xl">
             Your Next Client Referral Might Be Waiting At Our Table.
           </h1>
-          <p className="mt-6 text-lg text-zinc-300">
+          <p className="mt-6 text-lg text-zinc-200 drop-shadow">
             No pressure. No obligations. Just one seat waiting for you at our next weekly meeting.
           </p>
           {memberCount > 0 && (
-            <div className="mt-10 flex justify-center gap-10">
+            <div className="mt-10 flex flex-wrap justify-center gap-10">
               <div>
-                <p className="font-heading text-3xl font-extrabold sm:text-4xl">{memberCount}+</p>
-                <p className="mt-1 text-sm text-zinc-400">Business Owners</p>
+                <p className="font-heading text-3xl font-extrabold drop-shadow sm:text-4xl">{memberCount}+</p>
+                <p className="mt-1 text-sm text-zinc-300 drop-shadow">Business Owners</p>
               </div>
               {categoryCount > 0 && (
                 <div>
-                  <p className="font-heading text-3xl font-extrabold sm:text-4xl">{categoryCount}+</p>
-                  <p className="mt-1 text-sm text-zinc-400">Industries</p>
+                  <p className="font-heading text-3xl font-extrabold drop-shadow sm:text-4xl">{categoryCount}+</p>
+                  <p className="mt-1 text-sm text-zinc-300 drop-shadow">Industries</p>
+                </div>
+              )}
+              {!!s?.stat_total_referrals && (
+                <div>
+                  <p className="font-heading text-3xl font-extrabold drop-shadow sm:text-4xl">{s.stat_total_referrals.toLocaleString("en-IN")}+</p>
+                  <p className="mt-1 text-sm text-zinc-300 drop-shadow">Referrals Passed</p>
+                </div>
+              )}
+              {!!s?.stat_visitors_hosted && (
+                <div>
+                  <p className="font-heading text-3xl font-extrabold drop-shadow sm:text-4xl">{s.stat_visitors_hosted.toLocaleString("en-IN")}+</p>
+                  <p className="mt-1 text-sm text-zinc-300 drop-shadow">Visitors Hosted</p>
                 </div>
               )}
             </div>

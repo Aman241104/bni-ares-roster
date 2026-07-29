@@ -14,6 +14,14 @@ export default function MemberCard({ member }: { member: Member }) {
           photoUrl={member.photo_url}
           className="transition-transform duration-500 group-hover:scale-105"
         />
+        {member.company_logo_url && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={member.company_logo_url}
+            alt={member.company ?? ""}
+            className="absolute bottom-2 right-2 h-9 w-9 rounded-lg bg-white object-contain p-1 shadow-md"
+          />
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <div>

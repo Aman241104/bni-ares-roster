@@ -13,13 +13,23 @@ export default function MemberForm({
     <form action={action} encType="multipart/form-data" className="space-y-8">
       {member && <input type="hidden" name="id" value={member.id} />}
 
-      <div>
-        <label className="mb-1.5 block text-sm font-medium text-ink">Photo</label>
-        {member?.photo_url && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={member.photo_url} alt="" className="mb-2 h-20 w-20 rounded-xl object-cover" />
-        )}
-        <input type="file" name="photo" accept="image/*" className="text-sm" />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-ink">Photo</label>
+          {member?.photo_url && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={member.photo_url} alt="" className="mb-2 h-20 w-20 rounded-xl object-cover" />
+          )}
+          <input type="file" name="photo" accept="image/*" className="text-sm" />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-ink">Company Logo</label>
+          {member?.company_logo_url && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={member.company_logo_url} alt="" className="mb-2 h-20 w-20 rounded-xl bg-zinc-50 object-contain" />
+          )}
+          <input type="file" name="company_logo" accept="image/*" className="text-sm" />
+        </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">

@@ -33,17 +33,27 @@ async function maybeUploadPhoto(formData: FormData): Promise<string | undefined>
   return undefined;
 }
 
+async function maybeUploadCompanyLogo(formData: FormData): Promise<string | undefined> {
+  const file = formData.get("company_logo");
+  if (file instanceof File && file.size > 0) {
+    return uploadImage(file, "members/logos");
+  }
+  return undefined;
+}
+
 export async function createMember(formData: FormData) {
   const fields = fieldsFromForm(formData);
   if (!fields.name) throw new Error("Name is required");
 
   const photo_url = await maybeUploadPhoto(formData);
+  const company_logo_url = await maybeUploadCompanyLogo(formData);
 
   const { count } = await supabaseAdmin.from("members").select("id", { count: "exact", head: true });
 
   const { error } = await supabaseAdmin.from("members").insert({
     ...fields,
     photo_url: photo_url ?? null,
+    company_logo_url: company_logo_url ?? null,
     display_order: count ?? 0,
   });
   if (error) throw new Error(error.message);
@@ -61,10 +71,11 @@ export async function updateMember(formData: FormData) {
   if (!fields.name) throw new Error("Name is required");
 
   const photo_url = await maybeUploadPhoto(formData);
+  const company_logo_url = await maybeUploadCompanyLogo(formData);
 
   const { error } = await supabaseAdmin
     .from("members")
-    .update({ ...fields, ...(photo_url ? { photo_url } : {}) })
+    .update({ ...fields, ...(photo_url ? { photo_url } : {}), ...(company_logo_url ? { company_logo_url } : {}) })
     .eq("id", id);
   if (error) throw new Error(error.message);
 
