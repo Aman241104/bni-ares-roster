@@ -113,6 +113,16 @@ export interface ContactMessage {
   created_at: string;
 }
 
+export interface Testimonial {
+  id: string;
+  member_name: string;
+  company: string | null;
+  quote_text: string;
+  display_order: number;
+  status: Status;
+  created_at: string;
+}
+
 export interface Faq {
   question: string;
   answer: string;

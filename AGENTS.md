@@ -74,7 +74,7 @@ src/app/admin/
   login/page.tsx, login/actions.ts   — outside the (dashboard) group, no sidebar chrome
   (dashboard)/layout.tsx     — sidebar + logout, force-dynamic (see gotcha below)
   (dashboard)/page.tsx       — dashboard: live counts per resource + new-registration/message badges
-  (dashboard)/members/, coordinators/, sponsors/, gallery/, settings/, registrations/, messages/
+  (dashboard)/members/, coordinators/, sponsors/, testimonials/, gallery/, settings/, registrations/, messages/
                              — one actions.ts (Server Functions) + page(s) per resource
   (dashboard)/registrations/export/route.ts — CSV download (Route Handler, not a Server Action)
 src/components/              — MemberCard, CoordinatorCard, ContactButtons, Avatar (initials
@@ -95,6 +95,7 @@ supabase/migrations/0002_storage.sql — "media" storage bucket + public-read po
 supabase/migrations/0003_real_data.sql — **real chapter data** (33 members + settings from May-4 PDF); truncates placeholder data and inserts real roster
 supabase/migrations/0004_fix_support_team.sql — fixes `coordinators` rows with team='chapter_coordinator': clears out members that were mistakenly saved there (via admin panel) and reseeds the real 4-person support team
 supabase/migrations/0005_member_company_logo.sql — adds `members.company_logo_url` (per-member company logo, shown on member cards + profile page)
+supabase/migrations/0006_testimonials.sql — adds `testimonials` table (member_name/company/quote_text/display_order/status) + public-read-active RLS policy; makes the home page's "Hear From Our Members" section admin-editable instead of hardcoded
 supabase/seed/seed.sql       — placeholder demo data (superseded by 0003 — do not apply if 0003 has been run)
 ```
 
@@ -120,6 +121,9 @@ See `supabase/migrations/0001_init.sql` (core schema) and `0002_storage.sql` (st
 - [x] **Support Team photos (2026-07-29).** Found photos for 3 of 4 (Dinesh Sitlani, Alpesh Shah, Divyang Adawadkar) in `27TH MAY BNI ARES FINAL.pptx` (slides 24-25, at `/home/whoever/work/sweet-web/code/public/products/`), uploaded to the `media/coordinators` storage folder and attached to their DB rows directly via the Supabase MCP tools (this session, unlike prior ones, had `execute_sql`/`list_projects` access to project `ijmyvtnyytehjxprpwdc` — the "not connected" note earlier in this file may be stale, worth re-checking in future sessions). Also corrected the spelling to "Divyang" (PPT) from "Diwyang" (WhatsApp brief). Ankit Katharia isn't in that PPT — no photo found anywhere, still shows initials avatar; upload his photo via `/admin/coordinators` once someone has it. `0004_fix_support_team.sql` updated in place to include the photo URLs so it stays safe to re-run.
 - [ ] "Download Visiting Card" on member profile — brief marks this optional, not built
 - [ ] Domain — requester said decide later ("Last mai dekh lenge")
+- [x] **Testimonials made admin-editable (2026-07-30).** Requester (Gaurav, via WhatsApp) said he couldn't edit the fabricated "Member Testimonials" section from the admin panel — because it was hardcoded, not DB-backed (flagged as fabricated content in the 2026-07-29 handoff below). Built `testimonials` table (`0006_testimonials.sql`, **run live 2026-07-30**), full CRUD at `/admin/testimonials` (add/reorder/hide/delete, same pattern as Sponsors), and wired the home page to read real rows instead of the 6 hardcoded fake names — section now hides entirely when there are no active testimonials, no more fabricated fallback. The old fabricated-testimonials concern from the 2026-07-29 handoff is resolved by this change (mechanism exists now — requester still needs to actually add real member quotes through `/admin/testimonials`, table is empty as of this writing).
+- [x] **Floating WhatsApp button (2026-07-30).** Added `src/components/WhatsAppFloat.tsx` — fixed bottom-right circular button, site-wide (in `(site)/layout.tsx`, outside Footer), links to `wa.me/{settings.contact_whatsapp}`. Renders nothing if `contact_whatsapp` isn't set. Footer's bottom credit row got `pb-24`/`sm:pr-20` clearance added so the button doesn't overlap the copyright text at the very bottom of the page (verified both desktop and 390px mobile widths via Playwright).
+- [x] **Footer credit line (2026-07-30).** Changed "Designed with ❤️ for BNI Ares" → "Designed and developed by Gravity Media Marketing" per requester's explicit ask (WhatsApp, 2026-07-30) — this is Gaurav's own dev agency credit line, unrelated to this file's earlier note that this project has no connection to the `ares-web`/Gravity Media Marketing project; just a footer credit they asked for on this site too.
 
 ## Critical Gotchas
 - **Scroll-reveal elements start at `opacity: 0`** (`.sr`/`.sr-stagger` in `globals.css`, animated by `<Reveal>`). A full-page Playwright screenshot taken without scrolling first will show blank sections below the fold — this is expected animate-on-scroll behavior, not a bug. Scroll the page (or wait) before screenshotting for QA.
@@ -171,6 +175,7 @@ npm run lint     # eslint
 3. `supabase/migrations/0003_real_data.sql` — **real chapter data** (33 members from May-4 PDF + real stats). This replaces the placeholder `seed.sql`. Safe to re-run.
 4. `supabase/migrations/0004_fix_support_team.sql` — fixes the Support Team / Chapter Coordinators data (deletes mistaken entries, reseeds the real 4-person team). Safe to re-run (idempotent: it deletes-then-inserts by team).
 5. `supabase/migrations/0005_member_company_logo.sql` — adds `members.company_logo_url` (`alter table ... add column if not exists`, safe to re-run). Already applied live 2026-07-29 via Supabase MCP `execute_sql`.
+6. `supabase/migrations/0006_testimonials.sql` — adds the `testimonials` table (`create table if not exists`, safe to re-run). **Applied live 2026-07-30** (requester ran it manually in the SQL Editor). Verified end-to-end via Playwright: create in `/admin/testimonials` → appears on the home page's "Hear From Our Members" section → delete removes it and the section falls back to hidden when empty.
 
 Do NOT run `supabase/seed/seed.sql` if 0003 has been applied — it contains placeholder data that 0003 overwrites anyway.
 
@@ -291,3 +296,21 @@ Code is 100% done and deployed for both Phase 1 and Phase 2. The site and admin 
 2. Upload company logos for existing members via `/admin/members` (new field, all `company_logo_url` are currently null since this is a brand-new column).
 3. Everything else from the prior handoff (coordinator lists, meeting venue details, sponsor logos, member photos) still stands.
 ---
+
+## Handoff — Claude Code — 2026-07-30
+
+### Completed This Session
+- [x] Coordinators page: renamed the "Chapter Coordinators" section heading to "Support Team" (`src/app/(site)/coordinators/page.tsx`) — the section reads `team='chapter_coordinator'` rows, which are actually the real 4-person support team from other chapters (see 2026-07-29 fix above), so the heading now matches what it shows.
+- [x] **Testimonials made admin-editable** — new `testimonials` table (`0006_testimonials.sql`, **run live by requester 2026-07-30**), full CRUD at `/admin/testimonials`, home page wired to real data with an empty-state instead of the 6 hardcoded fake names. See Build Status above for detail.
+- [x] **Floating WhatsApp button** — `src/components/WhatsAppFloat.tsx`, fixed bottom-right, site-wide, driven by `settings.contact_whatsapp`.
+- [x] **Footer credit line** — "Designed and developed by Gravity Media Marketing" (requester's explicit ask).
+- [x] `npm run build` and `npm run lint` both pass clean (lint warnings are all pre-existing, unrelated to this session's changes).
+- [x] **Post-migration end-to-end QA (2026-07-30)**, once the requester confirmed 0006 was run: logged into `/admin/testimonials`, created a test testimonial, confirmed it rendered live on the home page's "Hear From Our Members" section (verified via Playwright screenshot), then deleted it and confirmed the section falls back to hidden with zero rows. Also re-verified the floating WhatsApp button doesn't overlap the footer credit line at desktop and 390px mobile widths.
+- [x] Pushed to `main`, Vercel auto-deploy triggered.
+
+### State Left In
+Everything from this session is live: testimonials CRUD, floating WhatsApp button, footer credit, Support Team heading. `testimonials` table is empty in production (the QA test row was deleted after verification) — requester still needs to add real member quotes via `/admin/testimonials`.
+
+### Next Steps
+1. Requester adds real testimonials via `/admin/testimonials` whenever quotes are collected from members.
+2. Everything else from prior handoffs still stands (sponsor/gallery placeholder fallbacks, coordinator lists, company logos, meeting venue details, Ankit Katharia's photo).

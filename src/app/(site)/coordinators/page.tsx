@@ -69,7 +69,7 @@ const COORDINATOR_GROUPS: { team: CoordinatorTeam; title: string; role: string }
   },
   {
     team: "chapter_coordinator",
-    title: "Chapter Coordinators",
+    title: "Support Team",
     role: "The people handling the details that keep every chapter function running smoothly.",
   },
 ];

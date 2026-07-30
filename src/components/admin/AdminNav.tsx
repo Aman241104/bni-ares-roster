@@ -1,13 +1,14 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, Handshake, Award, Images, CalendarCheck, MessageSquare, Settings } from "lucide-react";
+import { LayoutDashboard, Users, Handshake, Award, Images, CalendarCheck, MessageSquare, Settings, Quote } from "lucide-react";
 
 const LINKS = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/members", label: "Members", icon: Users },
   { href: "/admin/coordinators", label: "Coordinators", icon: Handshake },
   { href: "/admin/sponsors", label: "Sponsors", icon: Award },
+  { href: "/admin/testimonials", label: "Testimonials", icon: Quote },
   { href: "/admin/gallery", label: "Gallery", icon: Images },
   { href: "/admin/registrations", label: "Registrations", icon: CalendarCheck },
   { href: "/admin/messages", label: "Messages", icon: MessageSquare },

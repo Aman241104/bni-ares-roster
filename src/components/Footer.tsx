@@ -8,7 +8,7 @@ export default async function Footer() {
 
   return (
     <footer className="border-t border-black/5 bg-ink text-white">
-      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
+      <div className="mx-auto max-w-7xl px-5 pt-14 pb-24 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex flex-col">
@@ -108,9 +108,9 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between border-t border-white/10 pt-6 text-xs text-zinc-500 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between border-t border-white/10 pt-6 text-xs text-zinc-500 sm:flex-row sm:pr-20">
           <p>© {new Date().getFullYear()} BNI Ares Chapter. All rights reserved.</p>
-          <p className="mt-2 sm:mt-0">Designed with ❤️ for BNI Ares</p>
+          <p className="mt-2 sm:mt-0">Designed and developed by Gravity Media Marketing</p>
         </div>
       </div>
     </footer>

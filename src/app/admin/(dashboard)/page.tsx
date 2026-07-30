@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { Users, Handshake, Award, Images, CalendarCheck, MessageSquare } from "lucide-react";
+import { Users, Handshake, Award, Images, CalendarCheck, MessageSquare, Quote } from "lucide-react";
 import { supabaseAdmin } from "@/lib/supabase/server";
 
 async function getCounts() {
-  const [members, coordinators, sponsors, albums, newRegistrations, newMessages] = await Promise.all([
+  const [members, coordinators, sponsors, testimonials, albums, newRegistrations, newMessages] = await Promise.all([
     supabaseAdmin.from("members").select("id", { count: "exact", head: true }),
     supabaseAdmin.from("coordinators").select("id", { count: "exact", head: true }),
     supabaseAdmin.from("sponsors").select("id", { count: "exact", head: true }),
+    supabaseAdmin.from("testimonials").select("id", { count: "exact", head: true }),
     supabaseAdmin.from("gallery_albums").select("id", { count: "exact", head: true }),
     supabaseAdmin.from("visitor_registrations").select("id", { count: "exact", head: true }).eq("status", "new"),
     supabaseAdmin.from("contact_messages").select("id", { count: "exact", head: true }).eq("status", "new"),
@@ -16,6 +17,7 @@ async function getCounts() {
     members: members.count ?? 0,
     coordinators: coordinators.count ?? 0,
     sponsors: sponsors.count ?? 0,
+    testimonials: testimonials.count ?? 0,
     albums: albums.count ?? 0,
     newRegistrations: newRegistrations.count ?? 0,
     newMessages: newMessages.count ?? 0,
@@ -29,6 +31,7 @@ export default async function AdminDashboard() {
     { href: "/admin/members", icon: Users, label: "Members", value: counts.members },
     { href: "/admin/coordinators", icon: Handshake, label: "Coordinators", value: counts.coordinators },
     { href: "/admin/sponsors", icon: Award, label: "Sponsors", value: counts.sponsors },
+    { href: "/admin/testimonials", icon: Quote, label: "Testimonials", value: counts.testimonials },
     { href: "/admin/gallery", icon: Images, label: "Gallery Albums", value: counts.albums },
     { href: "/admin/registrations", icon: CalendarCheck, label: "New Visitor Registrations", value: counts.newRegistrations, highlight: counts.newRegistrations > 0 },
     { href: "/admin/messages", icon: MessageSquare, label: "New Messages", value: counts.newMessages, highlight: counts.newMessages > 0 },

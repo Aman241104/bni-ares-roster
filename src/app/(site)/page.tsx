@@ -21,7 +21,7 @@ import { Container, Section } from "@/components/Section";
 import Reveal from "@/components/Reveal";
 import StatCounter from "@/components/StatCounter";
 import { supabase } from "@/lib/supabase/client";
-import type { Settings, Sponsor, Member } from "@/types/database";
+import type { Settings, Sponsor, Member, Testimonial } from "@/types/database";
 
 const WHY_JOIN = [
   { icon: Handshake, title: "Qualified Referrals", text: "Get quality business referrals from trusted professionals." },
@@ -37,18 +37,21 @@ export default async function HomePage() {
     { data: sponsors },
     { data: members },
     { data: allCategories },
-    { data: gallery }
+    { data: gallery },
+    { data: testimonials },
   ] = await Promise.all([
     supabase.from("settings").select("*").eq("id", 1).maybeSingle(),
     supabase.from("sponsors").select("*").eq("status", "active").order("priority"),
     supabase.from("members").select("*").eq("status", "active").order("display_order").limit(8),
     supabase.from("members").select("business_category").eq("status", "active"),
     supabase.from("gallery_images").select("*, gallery_albums!inner(*)").eq("gallery_albums.status", "active").order("created_at", { ascending: false }).limit(4),
+    supabase.from("testimonials").select("*").eq("status", "active").order("display_order"),
   ]);
 
   const s = settings as Settings | null;
   const activeSponsors = (sponsors as Sponsor[] | null) ?? [];
   const activeMembers = (members as Member[] | null) ?? [];
+  const activeTestimonials = (testimonials as Testimonial[] | null) ?? [];
   const categoriesList = allCategories || [];
   const uniqueCategories = Math.max(30, new Set(categoriesList.map((m) => m.business_category).filter(Boolean)).size);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -335,44 +338,38 @@ export default async function HomePage() {
       </section>
 
       {/* 6. Member Testimonials */}
-      <Section className="bg-zinc-50 overflow-hidden relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-200 opacity-50 pointer-events-none">
-          <Quote size={400} strokeWidth={0.5} />
-        </div>
-        <Container className="relative z-10">
-          <Reveal className="text-center mb-16">
-            <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
-              MEMBER TESTIMONIALS
-            </span>
-            <h2 className="mt-2 font-heading text-4xl sm:text-5xl font-extrabold text-ink">
-              Hear From Our Members
-            </h2>
-          </Reveal>
-          
-          {/* Placeholder copy — generic names, none matching a real chapter member. Swap for real member quotes+names before/after launch. */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { name: "Rahul Sharma", company: "Sharma Logistics", text: "BNI Ares has completely transformed how I generate leads. The structured approach to networking is unparalleled." },
-              { name: "Priya Desai", company: "Desai Architects", text: "The quality of referrals I receive from this chapter is exceptional. It's like having a team of 30+ sales professionals working for you." },
-              { name: "Amit Patel", company: "Patel Financials", text: "I've seen a 40% growth in my business since joining BNI Ares. The Givers Gain philosophy truly works." },
-              { name: "Sneha Mehta", company: "Creative Minds Agency", text: "Beyond just business, the learning and leadership opportunities here have helped me grow personally as well." },
-              { name: "Vikram Singh", company: "Singh Enterprises", text: "The trust and camaraderie in this chapter make every meeting something I look forward to. Highly recommended." },
-              { name: "Neha Gupta", company: "Gupta Associates", text: "Being part of BNI Ares has given me access to a diverse network of professionals that I couldn't have reached otherwise." }
-            ].map((t, i) => (
-              <Reveal key={i} delay={i * 0.1} className="bg-white p-6 sm:p-8 rounded-2xl shadow-md border border-zinc-100 flex flex-col justify-between hover:shadow-lg transition-shadow">
-                <div>
-                  <Quote size={24} className="text-brand-500 mb-4 opacity-50" />
-                  <p className="text-zinc-600 italic">&ldquo;{t.text}&rdquo;</p>
-                </div>
-                <div className="mt-6 pt-6 border-t border-zinc-100">
-                  <p className="font-bold text-ink">{t.name}</p>
-                  <p className="text-sm font-medium text-brand-500">{t.company}</p>
-                </div>
-              </Reveal>
-            ))}
+      {activeTestimonials.length > 0 && (
+        <Section className="bg-zinc-50 overflow-hidden relative">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-200 opacity-50 pointer-events-none">
+            <Quote size={400} strokeWidth={0.5} />
           </div>
-        </Container>
-      </Section>
+          <Container className="relative z-10">
+            <Reveal className="text-center mb-16">
+              <span className="text-brand-500 font-bold tracking-wider text-sm uppercase">
+                MEMBER TESTIMONIALS
+              </span>
+              <h2 className="mt-2 font-heading text-4xl sm:text-5xl font-extrabold text-ink">
+                Hear From Our Members
+              </h2>
+            </Reveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {activeTestimonials.map((t, i) => (
+                <Reveal key={t.id} delay={i * 0.1} className="bg-white p-6 sm:p-8 rounded-2xl shadow-md border border-zinc-100 flex flex-col justify-between hover:shadow-lg transition-shadow">
+                  <div>
+                    <Quote size={24} className="text-brand-500 mb-4 opacity-50" />
+                    <p className="text-zinc-600 italic">&ldquo;{t.quote_text}&rdquo;</p>
+                  </div>
+                  <div className="mt-6 pt-6 border-t border-zinc-100">
+                    <p className="font-bold text-ink">{t.member_name}</p>
+                    {t.company && <p className="text-sm font-medium text-brand-500">{t.company}</p>}
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
 
       {/* 7. Our Chapter Sponsors */}
       {displaySponsors.length > 0 && (
