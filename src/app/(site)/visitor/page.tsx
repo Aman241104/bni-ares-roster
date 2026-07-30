@@ -101,7 +101,7 @@ export default async function VisitorPage() {
               )}
               {!!s?.stat_total_referrals && (
                 <div>
-                  <p className="font-heading text-3xl font-extrabold drop-shadow sm:text-4xl">{s.stat_total_referrals.toLocaleString("en-IN")}+</p>
+                  <p className="font-heading text-3xl font-extrabold drop-shadow sm:text-4xl">{new Intl.NumberFormat("en", { notation: "compact" }).format(s.stat_total_referrals).toLowerCase()}+</p>
                   <p className="mt-1 text-sm text-zinc-300 drop-shadow">Referrals Passed</p>
                 </div>
               )}

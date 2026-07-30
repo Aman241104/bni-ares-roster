@@ -12,6 +12,7 @@ export default function StatCounter({
   prefix = "",
   colorClass = "text-white",
   labelClass = "text-zinc-400",
+  compact = false,
 }: {
   value: number;
   label: string;
@@ -19,6 +20,7 @@ export default function StatCounter({
   prefix?: string;
   colorClass?: string;
   labelClass?: string;
+  compact?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [display, setDisplay] = useState(0);
@@ -43,7 +45,9 @@ export default function StatCounter({
     <div className="text-center">
       <span ref={ref} className={`font-heading text-4xl font-extrabold sm:text-5xl ${colorClass}`}>
         {prefix}
-        {display.toLocaleString("en-IN")}
+        {compact
+          ? new Intl.NumberFormat("en", { notation: "compact" }).format(display).toLowerCase()
+          : display.toLocaleString("en-IN")}
         {suffix}
       </span>
       <p className={`mt-2 text-sm font-medium ${labelClass}`}>{label}</p>

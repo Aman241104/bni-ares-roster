@@ -39,7 +39,7 @@ export default async function HomePage() {
   ] = await Promise.all([
     supabase.from("settings").select("*").eq("id", 1).maybeSingle(),
     supabase.from("sponsors").select("*").eq("status", "active").order("priority"),
-    supabase.from("members").select("*").eq("status", "active").order("display_order").limit(4),
+    supabase.from("members").select("*").eq("status", "active").order("display_order").limit(8),
     supabase.from("members").select("business_category").eq("status", "active"),
     supabase.from("gallery_images").select("*, gallery_albums!inner(*)").eq("gallery_albums.status", "active").order("created_at", { ascending: false }).limit(4),
   ]);
@@ -137,7 +137,7 @@ export default async function HomePage() {
               </div>
               <div className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-brand-500"><Handshake size={28} strokeWidth={1.5} /></div>
-                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-ink" labelClass="text-zinc-500" suffix="+" />
+                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-ink" labelClass="text-zinc-500" suffix="+" compact />
               </div>
               <div className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-brand-500"><Users size={28} strokeWidth={1.5} /></div>
@@ -212,10 +212,10 @@ export default async function HomePage() {
               </Link>
             </Reveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {activeMembers.map((member, idx) => (
-                <Reveal key={member.id} delay={idx * 0.1} className="group relative rounded-2xl border border-zinc-200 overflow-hidden bg-white hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
-                  <div className="aspect-[4/5] bg-zinc-100 relative shrink-0">
+                <Reveal key={member.id} delay={idx * 0.08} className="group relative rounded-xl border border-zinc-200 overflow-hidden bg-white hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col">
+                  <div className="aspect-square bg-zinc-100 relative shrink-0">
                     {member.photo_url ? (
                       <img
                         src={member.photo_url}
@@ -223,7 +223,7 @@ export default async function HomePage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center bg-ink text-3xl font-bold text-white">
+                      <div className="flex h-full items-center justify-center bg-ink text-2xl font-bold text-white">
                         {member.name.charAt(0)}
                       </div>
                     )}
@@ -232,33 +232,33 @@ export default async function HomePage() {
                       <img
                         src={member.company_logo_url}
                         alt={member.company ?? ""}
-                        className="absolute bottom-3 right-3 h-10 w-10 rounded-lg bg-white object-contain p-1 shadow-md"
+                        className="absolute bottom-2 right-2 h-7 w-7 rounded-md bg-white object-contain p-0.5 shadow-md"
                       />
                     )}
                   </div>
-                  <div className="p-6 text-center flex flex-col flex-1 justify-between">
+                  <div className="p-3 text-center flex flex-col flex-1 justify-between">
                     <div>
-                      <h3 className="font-bold text-ink text-xl line-clamp-1" title={member.name}>
+                      <h3 className="font-bold text-ink text-sm line-clamp-1" title={member.name}>
                         <Link href={`/members/${member.id}`} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 before:absolute before:inset-0">
                           {member.name}
                         </Link>
                       </h3>
-                      <p className="text-brand-500 text-sm font-semibold mt-1 line-clamp-1" title={member.business_category ?? undefined}>{member.business_category}</p>
-                      <p className="text-zinc-500 text-xs mt-1 line-clamp-1" title={member.company ?? undefined}>{member.company}</p>
+                      <p className="text-brand-500 text-xs font-semibold mt-0.5 line-clamp-1" title={member.business_category ?? undefined}>{member.business_category}</p>
+                      <p className="text-zinc-500 text-xs mt-0.5 line-clamp-1" title={member.company ?? undefined}>{member.company}</p>
                     </div>
 
-                    <div className="relative z-10 mt-4 flex justify-center gap-2">
+                    <div className="relative z-10 mt-2 flex justify-center gap-1.5">
                       {member.phone && (
-                        <a href={`tel:${member.phone}`} aria-label={`Call ${member.name}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><Phone size={16} /></a>
+                        <a href={`tel:${member.phone}`} aria-label={`Call ${member.name}`} className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><Phone size={13} /></a>
                       )}
                       {member.whatsapp && (
-                        <a href={`https://wa.me/${member.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${member.name}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><WhatsAppIcon size={16} /></a>
+                        <a href={`https://wa.me/${member.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${member.name}`} className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><WhatsAppIcon size={13} /></a>
                       )}
                       {member.email && (
-                        <a href={`mailto:${member.email}`} aria-label={`Email ${member.name}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><Mail size={16} /></a>
+                        <a href={`mailto:${member.email}`} aria-label={`Email ${member.name}`} className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><Mail size={13} /></a>
                       )}
                       {member.linkedin && (
-                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn ${member.name}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><LinkedinIcon size={16} /></a>
+                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn ${member.name}`} className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><LinkedinIcon size={13} /></a>
                       )}
                     </div>
                   </div>
@@ -315,14 +315,15 @@ export default async function HomePage() {
                     </div>
                     <div>
                       <p className="text-zinc-400 text-sm font-semibold">Location</p>
-                      <p className="font-bold text-lg mt-1">{s?.meeting_venue || "Details coming soon"}</p>
+                      <p className="font-bold text-lg mt-1">Shared on WhatsApp closer to the meeting</p>
+                      <p className="text-zinc-400 text-sm mt-1">Venue rotates weekly &mdash; register and we&apos;ll send it to you</p>
                     </div>
                   </div>
                 </div>
 
-                {s?.meeting_maps_link && (
-                  <a href={s.meeting_maps_link} target="_blank" rel="noopener noreferrer" className="mt-8 flex w-full justify-center items-center gap-2 rounded-full bg-white text-ink px-7 py-3.5 text-sm font-bold transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                    Get Directions <MapPin size={16} />
+                {s?.contact_whatsapp && (
+                  <a href={`https://wa.me/${s.contact_whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="mt-8 flex w-full justify-center items-center gap-2 rounded-full bg-white text-ink px-7 py-3.5 text-sm font-bold transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                    Message Us on WhatsApp <WhatsAppIcon size={16} />
                   </a>
                 )}
               </div>

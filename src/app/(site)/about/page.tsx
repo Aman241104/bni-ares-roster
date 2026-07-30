@@ -203,7 +203,7 @@ export default async function AboutPage() {
               </Reveal>
               <Reveal delay={0.2} className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-white"><Handshake size={36} strokeWidth={1.5} aria-hidden="true" /></div>
-                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-white text-2xl sm:text-3xl" labelClass="text-white/80" suffix="+" />
+                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-white text-2xl sm:text-3xl" labelClass="text-white/80" suffix="+" compact />
               </Reveal>
               <Reveal delay={0.3} className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-white"><Users size={36} strokeWidth={1.5} aria-hidden="true" /></div>

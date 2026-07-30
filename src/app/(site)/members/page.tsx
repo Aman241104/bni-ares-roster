@@ -98,7 +98,7 @@ export default async function MembersPage() {
               </Reveal>
               <Reveal delay={0.3} className="flex flex-col items-center justify-center space-y-2">
                 <div className="text-white"><Handshake size={32} strokeWidth={1.5} /></div>
-                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-white text-3xl sm:text-4xl" labelClass="text-white/80" suffix="+" />
+                <StatCounter value={s.stat_total_referrals ?? 0} label="Referrals Passed" colorClass="text-white text-3xl sm:text-4xl" labelClass="text-white/80" suffix="+" compact />
               </Reveal>
             </div>
           </Container>
