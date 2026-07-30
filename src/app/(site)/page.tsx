@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   TrendingUp,
   Award,
+  Lock,
 } from "lucide-react";
 import { LinkedinIcon, WhatsAppIcon } from "@/components/icons/BrandIcons";
 import { Container, Section } from "@/components/Section";
@@ -27,6 +28,7 @@ const WHY_JOIN = [
   { icon: ShieldCheck, title: "Trusted Network", text: "Build meaningful relationships with vetted business owners." },
   { icon: TrendingUp, title: "Business Growth", text: "Expand your reach and significantly increase your revenue." },
   { icon: Award, title: "Leadership", text: "Develop your leadership skills by taking up chapter roles." },
+  { icon: Lock, title: "Exclusive Access", text: "Only one member per business category — no internal competition, ever." },
 ];
 
 export default async function HomePage() {
