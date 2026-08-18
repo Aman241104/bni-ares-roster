@@ -145,7 +145,7 @@ export default async function VisitorPage() {
               <ul className="mt-4 space-y-3">
                 {GOOD_FIT.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-sm text-zinc-600">
-                    <CheckCircle2 className="mt-0.5 shrink-0 text-brand-500" size={16} />
+                    <CheckCircle2 className="mt-0.5 shrink-0 text-emerald-500" size={16} />
                     {item}
                   </li>
                 ))}

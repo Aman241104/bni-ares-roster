@@ -108,9 +108,8 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between border-t border-white/10 pt-6 text-xs text-zinc-500 sm:flex-row sm:pr-20">
+        <div className="mt-12 border-t border-white/10 pt-6 text-center text-xs text-zinc-500 sm:pr-20">
           <p>© {new Date().getFullYear()} BNI Ares Chapter. All rights reserved.</p>
-          <p className="mt-2 sm:mt-0">Designed and developed by Gravity Media Marketing</p>
         </div>
       </div>
     </footer>

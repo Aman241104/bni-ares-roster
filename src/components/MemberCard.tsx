@@ -38,11 +38,6 @@ export default function MemberCard({ member }: { member: Member }) {
               {member.business_category}
             </span>
           )}
-          {member.designation && (
-            <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">
-              {member.designation}
-            </span>
-          )}
         </div>
         {member.description && (
           <p className="line-clamp-2 text-sm text-zinc-500" title={member.description}>{member.description}</p>

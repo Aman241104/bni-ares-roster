@@ -3,9 +3,10 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
 import CoordinatorCard from "@/components/CoordinatorCard";
+import AchieverGrid from "@/components/AchieverGrid";
 import Reveal from "@/components/Reveal";
 import { Trophy, Star, Gem, IndianRupee, Users, Handshake } from "lucide-react";
-import type { Coordinator, CoordinatorTeam } from "@/types/database";
+import type { Coordinator, CoordinatorTeam, Member } from "@/types/database";
 
 export const metadata: Metadata = {
   title: "Chapter Excellence — BNI Ares",
@@ -76,28 +77,16 @@ const COORDINATOR_GROUPS: { team: CoordinatorTeam; title: string; role: string }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function AchieverBadge({ name }: { name: string }) {
-  const initials = name
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-
-  return (
-    <div className="flex items-center gap-3 rounded-2xl border border-zinc-100 bg-white px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink text-sm font-bold text-white">
-        {initials}
-      </div>
-      <span className="font-semibold text-ink text-sm">{name}</span>
-    </div>
-  );
-}
+type AchieverMember = Pick<
+  Member,
+  "id" | "name" | "photo_url" | "company" | "business_category" | "phone" | "whatsapp" | "email" | "website"
+>;
 
 function AchievementSection({
   title,
   description,
   names,
+  members,
   icon: Icon,
   accentClass,
   bgClass,
@@ -106,6 +95,7 @@ function AchievementSection({
   title: string;
   description: string;
   names: string[];
+  members: AchieverMember[];
   icon: React.ComponentType<{ size?: number; className?: string }>;
   accentClass: string;
   bgClass: string;
@@ -132,11 +122,7 @@ function AchievementSection({
         </div>
 
         {/* Members grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-          {names.map((name) => (
-            <AchieverBadge key={name} name={name} />
-          ))}
-        </div>
+        <AchieverGrid names={names} members={members} />
       </div>
     </Reveal>
   );
@@ -144,13 +130,16 @@ function AchievementSection({
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default async function ChapterExcellencePage() {
-  const { data: coordinatorsData } = await supabase
-    .from("coordinators")
-    .select("*")
-    .eq("status", "active")
-    .order("display_order");
+  const [{ data: coordinatorsData }, { data: membersData }] = await Promise.all([
+    supabase.from("coordinators").select("*").eq("status", "active").order("display_order"),
+    supabase
+      .from("members")
+      .select("id, name, photo_url, company, business_category, phone, whatsapp, email, website")
+      .eq("status", "active"),
+  ]);
 
   const coordinators = (coordinatorsData as Coordinator[] | null) ?? [];
+  const achieverMembers = (membersData as AchieverMember[] | null) ?? [];
 
   return (
     <>
@@ -193,6 +182,7 @@ export default async function ChapterExcellencePage() {
               title="Green Club Members"
               description="Members who consistently score 70–100 points on the Traffic Light system — the benchmark of a great BNI member."
               names={GREEN_CLUB}
+              members={achieverMembers}
               icon={Star}
               accentClass="bg-emerald-500"
               bgClass="bg-emerald-50/50"
@@ -204,6 +194,7 @@ export default async function ChapterExcellencePage() {
               title="One Plus Achievers"
               description="Members who go one step further — consistently giving more than the baseline, week after week."
               names={ONE_PLUS_ACHIEVERS}
+              members={achieverMembers}
               icon={Trophy}
               accentClass="bg-amber-500"
               bgClass="bg-amber-50/50"
@@ -215,6 +206,7 @@ export default async function ChapterExcellencePage() {
               title="Gold Club Members"
               description="An elite recognition for members who have demonstrated exceptional, sustained performance across referrals, attendance, and 1-2-1s."
               names={GOLD_CLUB}
+              members={achieverMembers}
               icon={Gem}
               accentClass="bg-yellow-500"
               bgClass="bg-yellow-50/60"
@@ -226,6 +218,7 @@ export default async function ChapterExcellencePage() {
               title="Crorepati Givers"
               description="Members who have passed ₹1 Crore or more in closed business through referrals within BNI Ares. The pinnacle of Givers Gain®."
               names={CROREPATI_GIVERS}
+              members={achieverMembers}
               icon={IndianRupee}
               accentClass="bg-brand-500"
               bgClass="bg-red-50/50"

@@ -33,7 +33,13 @@ export default function ContactButtons({
 
   const items = [
     phone && { href: `tel:${phone}`, icon: <Phone size={iconSize} />, label: "Call" },
-    whatsapp && { href: `https://wa.me/${whatsapp.replace(/\D/g, "")}`, icon: <WhatsAppIcon size={iconSize} />, label: "WhatsApp" },
+    whatsapp && {
+      href: `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
+        "Hi! I saw your profile on the BNI Ares website — can we connect / schedule a 1-2-1?"
+      )}`,
+      icon: <WhatsAppIcon size={iconSize} />,
+      label: "WhatsApp",
+    },
     email && { href: `mailto:${email}`, icon: <Mail size={iconSize} />, label: "Email" },
     website && { href: website, icon: <Globe size={iconSize} />, label: "Website" },
     linkedin && { href: linkedin, icon: <LinkedinIcon size={iconSize} />, label: "LinkedIn" },
