@@ -7,8 +7,6 @@ import {
   Calendar,
   PieChart,
   ArrowRight,
-  Phone,
-  Mail,
   MapPin,
   Quote,
   ShieldCheck,
@@ -16,10 +14,12 @@ import {
   Award,
   Lock,
 } from "lucide-react";
-import { LinkedinIcon, WhatsAppIcon } from "@/components/icons/BrandIcons";
+import { WhatsAppIcon } from "@/components/icons/BrandIcons";
 import { Container, Section } from "@/components/Section";
 import Reveal from "@/components/Reveal";
 import StatCounter from "@/components/StatCounter";
+import MemberCard from "@/components/MemberCard";
+import SponsorTicker from "@/components/SponsorTicker";
 import { supabase } from "@/lib/supabase/client";
 import type { Settings, Sponsor, Member, Testimonial } from "@/types/database";
 
@@ -219,54 +219,8 @@ export default async function HomePage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {activeMembers.map((member, idx) => (
-                <Reveal key={member.id} delay={idx * 0.08} className="group relative rounded-xl border border-zinc-200 overflow-hidden bg-white hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col">
-                  <div className="aspect-square bg-zinc-100 relative shrink-0">
-                    {member.photo_url ? (
-                      <img
-                        src={member.photo_url}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center bg-ink text-2xl font-bold text-white">
-                        {member.name.charAt(0)}
-                      </div>
-                    )}
-                    {member.company_logo_url && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={member.company_logo_url}
-                        alt={member.company ?? ""}
-                        className="absolute bottom-2 right-2 h-7 w-7 rounded-md bg-white object-contain p-0.5 shadow-md"
-                      />
-                    )}
-                  </div>
-                  <div className="p-3 text-center flex flex-col flex-1 justify-between">
-                    <div>
-                      <h3 className="font-bold text-ink text-sm line-clamp-1" title={member.name}>
-                        <Link href={`/members/${member.id}`} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 before:absolute before:inset-0">
-                          {member.name}
-                        </Link>
-                      </h3>
-                      <p className="text-brand-500 text-xs font-semibold mt-0.5 line-clamp-1" title={member.business_category ?? undefined}>{member.business_category}</p>
-                      <p className="text-zinc-500 text-xs mt-0.5 line-clamp-1" title={member.company ?? undefined}>{member.company}</p>
-                    </div>
-
-                    <div className="relative z-10 mt-2 flex justify-center gap-1.5">
-                      {member.phone && (
-                        <a href={`tel:${member.phone}`} aria-label={`Call ${member.name}`} className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><Phone size={13} /></a>
-                      )}
-                      {member.whatsapp && (
-                        <a href={`https://wa.me/${member.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${member.name}`} className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><WhatsAppIcon size={13} /></a>
-                      )}
-                      {member.email && (
-                        <a href={`mailto:${member.email}`} aria-label={`Email ${member.name}`} className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><Mail size={13} /></a>
-                      )}
-                      {member.linkedin && (
-                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn ${member.name}`} className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 transition-colors hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><LinkedinIcon size={13} /></a>
-                      )}
-                    </div>
-                  </div>
+                <Reveal key={member.id} delay={idx * 0.08}>
+                  <MemberCard member={member} />
                 </Reveal>
               ))}
             </div>
@@ -384,34 +338,7 @@ export default async function HomePage() {
             </Reveal>
           </Container>
           
-          <div className="flex overflow-hidden group whitespace-nowrap">
-            <div className="flex animate-marquee pause-marquee items-center gap-6 sm:gap-8 pr-6 sm:pr-8 w-max">
-              {[...displaySponsors, ...displaySponsors, ...displaySponsors, ...displaySponsors].map((sponsor, idx) => (
-                <div key={`s1-${sponsor.id}-${idx}`} className="flex shrink-0 h-28 sm:h-32 w-56 sm:w-64 items-center justify-center rounded-2xl bg-zinc-50 p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-200 transition-all cursor-pointer">
-                  <a href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full h-full focus-visible:outline-none">
-                    {sponsor.logo_url ? (
-                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
-                    ) : (
-                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest hover:text-brand-500 transition-colors text-center whitespace-normal">{sponsor.name}</span>
-                    )}
-                  </a>
-                </div>
-              ))}
-            </div>
-            <div className="flex animate-marquee pause-marquee items-center gap-6 sm:gap-8 pr-6 sm:pr-8 w-max" aria-hidden="true">
-              {[...displaySponsors, ...displaySponsors, ...displaySponsors, ...displaySponsors].map((sponsor, idx) => (
-                <div key={`s2-${sponsor.id}-${idx}`} className="flex shrink-0 h-28 sm:h-32 w-56 sm:w-64 items-center justify-center rounded-2xl bg-zinc-50 p-6 shadow-sm border border-zinc-100 hover:shadow-md hover:border-brand-200 transition-all cursor-pointer">
-                  <a href={sponsor.website_url ?? "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full h-full focus-visible:outline-none">
-                    {sponsor.logo_url ? (
-                      <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
-                    ) : (
-                      <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest hover:text-brand-500 transition-colors text-center whitespace-normal">{sponsor.name}</span>
-                    )}
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
+          <SponsorTicker sponsors={displaySponsors} />
         </Section>
       )}
 

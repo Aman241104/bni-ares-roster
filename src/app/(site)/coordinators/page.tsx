@@ -21,11 +21,11 @@ const GREEN_CLUB = [
   "Ashutosh Mehta",
   "Ankit Patel",
   "Harsh Brahmbhatt",
-  "Sunil Agarwal",
+  "Sunil Agrawal",
 ];
 
 const ONE_PLUS_ACHIEVERS = [
-  "Jay Patel",
+  "Adv Jay Patel",
   "Vishva Ambasana",
   "Rohan Shah",
   "Yash Thakkar",
@@ -33,13 +33,13 @@ const ONE_PLUS_ACHIEVERS = [
   "Manush Patel",
   "Varun Bagaria",
   "Harsh Brahmbhatt",
-  "Sunil Agarwal",
+  "Sunil Agrawal",
 ];
 
 const GOLD_CLUB = ["Ashutosh Mehta"];
 
 const CROREPATI_GIVERS = [
-  "Sunil Agarwal",
+  "Sunil Agrawal",
   "Ashutosh Mehta",
   "Maunil Parikh",
   "Jigar Shah",
