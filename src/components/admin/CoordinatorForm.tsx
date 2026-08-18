@@ -5,6 +5,7 @@ import type { Coordinator } from "@/types/database";
 const TEAM_OPTIONS = [
   { value: "lt_team", label: "Leadership Team" },
   { value: "mc_committee", label: "MC Committee" },
+  { value: "extended_leadership", label: "Extended Leadership Team" },
   { value: "visitor_host", label: "Visitor Host Team" },
   { value: "chapter_coordinator", label: "Chapter Coordinators" },
 ];

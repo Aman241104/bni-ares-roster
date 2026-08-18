@@ -88,7 +88,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden bg-ink text-white pt-20 pb-32 sm:pt-28 sm:pb-40">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-leadership-gala.jpg"
+            src="/images/hero-chapter-celebration.jpg"
             alt="BNI Ares Chapter Leadership & Members"
             fill
             priority

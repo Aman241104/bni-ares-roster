@@ -4,7 +4,8 @@ export type CoordinatorTeam =
   | "lt_team"
   | "mc_committee"
   | "visitor_host"
-  | "chapter_coordinator";
+  | "chapter_coordinator"
+  | "extended_leadership";
 
 export type GalleryCategory =
   | "meetings"

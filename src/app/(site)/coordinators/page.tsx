@@ -16,12 +16,13 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-// ── Achievement data (from May 2026 chapter roster PDF) ──────────────────────
+// ── Achievement data (from May 2026 chapter roster PDF, Green Club updated to
+// current status per the 15 July 2026 meeting deck) ──────────────────────────
 const GREEN_CLUB = [
   "Ashutosh Mehta",
   "Ankit Patel",
-  "Harsh Brahmbhatt",
-  "Sunil Agrawal",
+  "Priyank Vora",
+  "Adv Jay Patel",
 ];
 
 const ONE_PLUS_ACHIEVERS = [
@@ -50,23 +51,35 @@ const CROREPATI_GIVERS = [
   "Minakshi Bhavsar",
   "Ankit Patel",
   "Manush Patel",
+  "Dhaval Thakor",
+  "Jimil Shah",
 ];
 
 const COORDINATOR_GROUPS: { team: CoordinatorTeam | CoordinatorTeam[]; title: string; role: string }[] = [
+  {
+    team: "lt_team",
+    title: "Leadership Team",
+    role: "They set the chapter's direction — driving vision, tracking growth, and keeping every meeting on track.",
+  },
   {
     team: "mc_committee",
     title: "MC Committee",
     role: "They keep the chapter running week to week — membership, education, and day-to-day operations.",
   },
   {
-    team: ["lt_team", "chapter_coordinator"],
+    team: "extended_leadership",
     title: "Extended Leadership Team",
-    role: "The chapter's own leadership plus dedicated support from fellow BNI leaders — together setting direction and keeping every function running smoothly.",
+    role: "Members who take on an extra committee or coordinator role beyond their core team — running everything from KYM to the Power Team.",
   },
   {
     team: "visitor_host",
     title: "Visitor Host Team",
     role: "Your first friendly face at BNI — they make sure every guest feels welcome before the meeting even starts.",
+  },
+  {
+    team: "chapter_coordinator",
+    title: "Support Team",
+    role: "The people handling the details that keep every chapter function running smoothly.",
   },
 ];
 

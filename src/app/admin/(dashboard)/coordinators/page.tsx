@@ -9,6 +9,7 @@ import type { Coordinator, CoordinatorTeam } from "@/types/database";
 const TEAM_LABELS: Record<CoordinatorTeam, string> = {
   lt_team: "Leadership Team",
   mc_committee: "MC Committee",
+  extended_leadership: "Extended Leadership Team",
   visitor_host: "Visitor Host Team",
   chapter_coordinator: "Chapter Coordinators",
 };
