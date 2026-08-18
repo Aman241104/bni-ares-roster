@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   User,
   IndianRupee,
@@ -65,10 +66,10 @@ export default async function HomePage() {
   ] as Sponsor[];
 
   const displayGallery = recentGallery.length > 0 ? recentGallery : [
-    { id: 'g1', image_url: '/images/group-photo.png', caption: 'Chapter Meeting' },
-    { id: 'g2', image_url: '/images/group-photo.png', caption: 'Networking Event' },
-    { id: 'g3', image_url: '/images/group-photo.png', caption: 'Awards Night' },
-    { id: 'g4', image_url: '/images/group-photo.png', caption: 'Training Session' }
+    { id: 'g1', image_url: '/images/visitor-day-backdrop.jpg', caption: '115 CR Milestone & Visitor Day' },
+    { id: 'g2', image_url: '/images/givers-gain-award.jpg', caption: 'BNI Symposium Givers Gain Award' },
+    { id: 'g3', image_url: '/images/chapter-meeting-session.jpg', caption: 'Wednesday Chapter Meeting' },
+    { id: 'g4', image_url: '/images/kym-studio-visit.jpg', caption: 'KYM Business Studio Visit' }
   ];
 
   const hasRealStats = !!(
@@ -84,10 +85,12 @@ export default async function HomePage() {
       {/* 1. Hero Section */}
       <section className="relative overflow-hidden bg-ink text-white pt-20 pb-32 sm:pt-28 sm:pb-40">
         <div className="absolute inset-0">
-          <img
-            src="/images/group-photo.png"
-            alt="BNI Ares Network"
-            className="h-full w-full object-cover"
+          <Image
+            src="/images/hero-leadership-gala.jpg"
+            alt="BNI Ares Chapter Leadership & Members"
+            fill
+            priority
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-transparent" />
         </div>
@@ -252,7 +255,7 @@ export default async function HomePage() {
             </Reveal>
 
             <Reveal delay={0.2} className="relative">
-              <div className="absolute inset-0 -mx-4 sm:mx-0 sm:-right-10 sm:-top-10 sm:-bottom-10 bg-[url('/images/group-photo.png')] bg-cover bg-center rounded-3xl opacity-40"></div>
+              <div className="absolute inset-0 -mx-4 sm:mx-0 sm:-right-10 sm:-top-10 sm:-bottom-10 bg-[url('/images/chapter-meeting-session.jpg')] bg-cover bg-center rounded-3xl opacity-40"></div>
               
               <div className="relative glass-dark p-8 sm:p-10 rounded-3xl shadow-2xl">
                 <h3 className="font-bold text-2xl mb-8">Meeting Details</h3>
@@ -368,10 +371,12 @@ export default async function HomePage() {
                 const isLarge = idx === 0;
                 return (
                   <Reveal key={img.id} delay={idx * 0.1} className={`relative group rounded-3xl overflow-hidden bg-zinc-200 ${isLarge ? 'md:col-span-2 md:row-span-2' : ''}`}>
-                    <img
+                    <Image
                       src={img.image_url}
                       alt={img.caption || "Gallery image"}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                      fill
+                      sizes={isLarge ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
+                      className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">

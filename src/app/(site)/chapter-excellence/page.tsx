@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Trophy } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
 import Reveal from "@/components/Reveal";
@@ -34,8 +34,8 @@ export default async function ChapterExcellencePage() {
       <section className="relative overflow-hidden bg-ink text-white pt-24 sm:pt-32 pb-32 sm:pb-48">
         <div className="absolute inset-0">
           <Image
-            src="/images/award-ceremony.png"
-            alt=""
+            src="/images/givers-gain-award.jpg"
+            alt="BNI Ares Awards & Recognition"
             aria-hidden="true"
             fill
             priority
@@ -69,22 +69,81 @@ export default async function ChapterExcellencePage() {
               Celebrating Our Achievers
             </h2>
             <p className="mt-4 text-zinc-600 text-lg">
-              Honoring the Green Club, Gold Club, Crorepati Givers, and the monumental milestones of our chapter.
+              Honoring standout performers, award recipients, and the monumental milestones of BNI Ares.
             </p>
           </Reveal>
 
-          {/* Coming Soon State */}
-          <Reveal>
-            <div className="rounded-3xl border-2 border-dashed border-zinc-200 bg-zinc-50 py-24 text-center">
-              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-md border border-zinc-200 text-brand-500 mb-6">
-                <Trophy size={40} aria-hidden="true" />
+          {/* Real Milestone & Award Highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Reveal delay={0.1} className="flex flex-col overflow-hidden rounded-3xl border border-zinc-100 bg-zinc-50 shadow-md transition-shadow hover:shadow-xl">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-200">
+                <Image
+                  src="/images/givers-gain-award.jpg"
+                  alt="Givers Gain Award - Highest Visitors"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                />
               </div>
-              <h3 className="font-heading text-2xl font-bold text-ink">Awards & Milestones</h3>
-              <p className="mt-3 text-zinc-500 max-w-sm mx-auto">
-                We are currently compiling our chapter&apos;s greatest achievements. Check back soon for our Hall of Fame!
-              </p>
-            </div>
-          </Reveal>
+              <div className="flex flex-1 flex-col p-6">
+                <span className="inline-block w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-600">
+                  BNI Symposium Award
+                </span>
+                <h3 className="mt-3 font-heading text-xl font-bold text-ink">
+                  Givers Gain Award &mdash; Highest Visitors
+                </h3>
+                <p className="mt-2 text-sm text-zinc-600">
+                  Awarded to Ashutosh Mehta on the main stage at BNI Symposium for outstanding chapter contribution and visitor sponsorship.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.2} className="flex flex-col overflow-hidden rounded-3xl border border-zinc-100 bg-zinc-50 shadow-md transition-shadow hover:shadow-xl">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-200">
+                <Image
+                  src="/images/visitor-day-backdrop.jpg"
+                  alt="₹115 Crore Business Passed Milestone"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <span className="inline-block w-fit rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-700">
+                  Business Milestone
+                </span>
+                <h3 className="mt-3 font-heading text-xl font-bold text-ink">
+                  ₹115 Cr+ Business Passed
+                </h3>
+                <p className="mt-2 text-sm text-zinc-600">
+                  A milestone celebration marking over ₹115 Crore worth of closed business passed between BNI Ares members and trusted partners.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.3} className="flex flex-col overflow-hidden rounded-3xl border border-zinc-100 bg-zinc-50 shadow-md transition-shadow hover:shadow-xl">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-200">
+                <Image
+                  src="/images/anniversary-7-years.jpg"
+                  alt="Celebrating 7 Years of BNI Ares"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <span className="inline-block w-fit rounded-full bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-700">
+                  Chapter Anniversary
+                </span>
+                <h3 className="mt-3 font-heading text-xl font-bold text-ink">
+                  Celebrating 7 Years of Excellence
+                </h3>
+                <p className="mt-2 text-sm text-zinc-600">
+                  Seven years of continuous growth, weekly camaraderie, and building Ahmedabad&apos;s foremost premier business network.
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </Container>
       </Section>
 

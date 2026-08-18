@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { User, IndianRupee, Handshake, PieChart, Users, HeartHandshake, ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
@@ -48,12 +49,13 @@ export default async function MembersPage() {
       {/* 1. Hero Section */}
       <section className="relative overflow-hidden bg-ink text-white pt-24 sm:pt-32 pb-32">
         <div className="absolute inset-0">
-          <img
-            src="/images/group-photo.png"
-            alt=""
+          <Image
+            src="/images/members-conference-hall.jpg"
+            alt="BNI Ares Members"
             aria-hidden="true"
-            fetchPriority="high"
-            className="h-full w-full object-cover opacity-40"
+            fill
+            priority
+            className="object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>

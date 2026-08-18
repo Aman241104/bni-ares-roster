@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   User,
   IndianRupee,
@@ -60,11 +61,13 @@ export default async function AboutPage() {
       {/* 1. Hero Section */}
       <section className="relative bg-ink text-white pt-24 sm:pt-32 pb-32 sm:pb-48">
         <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="/images/group-photo.png"
-            alt=""
+          <Image
+            src="/images/social-lawn-picnic.jpg"
+            alt="BNI Ares Members"
             aria-hidden="true"
-            className="h-full w-full object-cover opacity-40"
+            fill
+            priority
+            className="object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>
@@ -291,10 +294,12 @@ export default async function AboutPage() {
             </Reveal>
 
             <Reveal delay={0.2} className="relative aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-2xl">
-              <img
-                src="/images/award-ceremony.png"
-                alt="Award Ceremony"
-                className="w-full h-full object-cover"
+              <Image
+                src="/images/givers-gain-award.jpg"
+                alt="BNI Ares Award Ceremony at BNI Symposium"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
               <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
             </Reveal>

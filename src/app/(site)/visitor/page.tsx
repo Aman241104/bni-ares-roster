@@ -70,14 +70,14 @@ export default async function VisitorPage() {
       <section className="relative overflow-hidden bg-ink py-24 text-white sm:py-32">
         <div className="absolute inset-0">
           <Image
-            src="/images/group-photo.png"
-            alt=""
+            src="/images/visitor-day-hall.jpg"
+            alt="BNI Ares Visitor Day Meeting"
             aria-hidden="true"
             fill
             priority
-            className="object-cover opacity-70"
+            className="object-cover opacity-60"
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
         <Container className="relative z-10 max-w-3xl text-center">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-500 drop-shadow">Come See Us</p>

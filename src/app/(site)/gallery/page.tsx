@@ -27,7 +27,7 @@ export default async function GalleryPage() {
     <>
       <section className="relative overflow-hidden bg-ink py-20 text-white sm:py-28">
         <div className="absolute inset-0">
-          <Image src="/images/group-photo.png" alt="" aria-hidden="true" fill priority className="object-cover opacity-40" />
+          <Image src="/images/social-gala-night.jpg" alt="BNI Ares Gallery" aria-hidden="true" fill priority className="object-cover opacity-40" />
           <div className="absolute inset-0 bg-black/60" />
         </div>
         <Container className="relative z-10 max-w-3xl text-center">
