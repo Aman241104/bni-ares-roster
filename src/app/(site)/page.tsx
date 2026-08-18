@@ -18,11 +18,13 @@ import {
 import { WhatsAppIcon } from "@/components/icons/BrandIcons";
 import { Container, Section } from "@/components/Section";
 import Reveal from "@/components/Reveal";
-import StatCounter from "@/components/StatCounter";
+import StatCounter, { AnimatedStatText } from "@/components/StatCounter";
 import MemberCard from "@/components/MemberCard";
 import SponsorTicker from "@/components/SponsorTicker";
 import { supabase } from "@/lib/supabase/client";
 import type { Settings, Sponsor, Member, Testimonial } from "@/types/database";
+
+export const revalidate = 60;
 
 const WHY_JOIN = [
   { icon: Handshake, title: "Qualified Referrals", text: "Get quality business referrals from trusted professionals." },
@@ -136,7 +138,7 @@ export default async function HomePage() {
                 <div className="text-brand-500"><IndianRupee size={28} strokeWidth={1.5} /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-4xl font-extrabold text-ink sm:text-5xl whitespace-nowrap">{s.stat_business_passed}</span>
+                    <AnimatedStatText raw={s.stat_business_passed} className="font-heading text-4xl font-extrabold text-ink sm:text-5xl whitespace-nowrap" />
                     <p className="mt-2 text-sm font-medium text-zinc-500">Business Passed</p>
                   </div>
                 ) : (
@@ -366,7 +368,7 @@ export default async function HomePage() {
               </Link>
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
               {displayGallery.map((img, idx) => {
                 const isLarge = idx === 0;
                 return (

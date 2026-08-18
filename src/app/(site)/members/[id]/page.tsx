@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
@@ -62,9 +63,8 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
             </div>
           </div>
           {member.company_logo_url && (
-            <div className="flex h-24 w-24 shrink-0 items-center justify-center self-start rounded-2xl border border-zinc-200 bg-white p-3 sm:h-28 sm:w-28">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={member.company_logo_url} alt={member.company ?? ""} className="max-h-full max-w-full object-contain" />
+            <div className="relative h-24 w-24 shrink-0 self-start rounded-2xl border border-zinc-200 bg-white p-3 sm:h-28 sm:w-28">
+              <Image src={member.company_logo_url} alt={member.company ?? ""} fill sizes="112px" className="object-contain p-3" />
             </div>
           )}
         </div>

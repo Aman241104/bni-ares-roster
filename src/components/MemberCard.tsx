@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Avatar from "@/components/Avatar";
 import ContactButtons from "@/components/ContactButtons";
 import ProfilePopup from "@/components/ProfilePopup";
@@ -25,10 +26,11 @@ export default function MemberCard({ member }: { member: Member }) {
             className="transition-transform duration-500 group-hover:scale-105"
           />
           {member.company_logo_url && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={member.company_logo_url}
               alt={member.company ?? ""}
+              width={36}
+              height={36}
               className="absolute bottom-2 right-2 h-9 w-9 rounded-lg bg-white object-contain p-1 shadow-md"
             />
           )}

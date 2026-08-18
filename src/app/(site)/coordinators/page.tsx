@@ -52,26 +52,21 @@ const CROREPATI_GIVERS = [
   "Manush Patel",
 ];
 
-const COORDINATOR_GROUPS: { team: CoordinatorTeam; title: string; role: string }[] = [
-  {
-    team: "lt_team",
-    title: "Leadership Team",
-    role: "They set the chapter's direction — driving vision, tracking growth, and keeping every meeting on track.",
-  },
+const COORDINATOR_GROUPS: { team: CoordinatorTeam | CoordinatorTeam[]; title: string; role: string }[] = [
   {
     team: "mc_committee",
     title: "MC Committee",
     role: "They keep the chapter running week to week — membership, education, and day-to-day operations.",
   },
   {
+    team: ["lt_team", "chapter_coordinator"],
+    title: "Extended Leadership Team",
+    role: "The chapter's own leadership plus dedicated support from fellow BNI leaders — together setting direction and keeping every function running smoothly.",
+  },
+  {
     team: "visitor_host",
     title: "Visitor Host Team",
     role: "Your first friendly face at BNI — they make sure every guest feels welcome before the meeting even starts.",
-  },
-  {
-    team: "chapter_coordinator",
-    title: "Support Team",
-    role: "The people handling the details that keep every chapter function running smoothly.",
   },
 ];
 
@@ -250,9 +245,10 @@ export default async function ChapterExcellencePage() {
 
           <div className="space-y-14">
             {COORDINATOR_GROUPS.map((group) => {
-              const members = coordinators.filter((c) => c.team === group.team);
+              const teams = Array.isArray(group.team) ? group.team : [group.team];
+              const members = coordinators.filter((c) => teams.includes(c.team));
               return (
-                <div key={group.team}>
+                <div key={group.title}>
                   <div className="mb-6 border-b border-zinc-100 pb-4">
                     <h3 className="font-heading text-xl font-bold text-ink">
                       {group.title}

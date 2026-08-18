@@ -231,8 +231,7 @@ export default async function VisitorPage() {
                   <p className="text-sm font-semibold text-ink">Payment</p>
                   <div className="mt-3 flex flex-wrap items-center gap-6">
                     {s?.qr_code_url && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={s.qr_code_url} alt="Payment QR code" className="h-32 w-32 rounded-lg border border-zinc-200 object-contain" />
+                      <Image src={s.qr_code_url} alt="Payment QR code" width={128} height={128} className="h-32 w-32 rounded-lg border border-zinc-200 object-contain" />
                     )}
                     {s?.upi_id && <p className="text-sm text-zinc-600">UPI ID: <span className="font-medium text-ink">{s.upi_id}</span></p>}
                   </div>

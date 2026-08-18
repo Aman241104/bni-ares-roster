@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -20,9 +21,16 @@ import {
 import { Container, Section } from "@/components/Section";
 import Reveal from "@/components/Reveal";
 import FaqAccordion from "@/components/FaqAccordion";
-import StatCounter from "@/components/StatCounter";
+import StatCounter, { AnimatedStatText } from "@/components/StatCounter";
 import { supabase } from "@/lib/supabase/client";
 import type { Settings } from "@/types/database";
+
+export const metadata: Metadata = {
+  title: "About Ares",
+  description: "The story, philosophy, and people behind BNI Ares — Ahmedabad West's Platinum chapter built on Givers Gain.",
+};
+
+export const revalidate = 60;
 
 const TIMELINE = [
   { icon: MessageCircle, title: "Build Relationships", desc: "Connect with like-minded business professionals." },
@@ -197,7 +205,7 @@ export default async function AboutPage() {
                 <div className="text-white"><IndianRupee size={36} strokeWidth={1.5} aria-hidden="true" /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-2xl sm:text-3xl whitespace-nowrap">{s.stat_business_passed}</span>
+                    <AnimatedStatText raw={s.stat_business_passed} className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-2xl sm:text-3xl whitespace-nowrap" />
                     <p className="mt-2 text-sm font-medium text-white/80">Business Passed</p>
                   </div>
                 ) : (
@@ -309,7 +317,7 @@ export default async function AboutPage() {
 
       {/* 6. FAQ Section */}
       {s?.faqs && s.faqs.length > 0 && (
-        <Section className="bg-white">
+        <Section id="faq" className="scroll-mt-24 bg-white">
           <Container>
             <Reveal className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-12">
               <div className="max-w-2xl">

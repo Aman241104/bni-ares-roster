@@ -49,7 +49,13 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   }, []);
 
   useEffect(() => {
-    lenisRef.current?.scrollTo(0, { immediate: true });
+    const hash = window.location.hash;
+    const target = hash ? document.querySelector(hash) : null;
+    if (target) {
+      lenisRef.current?.scrollTo(target as HTMLElement, { immediate: true });
+    } else {
+      lenisRef.current?.scrollTo(0, { immediate: true });
+    }
   }, [pathname]);
 
   return <>{children}</>;

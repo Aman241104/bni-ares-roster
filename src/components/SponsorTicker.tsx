@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 import { X, Globe } from "lucide-react";
 import type { Sponsor } from "@/types/database";
 
@@ -28,10 +29,9 @@ function SponsorPopup({ sponsor, onClose }: { sponsor: Sponsor; onClose: () => v
           <X size={18} />
         </button>
 
-        <div className="mx-auto flex h-28 w-full items-center justify-center rounded-2xl bg-zinc-50 p-4">
+        <div className="relative mx-auto flex h-28 w-full items-center justify-center rounded-2xl bg-zinc-50 p-4">
           {sponsor.logo_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-full max-w-full object-contain" />
+            <Image src={sponsor.logo_url} alt={sponsor.name} fill sizes="384px" className="object-contain p-4" />
           ) : (
             <span className="font-heading text-xl font-bold text-ink">{sponsor.name}</span>
           )}

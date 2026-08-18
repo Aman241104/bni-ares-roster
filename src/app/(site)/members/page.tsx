@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase/client";
 import { Container, Section } from "@/components/Section";
 import Reveal from "@/components/Reveal";
 import MembersDirectory from "@/components/MembersDirectory";
-import StatCounter from "@/components/StatCounter";
+import StatCounter, { AnimatedStatText } from "@/components/StatCounter";
 import CoordinatorCard from "@/components/CoordinatorCard";
 import type { Member, Coordinator, Settings } from "@/types/database";
 
@@ -91,7 +91,7 @@ export default async function MembersPage() {
                 <div className="text-white"><IndianRupee size={32} strokeWidth={1.5} /></div>
                 {s.stat_business_passed ? (
                   <div className="text-center">
-                    <span className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-3xl sm:text-4xl whitespace-nowrap">{s.stat_business_passed}</span>
+                    <AnimatedStatText raw={s.stat_business_passed} className="font-heading text-4xl font-extrabold sm:text-5xl text-white text-3xl sm:text-4xl whitespace-nowrap" />
                     <p className="mt-2 text-sm font-medium text-white/80">Business Passed</p>
                   </div>
                 ) : (

@@ -8,16 +8,13 @@ import type { Member } from "@/types/database";
 export default function MembersDirectory({ members }: { members: Member[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
-  const [designation, setDesignation] = useState("");
   const [visibleCount, setVisibleCount] = useState(16);
 
   const categories = useMemo(
-    () => Array.from(new Set(members.map((m) => m.business_category).filter(Boolean))) as string[],
-    [members]
-  );
-
-  const designations = useMemo(
-    () => Array.from(new Set(members.map((m) => m.designation).filter(Boolean))) as string[],
+    () =>
+      (Array.from(new Set(members.map((m) => m.business_category).filter(Boolean))) as string[]).sort((a, b) =>
+        a.localeCompare(b)
+      ),
     [members]
   );
 
@@ -27,10 +24,9 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
       const matchesQuery =
         !q || m.name.toLowerCase().includes(q) || (m.company ?? "").toLowerCase().includes(q);
       const matchesCategory = !category || m.business_category === category;
-      const matchesDesignation = !designation || m.designation === designation;
-      return matchesQuery && matchesCategory && matchesDesignation;
+      return matchesQuery && matchesCategory;
     });
-  }, [members, query, category, designation]);
+  }, [members, query, category]);
 
   const visibleMembers = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
@@ -38,7 +34,6 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
   const resetFilters = () => {
     setQuery("");
     setCategory("");
-    setDesignation("");
     setVisibleCount(16);
   };
 
@@ -69,21 +64,6 @@ export default function MembersDirectory({ members }: { members: Member[] }) {
               <option value="">All Categories</option>
               {categories.map((c) => (
                 <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-            <ChevronDown size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400" />
-          </div>
-
-          <div className="relative">
-            <select
-              aria-label="Filter by designation"
-              value={designation}
-              onChange={(e) => { setDesignation(e.target.value); setVisibleCount(16); }}
-              className="appearance-none w-full md:w-auto min-w-48 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-4 pr-10 text-sm outline-none ring-brand-500 focus:ring-2 transition-shadow text-zinc-700 font-medium cursor-pointer"
-            >
-              <option value="">All Designations</option>
-              {designations.map((d) => (
-                <option key={d} value={d}>{d}</option>
               ))}
             </select>
             <ChevronDown size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400" />

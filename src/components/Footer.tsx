@@ -45,7 +45,7 @@ export default async function Footer() {
             <p className="text-sm font-semibold text-zinc-300">Quick Links</p>
             <ul className="mt-4 space-y-2 text-sm text-zinc-400">
               <li><Link href="/" className="hover:text-red-400 transition-colors">Home</Link></li>
-              <li><Link href="/#about" className="hover:text-red-400 transition-colors">About Ares</Link></li>
+              <li><Link href="/about" className="hover:text-red-400 transition-colors">About Ares</Link></li>
               <li><Link href="/members" className="hover:text-red-400 transition-colors">Members</Link></li>
               <li><Link href="/coordinators" className="hover:text-red-400 transition-colors">Chapter Excellence</Link></li>
               <li><Link href="/visitor" className="hover:text-red-400 transition-colors">Visit Ares</Link></li>
@@ -57,11 +57,9 @@ export default async function Footer() {
           <div>
             <p className="text-sm font-semibold text-zinc-300">Resources</p>
             <ul className="mt-4 space-y-2 text-sm text-zinc-400">
-              <li><Link href="#" className="hover:text-red-400 transition-colors">About BNI</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">How It Works</Link></li>
+              <li><a href="https://www.bni.com" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors">About BNI</a></li>
               <li><Link href="/visitor" className="hover:text-red-400 transition-colors">Visitor Information</Link></li>
-              <li><Link href="/#faq" className="hover:text-red-400 transition-colors">FAQ</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Blog</Link></li>
+              <li><Link href="/about#faq" className="hover:text-red-400 transition-colors">FAQ</Link></li>
             </ul>
           </div>
 
