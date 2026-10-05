@@ -77,7 +77,7 @@ export default function SponsorTicker({ sponsors }: { sponsors: Sponsor[] }) {
             <img
               src={sponsor.logo_url}
               alt={sponsor.name}
-              className="max-h-full max-w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+              className="max-h-full max-w-full object-contain transition-all duration-300"
             />
           ) : (
             <span className="text-zinc-400 font-bold text-sm sm:text-base uppercase tracking-widest hover:text-brand-500 transition-colors text-center whitespace-normal">

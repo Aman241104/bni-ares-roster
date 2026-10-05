@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 glass-dark ${
+      className={`sticky top-0 z-50 transition-all duration-300 bg-black ${
         scrolled ? "shadow-md" : ""
       }`}
     >
@@ -72,7 +72,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="glass-dark border-t border-white/10 lg:hidden">
+        <div className="bg-black border-t border-white/10 lg:hidden">
           <div className="flex flex-col gap-1 px-5 py-4">
             {LINKS.map((link) => (
               <Link
