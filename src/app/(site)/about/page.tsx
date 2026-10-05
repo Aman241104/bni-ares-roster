@@ -26,8 +26,8 @@ import { supabase } from "@/lib/supabase/client";
 import type { Settings } from "@/types/database";
 
 export const metadata: Metadata = {
-  title: "About Ares",
-  description: "The story, philosophy, and people behind BNI Ares — Ahmedabad West's Platinum chapter built on Givers Gain.",
+  title: "About Us | BNI Ares Ahmedabad",
+  description: "The story, philosophy, and people behind BNI Ares — Ahmedabad West's Platinum chapter built on Givers Gain and trusted networking in Gujarat.",
 };
 
 export const revalidate = 60;

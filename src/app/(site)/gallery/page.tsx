@@ -6,8 +6,8 @@ import GalleryGrid from "@/components/GalleryGrid";
 import type { GalleryAlbum, GalleryImage } from "@/types/database";
 
 export const metadata: Metadata = {
-  title: "Gallery",
-  description: "Photos and videos from BNI Ares meetings, business events, visitor days, socials, fun events, and KYM sessions.",
+  title: "Gallery | BNI Ares Ahmedabad",
+  description: "Photos and videos from BNI Ares meetings, business events, visitor days, socials, and networking sessions in Gujarat.",
 };
 
 export const revalidate = 60;

@@ -9,8 +9,8 @@ import CoordinatorTabs from "@/components/CoordinatorTabs";
 import type { Coordinator } from "@/types/database";
 
 export const metadata: Metadata = {
-  title: "Chapter Excellence",
-  description: "Recognizing outstanding achievements and the driving force behind BNI Ares.",
+  title: "Chapter Excellence | BNI Ares",
+  description: "Recognizing outstanding achievements and the driving force behind BNI Ares, a top-performing BNI chapter in Ahmedabad, Gujarat.",
 };
 
 export const revalidate = 60;

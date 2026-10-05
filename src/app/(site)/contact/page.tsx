@@ -10,8 +10,8 @@ import ContactForm from "@/components/ContactForm";
 import type { Settings } from "@/types/database";
 
 export const metadata: Metadata = {
-  title: "Contact & Support",
-  description: "Get in touch with BNI Ares — phone, email, meeting address, and support.",
+  title: "Contact & Support | BNI Ares Ahmedabad",
+  description: "Get in touch with BNI Ares, Ahmedabad West's leading networking chapter. Find our meeting address, phone, email, and support team details.",
 };
 
 export const revalidate = 60;

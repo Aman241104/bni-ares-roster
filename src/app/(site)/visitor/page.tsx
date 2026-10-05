@@ -8,8 +8,8 @@ import VisitorRegistrationForm from "@/components/VisitorRegistrationForm";
 import type { Member, Settings } from "@/types/database";
 
 export const metadata: Metadata = {
-  title: "Visit BNI Ares",
-  description: "Register as a visitor at BNI Ares — meeting details, venue, fees, and everything you need to attend.",
+  title: "Visit BNI Ares | Ahmedabad Business Networking",
+  description: "Register as a visitor at BNI Ares in Ahmedabad. Experience the best business networking in Gujarat. Find meeting details, venue, and fees here.",
 };
 
 export const revalidate = 60;

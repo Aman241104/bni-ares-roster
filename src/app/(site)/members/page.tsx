@@ -12,7 +12,7 @@ import type { Member, Coordinator, Settings } from "@/types/database";
 
 export const metadata: Metadata = {
   title: "Members Directory",
-  description: "Search and browse every member of the BNI Ares chapter by name, company, or business category.",
+  description: "Search and browse the member directory of BNI Ares, Ahmedabad's premier business networking chapter. Find trusted professionals in Gujarat.",
 };
 
 export const revalidate = 60;

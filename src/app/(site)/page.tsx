@@ -23,6 +23,13 @@ import MemberCard from "@/components/MemberCard";
 import SponsorTicker from "@/components/SponsorTicker";
 import { supabase } from "@/lib/supabase/client";
 import type { Settings, Sponsor, Member, Testimonial } from "@/types/database";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "BNI Ares — Top Business Networking Chapter in Ahmedabad & Gandhinagar",
+  description:
+    "Join Ahmedabad West's Platinum BNI Chapter. BNI Ares connects top business professionals in Gujarat for verified referrals, strategic networking, and unmatched business growth.",
+};
 
 export const revalidate = 60;
 

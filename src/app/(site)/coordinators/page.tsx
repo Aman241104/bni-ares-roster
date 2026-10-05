@@ -11,7 +11,7 @@ import type { Coordinator, CoordinatorTeam, Member } from "@/types/database";
 export const metadata: Metadata = {
   title: "Chapter Excellence — BNI Ares",
   description:
-    "Recognising the members who go above and beyond — Green Club, One Plus Achievers, Gold Club, Crorepati Givers, and the chapter's leadership team.",
+    "Recognising the members who go above and beyond in Ahmedabad — Green Club, One Plus Achievers, Gold Club, Crorepati Givers, and the chapter's leadership team.",
 };
 
 export const revalidate = 60;
