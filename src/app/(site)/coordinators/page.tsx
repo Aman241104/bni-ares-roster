@@ -42,7 +42,6 @@ const GOLD_CLUB = ["Ashutosh Mehta"];
 const CROREPATI_GIVERS = [
   "Sunil Agrawal",
   "Ashutosh Mehta",
-  "Maunil Parikh",
   "Jigar Shah",
   "Harsh Brahmbhatt",
   "Shruti Agarwal",
