@@ -263,10 +263,10 @@ export default async function HomePage() {
               </Link>
             </Reveal>
 
-            <Reveal delay={0.2} className="relative">
-              <div className="absolute inset-0 -mx-4 sm:mx-0 sm:-right-10 sm:-top-10 sm:-bottom-10 bg-[url('/images/chapter-meeting-session.jpg')] bg-cover bg-center rounded-3xl opacity-40"></div>
+            <Reveal delay={0.2} className="relative p-6 sm:p-10 lg:p-12 flex items-center justify-center">
+              <div className="absolute inset-0 bg-[url('/images/chapter-meeting-session.jpg')] bg-cover bg-center rounded-3xl opacity-40"></div>
               
-              <div className="relative glass-dark p-8 sm:p-10 rounded-3xl shadow-2xl">
+              <div className="relative w-full glass-dark p-8 sm:p-10 rounded-3xl shadow-2xl">
                 <h3 className="font-bold text-2xl mb-8">Meeting Details</h3>
                 
                 <div className="space-y-6">
